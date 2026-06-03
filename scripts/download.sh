@@ -12,16 +12,13 @@
 # Estimated total download size: TODO GB
 # Estimated disk usage after extraction: TODO GB
 #
-# During reproduction, prefer downloading to shared directories
-# (shared/datasets/, shared/models/) so other papers can reuse them.
-# You do not need to run this script during reproduction — it exists
-# for future portability. Write it to download to workspace-local
-# paths (data/, checkpoints/) instead of the shared directories
-# so a future user with just the workspace can run this script and get everything they need.
+# This script is the portable fetch path for fresh clones. All resources
+# referenced by committed code should be recreated under data/downloads/
+# or another workspace-local generated directory.
 
 set -e
 
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 
 # TODO: implement downloads
 # Examples:

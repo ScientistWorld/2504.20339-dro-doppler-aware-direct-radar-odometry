@@ -1,0 +1,81 @@
+{
+  "experiments": {
+    "automotive_doppler_main": {
+      "description": "Automotive triangular-modulation radar odometry benchmark from Table I. KITTI relative translation and rotation errors are reported for sequence classes with increasing geometric difficulty.",
+      "weight": 0.35,
+      "primary_metric": "avg_translation_error_pct",
+      "metrics": {
+        "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0},
+        "avg_rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4}
+      },
+      "results": {
+        "ct_r": {"type": "baseline", "avg_translation_error_pct": 18.57, "avg_rotation_error_deg_per_100m": 0.8925},
+        "dg": {"type": "baseline", "avg_translation_error_pct": 0.965, "avg_rotation_error_deg_per_100m": 0.035},
+        "ct_rdg": {"type": "baseline", "avg_translation_error_pct": 0.5925, "avg_rotation_error_deg_per_100m": 0.035},
+        "dro_d": {"type": "proposed", "avg_translation_error_pct": 0.7025, "avg_rotation_error_deg_per_100m": 0.0175},
+        "dro_g": {"type": "proposed", "avg_translation_error_pct": 13.305, "avg_rotation_error_deg_per_100m": 0.0175},
+        "dro_gd": {"type": "proposed", "avg_translation_error_pct": 0.2925, "avg_rotation_error_deg_per_100m": 0.0175}
+      }
+    },
+    "automotive_ablation": {
+      "description": "Ablation study from Table II on the proposed automotive setup, excluding Skyway. Metrics average Suburbs, Highway, and Tunnel KITTI errors plus velocity RMSE.",
+      "weight": 0.2,
+      "primary_metric": "avg_translation_error_pct",
+      "metrics": {
+        "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0},
+        "avg_rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4},
+        "velocity_rmse_mps": {"higher_is_better": false, "coefficient": -0.3}
+      },
+      "results": {
+        "dro_gd": {"type": "proposed", "avg_translation_error_pct": 0.2567, "avg_rotation_error_deg_per_100m": 0.02, "velocity_rmse_mps": 0.119},
+        "no_gyro_bias": {"type": "proposed", "avg_translation_error_pct": 0.3333, "avg_rotation_error_deg_per_100m": 0.0367, "velocity_rmse_mps": 0.119},
+        "no_velocity_bias": {"type": "proposed", "avg_translation_error_pct": 0.2733, "avg_rotation_error_deg_per_100m": 0.02, "velocity_rmse_mps": 0.12},
+        "no_local_map": {"type": "proposed", "avg_translation_error_pct": 0.3933, "avg_rotation_error_deg_per_100m": 0.02, "velocity_rmse_mps": 0.107},
+        "no_gyroscope": {"type": "proposed", "avg_translation_error_pct": 1.8267, "avg_rotation_error_deg_per_100m": 0.5367, "velocity_rmse_mps": 0.132}
+      }
+    },
+    "boreas_leaderboard": {
+      "description": "Boreas SE(2) odometry leaderboard results from Table III for sawtooth-modulation public automotive radar sequences.",
+      "weight": 0.2,
+      "primary_metric": "translation_error_pct",
+      "metrics": {
+        "translation_error_pct": {"higher_is_better": false, "coefficient": -1.0},
+        "rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4}
+      },
+      "results": {
+        "cfear_pp": {"type": "baseline", "translation_error_pct": 0.51, "rotation_error_deg_per_100m": 0.14},
+        "cfear": {"type": "baseline", "translation_error_pct": 0.61, "rotation_error_deg_per_100m": 0.21},
+        "steam_rio_pp": {"type": "baseline", "translation_error_pct": 0.62, "rotation_error_deg_per_100m": 0.18},
+        "dro_g": {"type": "proposed", "translation_error_pct": 0.26, "rotation_error_deg_per_100m": 0.05}
+      }
+    },
+    "mulran_public": {
+      "description": "MulRan average KITTI odometry errors from Table IV across KAIST, DCC, and Riverside sequence groups.",
+      "weight": 0.15,
+      "primary_metric": "avg_translation_error_pct",
+      "metrics": {
+        "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0},
+        "avg_rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4}
+      },
+      "results": {
+        "cfear_3": {"type": "baseline", "avg_translation_error_pct": 1.62, "avg_rotation_error_deg_per_100m": 0.57},
+        "cfear_3_50": {"type": "baseline", "avg_translation_error_pct": 1.5, "avg_rotation_error_deg_per_100m": 0.56},
+        "dro_g": {"type": "proposed", "avg_translation_error_pct": 1.45, "avg_rotation_error_deg_per_100m": 0.38}
+      }
+    },
+    "offroad_rpe": {
+      "description": "Off-road mobile robot relative position error from Table V across Parking, Industrial, Grass, and Woods environments.",
+      "weight": 0.1,
+      "primary_metric": "avg_rpe_pct",
+      "metrics": {
+        "avg_rpe_pct": {"higher_is_better": false, "coefficient": -1.0}
+      },
+      "results": {
+        "ct_rg_no_bias": {"type": "baseline", "avg_rpe_pct": 4.3525},
+        "ct_rg": {"type": "baseline", "avg_rpe_pct": 1.0375},
+        "dro_g_no_bias": {"type": "proposed", "avg_rpe_pct": 3.93},
+        "dro_g": {"type": "proposed", "avg_rpe_pct": 0.76}
+      }
+    }
+  }
+}

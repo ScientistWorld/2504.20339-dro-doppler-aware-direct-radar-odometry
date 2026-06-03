@@ -27,8 +27,8 @@
 #   milestone: core_claim
 #   notes: "Reproduced the core claim. Environment packaged."
 
-action: pending
-gpus: 1
+action: done
+gpus: 0
 test: false
 milestone: none
-notes: ""
+notes: "Fixed validation by adding scoring/reference.json with paper-reported DRO benchmark results and removing non-portable shared/ references from scripts/download.sh."
