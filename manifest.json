@@ -1,0 +1,103 @@
+{
+  "paper": {
+    "arxiv_id": "2504.20339",
+    "title": "DRO: Doppler-Aware Direct Radar Odometry",
+    "date": "",
+    "topics": [
+      "paper-type-metric-method",
+      "domain-robotics",
+      "area-slam",
+      "category-odometry",
+      "method-direct-methods",
+      "secondary-domain-robotics",
+      "secondary-area-autonomous-driving",
+      "secondary-category-perception",
+      "secondary-method-radar-sensing",
+      "selection-category-detection"
+    ]
+  },
+  "reproduction": {
+    "milestone": "none",
+    "status": "error",
+    "error": "rc=-1: You've hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at 1:41 AM.",
+    "scaffold": "codex",
+    "model": "gpt-5.5",
+    "profile": "gpt-5.5-medium",
+    "effort": "medium",
+    "gpu_hours_used": 0.0,
+    "current_iteration_gpu_budget": 30,
+    "current_iteration_gpu_hours_used": 0.0,
+    "total_gpu_hours_used": 0.0,
+    "current_iteration_cpu_hours_used": 0.0,
+    "total_cpu_hours_used": 0,
+    "gpu_budget": 30,
+    "duration_sec": 909.4,
+    "cost_usd": null,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cached_input_tokens": 0,
+    "cache_creation_tokens": null,
+    "reasoning_tokens": 0,
+    "total_input_tokens": 0,
+    "num_turns": 0,
+    "duration_api_ms": null,
+    "num_runs": 1,
+    "iteration_count": 0,
+    "workflow": "standard",
+    "workflow_step": 0,
+    "total_gpu_jobs": 0,
+    "time_breakdown": {
+      "working": 903.5275685787201
+    }
+  },
+  "agents": [
+    {
+      "scaffold": "codex",
+      "model": "gpt-5.5",
+      "profile": "gpt-5.5-medium",
+      "effort": "medium",
+      "role": "reproducer",
+      "is_iteration": false,
+      "iteration": 1,
+      "workflow": "standard",
+      "workflow_step": 0,
+      "started_at": 1780448170.968746,
+      "finished_at": 1780449080.3560712,
+      "duration_sec": 909.4,
+      "blocked_sec": 0.0,
+      "status": "error",
+      "error": "rc=-1: You've hit your usage limit. Visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at 1:41 AM.",
+      "milestone": "none",
+      "gpu_budget": 30,
+      "gpu_hours_used": 0.0,
+      "total_gpu_hours_used": 0.0,
+      "cpu_hours_used": 0.0,
+      "time_breakdown": {
+        "working": 903.5275685787201
+      },
+      "cost_usd": null,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cached_input_tokens": 0,
+      "cache_creation_tokens": null,
+      "reasoning_tokens": 0,
+      "total_input_tokens": 0,
+      "num_turns": 0,
+      "duration_api_ms": null,
+      "tool_uses": {},
+      "gpu_jobs": [],
+      "progress_log": "<!-- Write your progress here -->"
+    }
+  ],
+  "components": {
+    "has_container": true,
+    "has_method_code": true,
+    "has_evaluation": true,
+    "has_download_script": true,
+    "has_reproduce_script": true,
+    "has_method_script": true,
+    "has_baseline": true,
+    "has_reference": false,
+    "has_data": true
+  }
+}
