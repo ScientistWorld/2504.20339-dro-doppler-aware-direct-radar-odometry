@@ -16,5 +16,11 @@
 - The evaluator also reports the constraint metrics: DRO-GD rotation error `1.489 deg/100m` and vector body-frame velocity RMSE `0.123 m/s`.
 - Added evaluator support for per-scenario score groups and submitting another CPU job before claiming `core_claim_plus`.
 
+### [2026-06-04 05:40] - core_claim
+- CPU follow-up job `99110a51-e02` completed with exit code 0 and regenerated `scoring/scores.json` with four experiments.
+- DRO-GD beats the fixed-velocity gyro baseline on the aggregate replacement benchmark and on both generated sub-scenarios: `2.385%` versus `22.572%` on `structured`, and `2.952%` versus `27.426%` on `tunnel`.
+- `python validate.py` passes on the final workspace.
+- Final milestone is kept at `core_claim` because the reproduction uses a compact synthetic replacement benchmark rather than the paper's full real automotive, Boreas, MulRan, and off-road evaluation suite.
+
 ## Stop Justification
-- Not stopped; a CPU job is being submitted to regenerate scenario-specific scores for potential `core_claim_plus`.
+- Finalized at `core_claim`. The paper's actual DRO computation is implemented and validated on a non-trivial synthetic FMCW radar benchmark with aggregate, per-scenario, and ablation/constraint metrics. Higher milestones are not claimed because the central Doppler-enabled automotive dataset is not fully public and the remaining public real-data tables would require substantially larger dataset setup beyond this compact gym.

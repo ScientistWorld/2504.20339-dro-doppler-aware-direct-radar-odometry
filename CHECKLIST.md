@@ -38,7 +38,7 @@ Check off items as you complete them. Order doesn't matter — work however make
 ## Milestones
 - [x] `method_runs` — executes end-to-end without errors
 - [x] `core_claim` — minimum experiment supports central claim
-- [ ] `core_claim_plus` — additional settings
+- [ ] `core_claim_plus` — additional independent paper settings (not claimed; final scores only add synthetic sub-scenario breakdowns)
 - [ ] `secondary_claims`
 - [ ] `majority`
 - [ ] `near_complete`
