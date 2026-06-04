@@ -32,10 +32,23 @@ def segment_metrics(pred: np.ndarray, gt: np.ndarray, step: int = 4) -> tuple[fl
             pr_delta = pred[j, 1:3] - pred[i, 1:3]
             trans_err.append(100.0 * np.linalg.norm(pr_delta - gt_delta) / max(np.linalg.norm(gt_delta), 1e-6))
             rot_err.append(abs(np.degrees(wrap_angle(np.array([pred[j, 3] - pred[i, 3] - (gt[j, 3] - gt[i, 3])]))[0])) / (length / 100.0))
-    pred_v = pred[:, 4:6]
-    gt_dt = np.maximum(np.diff(gt[:, 0], prepend=gt[0, 0]), 1e-6)
-    gt_speed = np.linalg.norm(np.diff(gt[:, 1:3], axis=0, prepend=gt[[0], 1:3]), axis=1) / gt_dt
-    vel_rmse = float(np.sqrt(np.mean((np.linalg.norm(pred_v, axis=1) - gt_speed) ** 2)))
+    dt = np.diff(gt[:, 0])
+    if len(dt) > 0:
+        world_velocity = np.diff(gt[:, 1:3], axis=0) / np.maximum(dt[:, None], 1e-6)
+        heading = gt[:-1, 3]
+        c = np.cos(heading)
+        s = np.sin(heading)
+        gt_body_velocity = np.stack(
+            [
+                c * world_velocity[:, 0] + s * world_velocity[:, 1],
+                -s * world_velocity[:, 0] + c * world_velocity[:, 1],
+            ],
+            axis=1,
+        )
+        pred_body_velocity = pred[1 : len(gt_body_velocity) + 1, 4:6]
+        vel_rmse = float(np.sqrt(np.mean((pred_body_velocity - gt_body_velocity) ** 2)))
+    else:
+        vel_rmse = 0.0
     return float(np.mean(trans_err)), float(np.mean(rot_err)), vel_rmse
 
 
@@ -76,7 +89,7 @@ def main() -> None:
             "avg_translation_error_pct": avg_te,
             "avg_rotation_error_deg_per_100m": avg_re,
         }
-        if name == "dro_gd":
+        if name in {"dro_d", "dro_g", "dro_gd"}:
             results_ablation[name] = {
                 "avg_translation_error_pct": avg_te,
                 "avg_rotation_error_deg_per_100m": avg_re,

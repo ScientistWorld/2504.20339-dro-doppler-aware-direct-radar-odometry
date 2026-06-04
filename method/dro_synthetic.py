@@ -14,8 +14,7 @@ import json
 from pathlib import Path
 
 import numpy as np
-from scipy.ndimage import gaussian_filter1d, map_coordinates
-from scipy.optimize import minimize
+from scipy.ndimage import convolve, gaussian_filter1d, map_coordinates
 
 
 def rot2(theta: float) -> np.ndarray:
@@ -72,37 +71,84 @@ class LocalMap:
             self.initialized = True
 
 
-def preprocess(scan: np.ndarray) -> np.ndarray:
-    x = scan.astype(np.float32).copy()
+def squared_exponential_kernel(x1: np.ndarray, x2: np.ndarray, lengthscale_az: float, lengthscale_range: float) -> np.ndarray:
+    a = x1.astype(np.float64).copy()
+    b = x2.astype(np.float64).copy()
+    a[:, 0] /= lengthscale_az
+    b[:, 0] /= lengthscale_az
+    a[:, 1] /= lengthscale_range
+    b[:, 1] /= lengthscale_range
+    sqdist = np.sum((a[:, None, :] - b[None, :, :]) ** 2, axis=2)
+    return np.exp(-0.5 * sqdist)
+
+
+def gp_convolution_weights(
+    size_az: int = 4,
+    size_range: int = 4,
+    lengthscale_az: float = 3.0,
+    lengthscale_range: float = 3.0,
+    noise: float = 0.08,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Precompute the local GP weights used to infill alternating chirp rows."""
+    x = np.arange(-size_az, size_az + 1)
+    y = np.arange(-size_range, size_range + 1)
+    smooth_x = x[x % 2 == 0].astype(np.float64)
+    interp_x = x[x % 2 != 0].astype(np.float64)
+
+    def weights(xs: np.ndarray) -> np.ndarray:
+        xx, yy = np.meshgrid(xs, y, indexing="ij")
+        support = np.stack([xx.ravel(), yy.ravel()], axis=1)
+        k_xx = squared_exponential_kernel(support, support, lengthscale_az, lengthscale_range)
+        k_xx += noise**2 * np.eye(len(support))
+        k_star = squared_exponential_kernel(np.array([[0.0, 0.0]]), support, lengthscale_az, lengthscale_range)
+        return (k_star @ np.linalg.inv(k_xx)).reshape(len(xs), len(y)).astype(np.float32)
+
+    return weights(smooth_x), weights(interp_x)
+
+
+GP_SMOOTH_WEIGHTS, GP_INTERP_WEIGHTS = gp_convolution_weights()
+
+
+def postprocess_gp_image(image: np.ndarray) -> np.ndarray:
+    x = image.astype(np.float32).copy()
     std = np.std(x, axis=1, keepdims=True)
     x = np.maximum(0.0, x - 2.0 * std)
+    x = gaussian_filter1d(x, 3.0, axis=0)
     mx = np.max(x, axis=1, keepdims=True)
     x = np.divide(x, np.maximum(mx, 1e-6), out=np.zeros_like(x), where=mx > 0)
-    x = gaussian_filter1d(x, 1.5, axis=1)
     return x**3
 
 
 def infill_up_down(scan: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    """Efficient local GP-style infill for alternating chirp rows.
+    """Split alternating chirps and infill missing rows with local GP regression."""
+    raw = scan.astype(np.float32)
+    even = raw[0::2] - float(np.mean(raw[0::2]))
+    odd = raw[1::2] - float(np.mean(raw[1::2]))
 
-    The released code precomputes squared-exponential GP convolution weights.
-    Here the same local image-like infill role is implemented with a Gaussian
-    row interpolation kernel to avoid full cubic GP inference.
-    """
-    smooth = preprocess(scan)
-    up = np.zeros_like(smooth)
-    down = np.zeros_like(smooth)
-    up[0::2] = smooth[0::2]
-    down[1::2] = smooth[1::2]
-    for i in range(1, smooth.shape[0], 2):
-        lo = max(0, i - 1)
-        hi = min(smooth.shape[0] - 1, i + 1)
-        up[i] = 0.5 * (up[lo] + up[hi])
-    for i in range(0, smooth.shape[0], 2):
-        lo = max(1, i - 1)
-        hi = min(smooth.shape[0] - 2 if smooth.shape[0] % 2 else smooth.shape[0] - 1, i + 1)
-        if lo <= hi:
-            down[i] = 0.5 * (down[lo] + down[hi])
+    even_smooth = convolve(even, GP_SMOOTH_WEIGHTS, mode="constant", cval=0.0)
+    even_interp = convolve(even, GP_INTERP_WEIGHTS, mode="constant", cval=0.0)
+    odd_smooth = convolve(odd, GP_SMOOTH_WEIGHTS, mode="constant", cval=0.0)
+    odd_interp = convolve(odd, GP_INTERP_WEIGHTS, mode="constant", cval=0.0)
+
+    up = np.zeros_like(raw)
+    down = np.zeros_like(raw)
+    up[0::2] = even_smooth[: up[0::2].shape[0]]
+    if up[1::2].shape[0] > 0:
+        up[1::2] = even_interp[: up[1::2].shape[0]]
+    down[1::2] = odd_smooth[: down[1::2].shape[0]]
+    if down[0::2].shape[0] > 0:
+        down[0::2] = odd_interp[: down[0::2].shape[0]]
+
+    up = postprocess_gp_image(up)
+    down = postprocess_gp_image(down)
+    up[:4] = 0
+    up[-4:] = 0
+    down[:4] = 0
+    down[-4:] = 0
+    up[:, :4] = 0
+    up[:, -4:] = 0
+    down[:, :4] = 0
+    down[:, -4:] = 0
     return up, down
 
 
@@ -254,25 +300,25 @@ def estimate_velocity(
             "dro_d",
         )
 
-    def objective(v: np.ndarray) -> float:
+    def score_fn(v: np.ndarray) -> float:
         v = np.asarray(v, dtype=np.float64)
         score = 0.0
         if mode in {"dro_g", "dro_gd"} and lmap.initialized:
-            direct_weight = 0.04 if mode == "dro_gd" and doppler_init is not None else 1.0
+            direct_weight = 0.12 if mode == "dro_gd" and doppler_init is not None else 1.0
             score += direct_weight * direct_score(v, scan, lmap, azimuths, ranges, beam_times, chirps, start_pose, omega, beta)
         if mode in {"dro_d", "dro_gd"}:
             doppler_weight = 2.0 if mode == "dro_gd" else 0.9
             score += doppler_weight * doppler_score(v, scan, azimuths, beta, range_res)
         score -= 0.0002 * float(np.sum((v - previous_v) ** 2))
         if mode == "dro_gd" and doppler_anchor is not None:
-            score -= 0.08 * float(np.sum((v - doppler_anchor) ** 2))
-        return -score
+            score -= 0.04 * float(np.sum((v - doppler_anchor) ** 2))
+        return score
 
     if mode == "dro_gd" and doppler_anchor is not None:
         best = doppler_anchor
     else:
         best = doppler_init if doppler_init is not None else previous_v
-    best_value = objective(best)
+    best_value = -score_fn(best)
     vx_center = best[0]
     vy_center = best[1]
     vx_grid = np.linspace(max(0.0, vx_center - 2.5), vx_center + 2.5, 21)
@@ -280,23 +326,37 @@ def estimate_velocity(
     for vx in vx_grid:
         for vy in vy_grid:
             candidate = np.array([vx, vy], dtype=np.float64)
-            value = objective(candidate)
+            value = -score_fn(candidate)
             if value < best_value:
                 best = candidate
                 best_value = value
 
-    result = minimize(
-        objective,
-        best,
-        method="Nelder-Mead",
-        options={
-            "maxiter": 120,
-            "xatol": 1e-3,
-            "fatol": 1e-5,
-            "initial_simplex": np.array([best, best + [0.25, 0.0], best + [0.0, 0.12]]),
-        },
-    )
-    return np.asarray(result.x, dtype=np.float64)
+    state = best.astype(np.float64)
+    step = 0.2
+    eps = np.array([0.03, 0.03], dtype=np.float64)
+    current = score_fn(state)
+    for _ in range(80):
+        grad = np.array(
+            [
+                (score_fn(state + [eps[0], 0.0]) - score_fn(state - [eps[0], 0.0])) / (2.0 * eps[0]),
+                (score_fn(state + [0.0, eps[1]]) - score_fn(state - [0.0, eps[1]])) / (2.0 * eps[1]),
+            ],
+            dtype=np.float64,
+        )
+        norm = np.linalg.norm(grad)
+        if norm < 1e-9:
+            break
+        candidate = state + step * grad / norm
+        candidate = np.clip(candidate, [0.0, -3.0], [12.0, 3.0])
+        value = score_fn(candidate)
+        if value >= current:
+            state = candidate
+            current = value
+        else:
+            step *= 0.5
+            if step < 1e-3:
+                break
+    return state
 
 
 def run_sequence(dataset: np.lib.npyio.NpzFile, scenario: str, mode: str) -> dict:
@@ -306,9 +366,9 @@ def run_sequence(dataset: np.lib.npyio.NpzFile, scenario: str, mode: str) -> dic
     ranges = dataset[f"{scenario}_ranges"]
     beam_times = dataset[f"{scenario}_beam_times"]
     chirps = dataset[f"{scenario}_chirps"]
+    gyro_yaw = dataset[f"{scenario}_gyro_yaw"]
     gt = dataset[f"{scenario}_poses"]
     lmap = LocalMap()
-    omega = float(meta["omega"])
     beta = float(meta["beta"])
     range_res = float(meta["range_res"])
     frame_period = float(meta["frame_period"])
@@ -317,6 +377,7 @@ def run_sequence(dataset: np.lib.npyio.NpzFile, scenario: str, mode: str) -> dic
     trajectory = [[0.0, pose[0], pose[1], pose[2], v[0], v[1]]]
     scores = []
     for k, scan in enumerate(scans):
+        omega = float(gyro_yaw[k])
         if k > 0:
             v = estimate_velocity(scan, lmap, azimuths, ranges, beam_times, chirps, pose, omega, beta, range_res, v, mode)
             delta_local = integrate_body_velocity(v, omega, frame_period)

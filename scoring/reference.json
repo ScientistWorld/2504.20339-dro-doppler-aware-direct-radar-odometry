@@ -102,6 +102,8 @@
         "velocity_rmse_mps": {"higher_is_better": false, "coefficient": -0.3}
       },
       "results": {
+        "dro_d": {"type": "proposed", "avg_translation_error_pct": 10.902970016107083, "avg_rotation_error_deg_per_100m": 1.271369938295729e-14, "velocity_rmse_mps": 1.0492315055873438},
+        "dro_g": {"type": "proposed", "avg_translation_error_pct": 52.75635680959785, "avg_rotation_error_deg_per_100m": 1.271369938295729e-14, "velocity_rmse_mps": 2.836},
         "dro_gd": {"type": "proposed", "avg_translation_error_pct": 10.902667146405555, "avg_rotation_error_deg_per_100m": 1.271369938295729e-14, "velocity_rmse_mps": 1.0492315055873438}
       }
     }

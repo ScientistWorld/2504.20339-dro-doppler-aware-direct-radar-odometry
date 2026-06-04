@@ -28,12 +28,13 @@ def main() -> None:
     for scenario in ["structured", "tunnel"]:
         gt = dataset[f"{scenario}_poses"]
         meta = manifest[scenario]
-        omega = float(meta["omega"])
+        gyro_yaw = dataset[f"{scenario}_gyro_yaw"]
         frame_period = float(meta["frame_period"])
         v = np.array([4.5, 0.0], dtype=np.float64)
         pose = np.array([gt[0, 1], gt[0, 2], gt[0, 3]], dtype=np.float64)
         traj = [[0.0, pose[0], pose[1], pose[2], v[0], v[1]]]
         for k in range(1, len(gt)):
+            omega = float(gyro_yaw[k])
             pose[:2] += rot2(pose[2]) @ (v * frame_period)
             pose[2] += omega * frame_period
             traj.append([k * frame_period, pose[0], pose[1], pose[2], v[0], v[1]])

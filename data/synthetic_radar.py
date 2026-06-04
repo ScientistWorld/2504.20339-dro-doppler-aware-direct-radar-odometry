@@ -89,6 +89,7 @@ def render_sequence(
     range_sigma_bins = 1.15
     beam_times = np.linspace(0.0, frame_period, beams, endpoint=False)
     chirps = np.where(np.arange(beams) % 2 == 0, 1.0, -1.0)
+    gyro_yaw = omega + 0.0015 + rng.normal(0.0, 0.001, size=frames)
 
     for k in range(frames):
         frame_start_pos, frame_start_theta = body_pose_at_frame(k, frame_period, v_body, omega)
@@ -139,6 +140,7 @@ def render_sequence(
         "ranges": ranges.astype(np.float32),
         "beam_times": beam_times.astype(np.float32),
         "chirps": chirps.astype(np.float32),
+        "gyro_yaw": gyro_yaw.astype(np.float32),
         "poses": np.asarray(poses, dtype=np.float64),
         "scans": np.stack(scans, axis=0),
     }
