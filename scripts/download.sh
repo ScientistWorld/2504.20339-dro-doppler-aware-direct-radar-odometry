@@ -1,27 +1,14 @@
 #!/bin/bash
-# Download all data and models needed for this environment.
+# Estimated download size: 0 MB. Estimated disk usage: ~2-5 MB generated.
 #
-# Run on a node with internet access BEFORE building the container
-# or submitting compute jobs.
-#
-# This script should be idempotent — safe to run multiple times.
-# It should skip files that already exist.
-#
-# Update the storage estimate below as you add downloads.
-#
-# Estimated total download size: TODO GB
-# Estimated disk usage after extraction: TODO GB
-#
-# This script is the portable fetch path for fresh clones. All resources
-# referenced by committed code should be recreated under data/downloads/
-# or another workspace-local generated directory.
+# The paper's full public benchmarks are large robotics datasets and the
+# Doppler-enabled automotive benchmark is not fully public. This reproduction
+# uses a procedural local FMCW spinning-radar benchmark, so no external fetch
+# is required.
 
 set -e
 
 cd "$(dirname "$0")/.."
 
-# TODO: implement downloads
-# Examples:
-#   wget -nc https://example.com/dataset.tar.gz -P data/
-#   python -c "from huggingface_hub import snapshot_download; snapshot_download('model/name', local_dir='checkpoints/')"
-#   huggingface-cli download Qwen/Qwen3-1.7B --local-dir /checkpoints/Qwen3-1.7B
+mkdir -p data data/downloads
+python data/synthetic_radar.py --output data/synthetic_dro.npz

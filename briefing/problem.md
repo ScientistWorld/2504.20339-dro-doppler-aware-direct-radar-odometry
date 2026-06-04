@@ -1,17 +1,7 @@
 # Problem Definition
 
-What problem does this paper address? Write this so that someone with no knowledge of the paper can understand what needs to be solved and how success is measured.
+Estimate the SE(2) trajectory of a vehicle carrying a 360-degree spinning FMCW radar and a yaw-axis gyroscope. Each radar scan is a polar intensity image: rows are azimuth beams collected at different timestamps during the scan, and columns are range bins.
 
-Do NOT describe the paper's method or solution here — only the problem itself. Think about if a future scientist agent try to solve this problem from scratch without knowing what approach the paper took. If you leak the solution, you compromise the benchmark.
+The benchmark input is a sequence of radar scans, beam azimuths, beam timestamps, chirp directions, range bins, and yaw rates. The output is one pose per scan, represented by timestamp, x, y, heading, and estimated body-frame velocity.
 
-## Research Question
-
-<!-- What problem or challenge does this paper tackle? What gap in existing work does it address? -->
-
-## Why It Matters
-
-<!-- Why is this problem important? What would a good solution enable? Make it short -->
-
-## Success Criteria
-
-<!-- What would a successful solution look like? What properties should it have? This is about the goal, not the paper's specific approach. Make it short -->
+Success is measured by odometry accuracy against ground truth trajectories. The evaluation code is method-agnostic and reads prediction JSON files; it does not import the reproduced method.

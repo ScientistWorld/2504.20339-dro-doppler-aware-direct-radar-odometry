@@ -15,7 +15,11 @@
 
 ## Progress Log
 
-<!-- Write your progress here -->
+### [2026-06-04 03:52] - none
+- Read the paper and identified the core DRO algorithm: direct scan-to-local-map radar intensity registration, continuous SE(2) motion correction, Doppler range correction, and optional Doppler velocity objective from up/down chirp images.
+- Cloned the authors' public implementation into `method/upstream_dro/` for reference.
+- Implemented a compact runnable reproduction on a synthetic spinning FMCW radar benchmark because the paper's full Doppler-enabled automotive dataset is not fully public.
+- Added method, baseline, evaluation, scoring, and scripts; local syntax checks and `python validate.py` pass.
 
 ## Stop Justification
-- Completed at milestone `none`.
+- Not stopped. A compute job is being submitted to run the method end-to-end.

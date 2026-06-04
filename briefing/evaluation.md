@@ -1,15 +1,11 @@
-# Evaluation
+# Evaluation Protocol
 
-How success is measured. Describe only the metrics, targets, and evaluation procedure — do NOT describe the paper's method or how they achieved these results. Think of this as a general evaluation protocal for other scientists trying to solve the same problem, where they should not see this paper's solution.
+The evaluator computes relative odometry errors from prediction artifacts. For each sequence, it compares estimated and ground-truth trajectory segments and reports:
 
-## Metrics
+- Relative translation error as a percentage of segment length.
+- Relative heading error in degrees per 100 m.
+- Velocity RMSE in m/s for ablation-style checks.
 
-<!-- What metrics are used? How are they computed? What does higher/lower mean? -->
+The paper reports KITTI relative translation and rotation errors for automotive datasets, and relative position error for off-road data. This workspace uses the same style of relative trajectory scoring on a local synthetic FMCW radar benchmark because the full Doppler-enabled dataset used for the central claim is not publicly available.
 
-## Baselines and Targets
-
-<!-- What performance levels exist as reference points? Include the paper's reported numbers as targets, and any standard baselines. A scientist agent should know what "good" looks like. -->
-
-## Evaluation Protocol
-
-<!-- How should evaluation be run? What data split, what conditions? Any important details about how to compare fairly (e.g., fixed seeds, specific test sets, averaging over runs). -->
+Run `bash scripts/evaluate.sh` after generating predictions. It writes `scoring/scores.json`.
