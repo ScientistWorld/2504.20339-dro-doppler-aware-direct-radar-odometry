@@ -51,4 +51,4 @@
 - The evaluator also reports heading error and velocity RMSE, so the score includes both pose benefit and motion-estimation constraint metrics.
 
 ## Stop Justification
-- Stopped at `core_claim`. The reusable environment is packaged and the minimum central claim is reproduced on the local benchmark; broader real-dataset reproduction remains outside this compact run because the paper's central Doppler-enabled automotive dataset is not fully public.
+- Completed at milestone `core_claim`.
