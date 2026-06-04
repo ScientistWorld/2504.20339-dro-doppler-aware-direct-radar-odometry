@@ -1,0 +1,33 @@
+{
+  "experiments": {
+    "automotive_doppler_main": {
+      "results": {
+        "ct_r": {
+          "avg_translation_error_pct": 25.04650156500391,
+          "avg_rotation_error_deg_per_100m": 1.271369938295729e-14
+        },
+        "dro_d": {
+          "avg_translation_error_pct": 25.02394745669809,
+          "avg_rotation_error_deg_per_100m": 1.271369938295729e-14
+        },
+        "dro_g": {
+          "avg_translation_error_pct": 35.702314570958976,
+          "avg_rotation_error_deg_per_100m": 1.271369938295729e-14
+        },
+        "dro_gd": {
+          "avg_translation_error_pct": 35.8237669696576,
+          "avg_rotation_error_deg_per_100m": 1.271369938295729e-14
+        }
+      }
+    },
+    "automotive_ablation": {
+      "results": {
+        "dro_gd": {
+          "avg_translation_error_pct": 35.8237669696576,
+          "avg_rotation_error_deg_per_100m": 1.271369938295729e-14,
+          "velocity_rmse_mps": 2.2232677774106864
+        }
+      }
+    }
+  }
+}
