@@ -15,7 +15,7 @@
           "avg_rotation_error_deg_per_100m": 1.271369938295729e-14
         },
         "dro_gd": {
-          "avg_translation_error_pct": 33.03270651885941,
+          "avg_translation_error_pct": 10.902667146405555,
           "avg_rotation_error_deg_per_100m": 1.271369938295729e-14
         }
       }
@@ -23,9 +23,9 @@
     "automotive_ablation": {
       "results": {
         "dro_gd": {
-          "avg_translation_error_pct": 33.03270651885941,
+          "avg_translation_error_pct": 10.902667146405555,
           "avg_rotation_error_deg_per_100m": 1.271369938295729e-14,
-          "velocity_rmse_mps": 2.3657849500286767
+          "velocity_rmse_mps": 1.0492315055873438
         }
       }
     }
