@@ -242,14 +242,14 @@ def estimate_velocity(
         v = np.asarray(v, dtype=np.float64)
         score = 0.0
         if mode in {"dro_g", "dro_gd"} and lmap.initialized:
-            direct_weight = 0.18 if mode == "dro_gd" and doppler_init is not None else 1.0
+            direct_weight = 0.04 if mode == "dro_gd" and doppler_init is not None else 1.0
             score += direct_weight * direct_score(v, scan, lmap, azimuths, ranges, beam_times, chirps, start_pose, omega, beta)
         if mode in {"dro_d", "dro_gd"}:
-            doppler_weight = 1.5 if mode == "dro_gd" else 0.9
+            doppler_weight = 2.0 if mode == "dro_gd" else 0.9
             score += doppler_weight * doppler_score(v, scan, azimuths, beta, range_res)
         score -= 0.0002 * float(np.sum((v - previous_v) ** 2))
         if mode == "dro_gd" and doppler_init is not None:
-            score -= 0.015 * float(np.sum((v - doppler_init) ** 2))
+            score -= 0.08 * float(np.sum((v - doppler_init) ** 2))
         return -score
 
     best = doppler_init if doppler_init is not None else previous_v

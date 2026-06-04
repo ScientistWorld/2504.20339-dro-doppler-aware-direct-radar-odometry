@@ -35,5 +35,10 @@
 - DRO-D improved slightly over the fixed-velocity baseline, but DRO-GD failed because the direct local-map term overwhelmed the Doppler velocity cue.
 - Fixed the discrete Doppler initializer sign, strengthened the reduced-scale synthetic Doppler displacement, and reweighted the combined objective before another CPU reproduction run.
 
+### [2026-06-04 04:18] - method_runs
+- CPU job `8e70fbca-fde` completed successfully.
+- DRO-D now improves substantially over the fixed-velocity baseline, but DRO-GD remains worse than baseline, so the core claim is not yet met for the primary combined method.
+- Strengthened the Doppler anchoring in the combined objective and submitted another end-to-end CPU run.
+
 ## Stop Justification
 - Not stopped. A compute job is being submitted to run the method end-to-end.

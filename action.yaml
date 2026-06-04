@@ -2,4 +2,4 @@ action: submit
 gpus: 0
 test: true
 milestone: method_runs
-notes: "Rerun after fixing Doppler initializer sign, strengthening synthetic chirp displacement, and rebalancing DRO-GD objective weights."
+notes: "Rerun after strengthening Doppler anchoring in DRO-GD so the direct local-map term cannot collapse the reduced-scale velocity estimate."
