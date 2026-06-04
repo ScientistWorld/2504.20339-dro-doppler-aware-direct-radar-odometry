@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: true
 milestone: method_runs
-notes: "CPU audit job for revised DRO reproduction: regenerate synthetic radar data with gyro measurements, run baseline and DRO variants, score vector velocity/pose metrics, and validate."
+notes: "CPU audit job for revised DRO reproduction: regenerate synthetic radar data with gyro measurements, run baseline and DRO variants with corrected GP cross-correlation infill, score vector velocity/pose metrics, and validate."

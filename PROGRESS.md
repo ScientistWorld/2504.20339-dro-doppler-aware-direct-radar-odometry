@@ -27,7 +27,7 @@
 - Continuing audit job `d43de523-464` reran the full packaged pipeline inside the container with exit code 0. It regenerated `data/synthetic_dro.npz`, baseline predictions, DRO-D/G/GD predictions, `scoring/scores.json`, and passed `python validate.py --compare`.
 - The audit rerun reproduced the core scores exactly: fixed-velocity gyro baseline `25.05%` average translation error, `dro_d` `10.90%`, and `dro_gd` `10.90%`, with near-zero heading error and `1.05 m/s` velocity RMSE for the combined method.
 - Follow-up audit found that the previous core-claim state was too weak: up/down infill used neighbor averaging instead of GP regression, velocity RMSE only compared speed magnitudes, and exact synthetic yaw rates made rotation nearly trivial. I have not claimed a higher milestone after these concerns.
-- Current pending changes replace the infill with local squared-exponential GP convolution weights, add deterministic noisy/bias gyro measurements to the generated data, use those measurements in baseline and method, score vector body-frame velocity RMSE, and replace the local optimizer's Nelder-Mead refinement with normalized finite-difference gradient ascent in the form of the paper's update rule. These changes are awaiting a full container job rerun.
+- Current pending changes replace the infill with local squared-exponential GP cross-correlation weights, add deterministic noisy/bias gyro measurements to the generated data, use those measurements in baseline and method, score vector body-frame velocity RMSE, and replace the local optimizer's Nelder-Mead refinement with normalized finite-difference gradient ascent in the form of the paper's update rule. These changes are awaiting a full container job rerun.
 
 ## Remaining
 
@@ -45,6 +45,7 @@
 - The final core-claim run depends on a two-stage reduced-scale optimization for DRO-GD. This is documented as a scaling adaptation: it preserves the paper's Doppler and direct objective computations while making the reduced synthetic benchmark stable.
 - The validator requires every scored experiment to appear in `reference.json`, so the file includes two clearly labeled synthetic replacement benchmark anchors in addition to the original paper-reported experiments.
 - A later read-only audit judged the earlier `core_claim` status overly optimistic. The milestone has been kept at `method_runs` until the revised, more faithful implementation is rerun in the container.
+- During the continuation audit, the GP infill operator was corrected from SciPy convolution to cross-correlation so asymmetric interpolation kernels are applied in the same orientation as the paper's neural-network-style convolution implementation.
 
 ## Deviations from Paper
 

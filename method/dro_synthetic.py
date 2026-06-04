@@ -14,7 +14,7 @@ import json
 from pathlib import Path
 
 import numpy as np
-from scipy.ndimage import convolve, gaussian_filter1d, map_coordinates
+from scipy.ndimage import correlate, gaussian_filter1d, map_coordinates
 
 
 def rot2(theta: float) -> np.ndarray:
@@ -125,10 +125,10 @@ def infill_up_down(scan: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     even = raw[0::2] - float(np.mean(raw[0::2]))
     odd = raw[1::2] - float(np.mean(raw[1::2]))
 
-    even_smooth = convolve(even, GP_SMOOTH_WEIGHTS, mode="constant", cval=0.0)
-    even_interp = convolve(even, GP_INTERP_WEIGHTS, mode="constant", cval=0.0)
-    odd_smooth = convolve(odd, GP_SMOOTH_WEIGHTS, mode="constant", cval=0.0)
-    odd_interp = convolve(odd, GP_INTERP_WEIGHTS, mode="constant", cval=0.0)
+    even_smooth = correlate(even, GP_SMOOTH_WEIGHTS, mode="constant", cval=0.0)
+    even_interp = correlate(even, GP_INTERP_WEIGHTS, mode="constant", cval=0.0)
+    odd_smooth = correlate(odd, GP_SMOOTH_WEIGHTS, mode="constant", cval=0.0)
+    odd_interp = correlate(odd, GP_INTERP_WEIGHTS, mode="constant", cval=0.0)
 
     up = np.zeros_like(raw)
     down = np.zeros_like(raw)
