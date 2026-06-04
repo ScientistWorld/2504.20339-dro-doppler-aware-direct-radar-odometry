@@ -30,5 +30,10 @@
 - CPU job `4736bccc-2e7` completed but still did not support the core claim.
 - Added a Doppler velocity initializer based on per-row up/down chirp cross-correlation and weighted least-squares radial velocity fitting.
 
+### [2026-06-04 04:10] - method_runs
+- CPU job `fb9bf823-812` completed successfully and kept the environment at `method_runs`.
+- DRO-D improved slightly over the fixed-velocity baseline, but DRO-GD failed because the direct local-map term overwhelmed the Doppler velocity cue.
+- Fixed the discrete Doppler initializer sign, strengthened the reduced-scale synthetic Doppler displacement, and reweighted the combined objective before another CPU reproduction run.
+
 ## Stop Justification
 - Not stopped. A compute job is being submitted to run the method end-to-end.

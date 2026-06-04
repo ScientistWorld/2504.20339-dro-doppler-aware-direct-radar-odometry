@@ -2,4 +2,4 @@ action: submit
 gpus: 0
 test: true
 milestone: method_runs
-notes: "Rerun after adding Doppler-derived velocity initialization from up/down chirp cross-correlation before DRO objective refinement."
+notes: "Rerun after fixing Doppler initializer sign, strengthening synthetic chirp displacement, and rebalancing DRO-GD objective weights."

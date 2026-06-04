@@ -166,7 +166,8 @@ def doppler_velocity_initializer(scan: np.ndarray, azimuths: np.ndarray, beta: f
     This is an explicit small-scale equivalent of maximizing the paper's
     Doppler objective: find the range shift that best aligns up/down chirp
     intensity images, then solve the radial-velocity relation
-    shift_bins = -beta / range_res * [cos(a), sin(a)] v_body.
+    shift_bins = beta / range_res * [cos(a), sin(a)] v_body for the
+    integer row-moving convention used by _shift_row().
     """
     up, down = infill_up_down(scan)
     max_shift = max(3, int(round(10.0 * beta / range_res)))
@@ -191,7 +192,7 @@ def doppler_velocity_initializer(scan: np.ndarray, azimuths: np.ndarray, beta: f
     if len(shifts) < 8:
         return None
     a = np.asarray(rows, dtype=np.float64)
-    b = -np.asarray(shifts, dtype=np.float64) * range_res / beta
+    b = np.asarray(shifts, dtype=np.float64) * range_res / beta
     w = np.sqrt(np.asarray(weights, dtype=np.float64) / (np.max(weights) + 1e-9))
     aw = a * w[:, None]
     bw = b * w
@@ -241,10 +242,14 @@ def estimate_velocity(
         v = np.asarray(v, dtype=np.float64)
         score = 0.0
         if mode in {"dro_g", "dro_gd"} and lmap.initialized:
-            score += 1.0 * direct_score(v, scan, lmap, azimuths, ranges, beam_times, chirps, start_pose, omega, beta)
+            direct_weight = 0.18 if mode == "dro_gd" and doppler_init is not None else 1.0
+            score += direct_weight * direct_score(v, scan, lmap, azimuths, ranges, beam_times, chirps, start_pose, omega, beta)
         if mode in {"dro_d", "dro_gd"}:
-            score += 0.45 * doppler_score(v, scan, azimuths, beta, range_res)
+            doppler_weight = 1.5 if mode == "dro_gd" else 0.9
+            score += doppler_weight * doppler_score(v, scan, azimuths, beta, range_res)
         score -= 0.0002 * float(np.sum((v - previous_v) ** 2))
+        if mode == "dro_gd" and doppler_init is not None:
+            score -= 0.015 * float(np.sum((v - doppler_init) ** 2))
         return -score
 
     best = doppler_init if doppler_init is not None else previous_v

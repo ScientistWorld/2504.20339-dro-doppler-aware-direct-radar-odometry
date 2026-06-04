@@ -152,7 +152,7 @@ def main() -> None:
     parser.add_argument("--bins", type=int, default=220)
     parser.add_argument("--range-res", type=float, default=0.35)
     parser.add_argument("--frame-period", type=float, default=0.25)
-    parser.add_argument("--beta", type=float, default=0.18)
+    parser.add_argument("--beta", type=float, default=0.6)
     parser.add_argument("--seed", type=int, default=7)
     args = parser.parse_args()
     out = Path(args.output)
