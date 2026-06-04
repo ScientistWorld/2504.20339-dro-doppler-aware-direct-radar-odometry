@@ -22,4 +22,3 @@
 
 ## Stop Justification
 - Completed at milestone `core_claim`.
-- Higher milestones would require additional large public robotics datasets or the paper's full Doppler-enabled automotive dataset, which is not fully public in the paper release.
