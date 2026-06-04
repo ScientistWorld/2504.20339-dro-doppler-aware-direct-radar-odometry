@@ -1,8 +1,8 @@
 # IMPORTANT: Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends. Sleeping blocks the entire pipeline.
-action: done
+action: submit
 gpus: 0
-test: false
-milestone: core_claim
-notes: "Core claim reproduced on the packaged synthetic FMCW radar benchmark: DRO-GD improves average relative translation error over the fixed-velocity gyro baseline while preserving the heading-error constraint. Environment, scripts, scoring, and validation are complete."
+test: true
+milestone: method_runs
+notes: "Continuing-agent audit job: rerun scripts/reproduce.sh and python validate.py --compare inside the container to verify the packaged DRO reproduction before restoring core_claim."

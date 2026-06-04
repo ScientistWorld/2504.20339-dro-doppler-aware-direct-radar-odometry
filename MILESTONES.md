@@ -1,8 +1,13 @@
 # Reproduction Milestones
 
-**Current: core_claim**
+**Current: method_runs**
 
 ## Progress Log
+
+### [2026-06-04 04:45] - method_runs
+- Continuing-agent audit reset: previous `core_claim` is being revalidated from `method_runs`.
+- Static audit found a recognizable DRO implementation and method-agnostic evaluator.
+- Submitting a CPU container job to rerun `scripts/reproduce.sh` and `python validate.py --compare` before restoring the milestone.
 
 ### [2026-06-04 04:32] - core_claim
 - Implemented and packaged a compact DRO reproduction that preserves the paper's core computation: continuous SE(2) scan correction, Doppler range correction, up/down chirp infill, Doppler cross-correlation, direct local-map registration, and low-pass local-map update.

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Compute job: generate data, run baseline and DRO variants, then score.
+# Audit job: regenerate data, run baseline and DRO variants, then score.
 
 set -e
 
