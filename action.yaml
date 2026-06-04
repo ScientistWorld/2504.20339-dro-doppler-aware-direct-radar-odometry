@@ -1,5 +1,5 @@
 action: submit
 gpus: 0
 test: true
-milestone: none
-notes: "CPU smoke test: generate synthetic FMCW radar data, run baseline and DRO variants, evaluate odometry metrics, and validate scores."
+milestone: method_runs
+notes: "Rerun after fixing Doppler alignment sign and adding coarse-to-local velocity search; expect DRO-D/GD to improve over the fixed-velocity baseline."

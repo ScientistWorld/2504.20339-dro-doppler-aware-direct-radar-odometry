@@ -139,7 +139,10 @@ def corrected_points(
 def doppler_score(v_body: np.ndarray, scan: np.ndarray, azimuths: np.ndarray, beta: float, range_res: float) -> float:
     up, down = infill_up_down(scan)
     radial = np.cos(azimuths) * v_body[0] + np.sin(azimuths) * v_body[1]
-    shift_bins = beta * radial / range_res
+    # The synthetic generator writes up-chirp returns at true_range - d/2
+    # and down-chirp returns at true_range + d/2. Querying the up-chirp image
+    # at down_range - d therefore aligns both views of the same reflector.
+    shift_bins = -beta * radial / range_res
     cols = np.arange(scan.shape[1], dtype=np.float64)[None, :] + shift_bins[:, None]
     rows = np.arange(scan.shape[0], dtype=np.float64)[:, None] * np.ones_like(cols)
     aligned = map_coordinates(up, [rows, cols], order=1, mode="constant", cval=0.0)
@@ -188,11 +191,28 @@ def estimate_velocity(
         score -= 0.002 * float(np.sum((v - previous_v) ** 2))
         return -score
 
+    best = previous_v
+    best_value = objective(best)
+    vx_grid = np.linspace(max(0.0, previous_v[0] - 2.5), previous_v[0] + 2.5, 17)
+    vy_grid = np.linspace(previous_v[1] - 0.8, previous_v[1] + 0.8, 13)
+    for vx in vx_grid:
+        for vy in vy_grid:
+            candidate = np.array([vx, vy], dtype=np.float64)
+            value = objective(candidate)
+            if value < best_value:
+                best = candidate
+                best_value = value
+
     result = minimize(
         objective,
-        previous_v,
+        best,
         method="Nelder-Mead",
-        options={"maxiter": 90, "xatol": 1e-3, "fatol": 1e-5, "initial_simplex": np.array([previous_v, previous_v + [0.25, 0.0], previous_v + [0.0, 0.12]])},
+        options={
+            "maxiter": 120,
+            "xatol": 1e-3,
+            "fatol": 1e-5,
+            "initial_simplex": np.array([best, best + [0.25, 0.0], best + [0.0, 0.12]]),
+        },
     )
     return np.asarray(result.x, dtype=np.float64)
 

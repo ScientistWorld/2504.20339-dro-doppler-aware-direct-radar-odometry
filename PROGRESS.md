@@ -8,20 +8,22 @@
 - A compact DRO implementation is implemented in `method/dro_synthetic.py`, including direct local-map registration, Doppler correction, up/down chirp infill, Doppler velocity objective, gyroscope yaw integration, and online map update.
 - A fixed-velocity gyro baseline and method-agnostic evaluator are implemented.
 - `python validate.py` passes before job submission.
+- CPU job `f0db0bd3-b7b` ran the full pipeline end-to-end without errors.
 
 ## Results
 
-- No reproduced scores yet. The first CPU compute job will run `scripts/reproduce.sh` and write `scoring/scores.json`.
+- First job scores showed a working but unsuccessful reproduction: fixed-velocity baseline `ct_r` had `25.05%` average translation error, while `dro_gd` had `35.82%`. This supports `method_runs` only, not `core_claim`.
+- After reviewing the failure, the Doppler objective sign was corrected and the velocity optimizer was changed to coarse-to-local search to avoid getting stuck near the previous velocity.
 
 ## Remaining
 
-- Run the end-to-end reproduction in the compute container.
-- Inspect `scoring/scores.json` and compare DRO variants against the baseline.
-- If results do not support the core claim, tune the synthetic benchmark or optimizer without changing the paper's algorithm.
+- Rerun the corrected method and inspect whether DRO-D/DRO-GD improve over the fixed-velocity baseline.
+- If results still fail, inspect the synthetic chirp generation and direct local-map coordinate convention.
 
 ## Issues
 
 - The Doppler-enabled automotive dataset used for the paper's central Table I result is not fully public in the paper. The public release notes only one newer Boreas Doppler-enabled sequence at the time of release, while the paper reports a larger collected automotive dataset.
+- The first run produced poor DRO estimates. This was not claimed as `core_claim`; the implementation has been adjusted and a new job will be submitted.
 
 ## Deviations from Paper
 

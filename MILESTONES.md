@@ -1,6 +1,6 @@
 # Reproduction Milestones
 
-**Current: none**
+**Current: method_runs**
 
 <!-- Milestone levels (update "Current" above as you progress):
   none             — just started, no meaningful progress yet
@@ -20,6 +20,11 @@
 - Cloned the authors' public implementation into `method/upstream_dro/` for reference.
 - Implemented a compact runnable reproduction on a synthetic spinning FMCW radar benchmark because the paper's full Doppler-enabled automotive dataset is not fully public.
 - Added method, baseline, evaluation, scoring, and scripts; local syntax checks and `python validate.py` pass.
+
+### [2026-06-04 03:55] - method_runs
+- CPU job `f0db0bd3-b7b` completed successfully and ran the synthetic data generator, baseline, DRO-D, DRO-G, DRO-GD, evaluator, and validator end-to-end.
+- The resulting scores did not support the core claim: DRO-GD was worse than the fixed-velocity baseline, so the milestone remains below `core_claim`.
+- Diagnosed likely Doppler alignment sign and local optimizer search issues; fixed the Doppler objective convention and added a coarse-to-local velocity search before resubmission.
 
 ## Stop Justification
 - Not stopped. A compute job is being submitted to run the method end-to-end.
