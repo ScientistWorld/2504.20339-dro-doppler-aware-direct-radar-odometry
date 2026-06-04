@@ -2,4 +2,4 @@ action: submit
 gpus: 0
 test: true
 milestone: method_runs
-notes: "Rerun after strengthening Doppler anchoring in DRO-GD so the direct local-map term cannot collapse the reduced-scale velocity estimate."
+notes: "Rerun after changing DRO-GD to initialize from the refined Doppler-only velocity before direct-plus-Doppler refinement."

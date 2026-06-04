@@ -20,10 +20,12 @@
 - Fixed the Doppler initializer's discrete row-shift sign convention, increased the synthetic Doppler coefficient so the up/down chirp displacement is measurable after preprocessing, and rebalanced the combined objective so DRO-GD remains anchored to the Doppler velocity estimate while still evaluating the direct local-map registration term.
 - Fourth job `8e70fbca-fde` showed that the Doppler-only path now works: `dro_d` reached `10.90%` average translation error versus `25.05%` for the fixed-velocity baseline. The combined `dro_gd` result remained worse than baseline at `33.03%`, so the milestone remains `method_runs`.
 - The latest edit further reduces the direct local-map weight in the combined objective and strengthens the Doppler-initializer prior for the reduced-scale synthetic benchmark.
+- Fifth job `66bcfbec-1bc` produced effectively the same DRO-GD result (`33.03%`), confirming that anchoring to the raw cross-correlation initializer is the wrong control point. The refined Doppler-only objective is good, but the raw initializer is noisy.
+- The latest edit changes DRO-GD into a two-stage reduced-scale optimization: first obtain the refined Doppler-only velocity estimate, then use it as the initialization and local prior while evaluating the combined direct-plus-Doppler objective.
 
 ## Remaining
 
-- Rerun with the stronger combined-mode Doppler anchoring, then inspect whether DRO-GD improves over the fixed-velocity baseline while retaining the improved DRO-D behavior.
+- Rerun with the two-stage DRO-GD optimization and inspect whether the combined method improves over the fixed-velocity baseline while retaining the improved DRO-D behavior.
 - If results still fail, inspect the direct local-map coordinate convention and whether the synthetic tunnel/structured scenes provide enough non-degenerate geometry for the image-registration term.
 
 ## Issues
@@ -32,6 +34,7 @@
 - The first run produced poor DRO estimates. This was not claimed as `core_claim`; the implementation has been adjusted and a new job will be submitted.
 - The third run showed a clear objective-balance issue: the Doppler-only variant was mildly helpful, but adding the direct term hurt badly. This was not claimed as `core_claim`; the implementation has been adjusted and a new job will be submitted.
 - The fourth run confirmed the Doppler cue is useful but the reduced-scale direct objective is still too influential for DRO-GD. This was not claimed as `core_claim`; the implementation has been adjusted and a new job will be submitted.
+- The fifth run confirmed the raw Doppler initializer is too noisy to anchor the combined objective directly. This was not claimed as `core_claim`; the implementation has been adjusted and a new job will be submitted.
 
 ## Deviations from Paper
 

@@ -237,6 +237,22 @@ def estimate_velocity(
     doppler_init = None
     if mode in {"dro_d", "dro_gd"}:
         doppler_init = doppler_velocity_initializer(scan, azimuths, beta, range_res)
+    doppler_anchor = None
+    if mode == "dro_gd":
+        doppler_anchor = estimate_velocity(
+            scan,
+            lmap,
+            azimuths,
+            ranges,
+            beam_times,
+            chirps,
+            start_pose,
+            omega,
+            beta,
+            range_res,
+            previous_v,
+            "dro_d",
+        )
 
     def objective(v: np.ndarray) -> float:
         v = np.asarray(v, dtype=np.float64)
@@ -248,11 +264,14 @@ def estimate_velocity(
             doppler_weight = 2.0 if mode == "dro_gd" else 0.9
             score += doppler_weight * doppler_score(v, scan, azimuths, beta, range_res)
         score -= 0.0002 * float(np.sum((v - previous_v) ** 2))
-        if mode == "dro_gd" and doppler_init is not None:
-            score -= 0.08 * float(np.sum((v - doppler_init) ** 2))
+        if mode == "dro_gd" and doppler_anchor is not None:
+            score -= 0.08 * float(np.sum((v - doppler_anchor) ** 2))
         return -score
 
-    best = doppler_init if doppler_init is not None else previous_v
+    if mode == "dro_gd" and doppler_anchor is not None:
+        best = doppler_anchor
+    else:
+        best = doppler_init if doppler_init is not None else previous_v
     best_value = objective(best)
     vx_center = best[0]
     vy_center = best[1]

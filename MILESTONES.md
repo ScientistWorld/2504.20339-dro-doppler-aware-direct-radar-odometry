@@ -40,5 +40,10 @@
 - DRO-D now improves substantially over the fixed-velocity baseline, but DRO-GD remains worse than baseline, so the core claim is not yet met for the primary combined method.
 - Strengthened the Doppler anchoring in the combined objective and submitted another end-to-end CPU run.
 
+### [2026-06-04 04:25] - method_runs
+- CPU job `66bcfbec-1bc` completed successfully but did not improve DRO-GD.
+- Diagnosed that the refined Doppler-only objective is good while the raw cross-correlation initializer is noisy.
+- Updated DRO-GD to initialize from the refined Doppler-only estimate before direct-plus-Doppler refinement.
+
 ## Stop Justification
 - Not stopped. A compute job is being submitted to run the method end-to-end.
