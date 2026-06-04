@@ -2,4 +2,4 @@ action: submit
 gpus: 0
 test: true
 milestone: method_runs
-notes: "Rerun after fixing Doppler alignment sign and adding coarse-to-local velocity search; expect DRO-D/GD to improve over the fixed-velocity baseline."
+notes: "Rerun after adding Doppler-derived velocity initialization from up/down chirp cross-correlation before DRO objective refinement."

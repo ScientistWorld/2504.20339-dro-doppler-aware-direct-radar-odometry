@@ -149,6 +149,58 @@ def doppler_score(v_body: np.ndarray, scan: np.ndarray, azimuths: np.ndarray, be
     return float(np.sum(down * aligned) / (np.sum(down > 0) + 1.0))
 
 
+def _shift_row(row: np.ndarray, shift: int) -> np.ndarray:
+    out = np.zeros_like(row)
+    if shift > 0:
+        out[shift:] = row[:-shift]
+    elif shift < 0:
+        out[:shift] = row[-shift:]
+    else:
+        out[:] = row
+    return out
+
+
+def doppler_velocity_initializer(scan: np.ndarray, azimuths: np.ndarray, beta: float, range_res: float) -> np.ndarray | None:
+    """Estimate body velocity from per-row Doppler cross-correlation shifts.
+
+    This is an explicit small-scale equivalent of maximizing the paper's
+    Doppler objective: find the range shift that best aligns up/down chirp
+    intensity images, then solve the radial-velocity relation
+    shift_bins = -beta / range_res * [cos(a), sin(a)] v_body.
+    """
+    up, down = infill_up_down(scan)
+    max_shift = max(3, int(round(10.0 * beta / range_res)))
+    shifts = []
+    rows = []
+    weights = []
+    for i, alpha in enumerate(azimuths):
+        if np.max(up[i]) <= 0 or np.max(down[i]) <= 0:
+            continue
+        best_shift = 0
+        best_score = -np.inf
+        for shift in range(-max_shift, max_shift + 1):
+            score = float(np.dot(down[i], _shift_row(up[i], shift)))
+            if score > best_score:
+                best_score = score
+                best_shift = shift
+        if best_score <= 0:
+            continue
+        shifts.append(best_shift)
+        rows.append([np.cos(alpha), np.sin(alpha)])
+        weights.append(best_score)
+    if len(shifts) < 8:
+        return None
+    a = np.asarray(rows, dtype=np.float64)
+    b = -np.asarray(shifts, dtype=np.float64) * range_res / beta
+    w = np.sqrt(np.asarray(weights, dtype=np.float64) / (np.max(weights) + 1e-9))
+    aw = a * w[:, None]
+    bw = b * w
+    v, *_ = np.linalg.lstsq(aw, bw, rcond=None)
+    if not np.all(np.isfinite(v)):
+        return None
+    return np.clip(v, [-2.0, -3.0], [12.0, 3.0])
+
+
 def direct_score(
     v_body: np.ndarray,
     scan: np.ndarray,
@@ -181,6 +233,10 @@ def estimate_velocity(
     previous_v: np.ndarray,
     mode: str,
 ) -> np.ndarray:
+    doppler_init = None
+    if mode in {"dro_d", "dro_gd"}:
+        doppler_init = doppler_velocity_initializer(scan, azimuths, beta, range_res)
+
     def objective(v: np.ndarray) -> float:
         v = np.asarray(v, dtype=np.float64)
         score = 0.0
@@ -188,13 +244,15 @@ def estimate_velocity(
             score += 1.0 * direct_score(v, scan, lmap, azimuths, ranges, beam_times, chirps, start_pose, omega, beta)
         if mode in {"dro_d", "dro_gd"}:
             score += 0.45 * doppler_score(v, scan, azimuths, beta, range_res)
-        score -= 0.002 * float(np.sum((v - previous_v) ** 2))
+        score -= 0.0002 * float(np.sum((v - previous_v) ** 2))
         return -score
 
-    best = previous_v
+    best = doppler_init if doppler_init is not None else previous_v
     best_value = objective(best)
-    vx_grid = np.linspace(max(0.0, previous_v[0] - 2.5), previous_v[0] + 2.5, 17)
-    vy_grid = np.linspace(previous_v[1] - 0.8, previous_v[1] + 0.8, 13)
+    vx_center = best[0]
+    vy_center = best[1]
+    vx_grid = np.linspace(max(0.0, vx_center - 2.5), vx_center + 2.5, 21)
+    vy_grid = np.linspace(vy_center - 1.0, vy_center + 1.0, 17)
     for vx in vx_grid:
         for vy in vy_grid:
             candidate = np.array([vx, vy], dtype=np.float64)

@@ -14,10 +14,12 @@
 
 - First job scores showed a working but unsuccessful reproduction: fixed-velocity baseline `ct_r` had `25.05%` average translation error, while `dro_gd` had `35.82%`. This supports `method_runs` only, not `core_claim`.
 - After reviewing the failure, the Doppler objective sign was corrected and the velocity optimizer was changed to coarse-to-local search to avoid getting stuck near the previous velocity.
+- Second job `4736bccc-2e7` still failed the core claim: `dro_d` only improved slightly to `24.87%`, and `dro_gd` remained worse than baseline at `35.50%`.
+- Added a Doppler-derived velocity initializer that estimates per-azimuth up/down range shifts by cross-correlation and solves the radial velocity relation before the direct/Doppler objective refinement.
 
 ## Remaining
 
-- Rerun the corrected method and inspect whether DRO-D/DRO-GD improve over the fixed-velocity baseline.
+- Rerun with the Doppler-derived velocity initializer and inspect whether DRO-D/DRO-GD improve over the fixed-velocity baseline.
 - If results still fail, inspect the synthetic chirp generation and direct local-map coordinate convention.
 
 ## Issues
