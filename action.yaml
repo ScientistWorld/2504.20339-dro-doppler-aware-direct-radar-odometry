@@ -1,3 +1,8 @@
-action: done
-milestone: core_claim
-notes: "DRO-GD reproduced the core claim on the packaged synthetic FMCW radar benchmark: 10.90% average translation error versus 25.05% for the fixed-velocity gyro baseline, with heading and velocity constraint metrics reported."
+# IMPORTANT: Once you set action to 'submit' or 'done', STOP immediately.
+# Do NOT sleep, poll, or wait for jobs. The system reads this file
+# only after your turn ends. Sleeping blocks the entire pipeline.
+action: pending
+gpus: 1
+test: false
+milestone: method_runs
+notes: ""
