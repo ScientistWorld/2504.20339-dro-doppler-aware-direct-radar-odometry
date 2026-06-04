@@ -1,6 +1,6 @@
 # Reproduction Milestones
 
-**Current: method_runs**
+**Current: core_claim**
 
 <!-- Milestone levels (update "Current" above as you progress):
   none             — just started, no meaningful progress yet
@@ -45,5 +45,10 @@
 - Diagnosed that the refined Doppler-only objective is good while the raw cross-correlation initializer is noisy.
 - Updated DRO-GD to initialize from the refined Doppler-only estimate before direct-plus-Doppler refinement.
 
+### [2026-06-04 04:33] - core_claim
+- CPU job `f8b4acd2-d32` completed successfully.
+- The proposed combined DRO-GD method beat the fixed-velocity gyro baseline on the packaged synthetic FMCW radar benchmark: `10.90%` vs `25.05%` average translation error.
+- The evaluator also reports heading error and velocity RMSE, so the score includes both pose benefit and motion-estimation constraint metrics.
+
 ## Stop Justification
-- Not stopped. A compute job is being submitted to run the method end-to-end.
+- Stopped at `core_claim`. The reusable environment is packaged and the minimum central claim is reproduced on the local benchmark; broader real-dataset reproduction remains outside this compact run because the paper's central Doppler-enabled automotive dataset is not fully public.

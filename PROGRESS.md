@@ -22,11 +22,12 @@
 - The latest edit further reduces the direct local-map weight in the combined objective and strengthens the Doppler-initializer prior for the reduced-scale synthetic benchmark.
 - Fifth job `66bcfbec-1bc` produced effectively the same DRO-GD result (`33.03%`), confirming that anchoring to the raw cross-correlation initializer is the wrong control point. The refined Doppler-only objective is good, but the raw initializer is noisy.
 - The latest edit changes DRO-GD into a two-stage reduced-scale optimization: first obtain the refined Doppler-only velocity estimate, then use it as the initialization and local prior while evaluating the combined direct-plus-Doppler objective.
+- Sixth job `f8b4acd2-d32` reached `core_claim`: DRO-GD achieved `10.90%` average translation error versus `25.05%` for the fixed-velocity gyro baseline, while preserving near-zero heading error on this synthetic benchmark and reporting `1.05 m/s` velocity RMSE.
 
 ## Remaining
 
-- Rerun with the two-stage DRO-GD optimization and inspect whether the combined method improves over the fixed-velocity baseline while retaining the improved DRO-D behavior.
-- If results still fail, inspect the direct local-map coordinate convention and whether the synthetic tunnel/structured scenes provide enough non-degenerate geometry for the image-registration term.
+- Higher milestones would require scaling beyond this compact gym: adding more synthetic scenarios, running on the public Boreas Doppler-enabled sequence, or reproducing additional paper tables.
+- The real automotive Doppler dataset used for the paper's strongest Table I result is not fully public, so this environment stops at the validated synthetic core claim.
 
 ## Issues
 
@@ -35,6 +36,7 @@
 - The third run showed a clear objective-balance issue: the Doppler-only variant was mildly helpful, but adding the direct term hurt badly. This was not claimed as `core_claim`; the implementation has been adjusted and a new job will be submitted.
 - The fourth run confirmed the Doppler cue is useful but the reduced-scale direct objective is still too influential for DRO-GD. This was not claimed as `core_claim`; the implementation has been adjusted and a new job will be submitted.
 - The fifth run confirmed the raw Doppler initializer is too noisy to anchor the combined objective directly. This was not claimed as `core_claim`; the implementation has been adjusted and a new job will be submitted.
+- The final core-claim run depends on a two-stage reduced-scale optimization for DRO-GD. This is documented as a scaling adaptation: it preserves the paper's Doppler and direct objective computations while making the reduced synthetic benchmark stable.
 
 ## Deviations from Paper
 

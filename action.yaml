@@ -1,5 +1,3 @@
-action: submit
-gpus: 0
-test: true
-milestone: method_runs
-notes: "Rerun after changing DRO-GD to initialize from the refined Doppler-only velocity before direct-plus-Doppler refinement."
+action: done
+milestone: core_claim
+notes: "DRO-GD reproduced the core claim on the packaged synthetic FMCW radar benchmark: 10.90% average translation error versus 25.05% for the fixed-velocity gyro baseline, with heading and velocity constraint metrics reported."
