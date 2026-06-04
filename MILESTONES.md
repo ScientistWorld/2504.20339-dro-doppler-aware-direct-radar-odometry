@@ -23,4 +23,4 @@
 - Final milestone is kept at `core_claim` because the reproduction uses a compact synthetic replacement benchmark rather than the paper's full real automotive, Boreas, MulRan, and off-road evaluation suite.
 
 ## Stop Justification
-- Finalized at `core_claim`. The paper's actual DRO computation is implemented and validated on a non-trivial synthetic FMCW radar benchmark with aggregate, per-scenario, and ablation/constraint metrics. Higher milestones are not claimed because the central Doppler-enabled automotive dataset is not fully public and the remaining public real-data tables would require substantially larger dataset setup beyond this compact gym.
+- Completed at milestone `core_claim`.
