@@ -1,8 +1,8 @@
 # IMPORTANT: Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends. Sleeping blocks the entire pipeline.
-action: submit
+action: done
 gpus: 0
-test: true
-milestone: method_runs
-notes: "Continuing-agent audit job: rerun scripts/reproduce.sh and python validate.py --compare inside the container to verify the packaged DRO reproduction before restoring core_claim."
+test: false
+milestone: core_claim
+notes: "Continuing-agent audit job d43de523-464 reran the full packaged reproduction and validation inside the container with exit code 0. Core claim restored: DRO-GD improves average translation error over the fixed-velocity gyro baseline on the synthetic FMCW benchmark while preserving the heading-error constraint."

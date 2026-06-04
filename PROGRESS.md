@@ -24,10 +24,12 @@
 - The latest edit changes DRO-GD into a two-stage reduced-scale optimization: first obtain the refined Doppler-only velocity estimate, then use it as the initialization and local prior while evaluating the combined direct-plus-Doppler objective.
 - Sixth job `f8b4acd2-d32` reached `core_claim`: DRO-GD achieved `10.90%` average translation error versus `25.05%` for the fixed-velocity gyro baseline, while preserving near-zero heading error on this synthetic benchmark and reporting `1.05 m/s` velocity RMSE.
 - Final validation fix: `scores.json` now uses explicit `synthetic_doppler_core` and `synthetic_doppler_ablation` experiment names instead of the paper's real automotive table names. Matching synthetic reference anchors were added so `python validate.py --compare` validates the replacement benchmark without comparing synthetic reduced-scale numbers to paper real-dataset magnitudes.
+- Continuing audit job `d43de523-464` reran the full packaged pipeline inside the container with exit code 0. It regenerated `data/synthetic_dro.npz`, baseline predictions, DRO-D/G/GD predictions, `scoring/scores.json`, and passed `python validate.py --compare`.
+- The audit rerun reproduced the core scores exactly: fixed-velocity gyro baseline `25.05%` average translation error, `dro_d` `10.90%`, and `dro_gd` `10.90%`, with near-zero heading error and `1.05 m/s` velocity RMSE for the combined method.
 
 ## Remaining
 
-- Higher milestones would require scaling beyond this compact gym: adding more synthetic scenarios, running on the public Boreas Doppler-enabled sequence, or reproducing additional paper tables.
+- Higher milestones would require scaling beyond this compact gym: adding more synthetic scenarios, running on public Boreas/MulRan sequences, or reproducing additional paper tables.
 - The real automotive Doppler dataset used for the paper's strongest Table I result is not fully public, so this environment stops at the validated synthetic core claim.
 
 ## Issues

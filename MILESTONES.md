@@ -1,10 +1,15 @@
 # Reproduction Milestones
 
-**Current: method_runs**
+**Current: core_claim**
 
 ## Progress Log
 
-### [2026-06-04 04:45] - method_runs
+### [2026-06-04 04:40] - core_claim
+- Continuing-agent audit job `d43de523-464` reran `scripts/reproduce.sh` and `python validate.py --compare` inside the container with exit code 0.
+- The rerun regenerated the benchmark data and prediction artifacts, then reproduced the existing scores: `dro_gd` reached `10.90%` average relative translation error versus `25.05%` for the fixed-velocity gyro baseline.
+- Validation confirmed method/evaluation separation and that `eval/` reads prediction artifacts rather than rerunning the method.
+
+### [2026-06-04 04:39] - method_runs
 - Continuing-agent audit reset: previous `core_claim` is being revalidated from `method_runs`.
 - Static audit found a recognizable DRO implementation and method-agnostic evaluator.
 - Submitting a CPU container job to rerun `scripts/reproduce.sh` and `python validate.py --compare` before restoring the milestone.
