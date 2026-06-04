@@ -79,6 +79,7 @@ def main() -> None:
     args = parser.parse_args()
     results_main = {}
     results_ablation = {}
+    scenario_results: dict[str, dict[str, dict[str, float]]] = {}
     for pred_path in args.predictions:
         method, scenario_scores, avg_te, avg_re, avg_ve = score_file(Path(pred_path))
         if method == "dead_reckoning":
@@ -89,6 +90,11 @@ def main() -> None:
             "avg_translation_error_pct": avg_te,
             "avg_rotation_error_deg_per_100m": avg_re,
         }
+        for scenario, metrics in scenario_scores.items():
+            scenario_results.setdefault(scenario, {})[name] = {
+                "translation_error_pct": metrics["translation_error_pct"],
+                "rotation_error_deg_per_100m": metrics["rotation_error_deg_per_100m"],
+            }
         if name in {"dro_d", "dro_g", "dro_gd"}:
             results_ablation[name] = {
                 "avg_translation_error_pct": avg_te,
@@ -98,6 +104,8 @@ def main() -> None:
     scores = {
         "experiments": {
             "synthetic_doppler_core": {"results": results_main},
+            "synthetic_doppler_structured": {"results": scenario_results.get("structured", {})},
+            "synthetic_doppler_tunnel": {"results": scenario_results.get("tunnel", {})},
             "synthetic_doppler_ablation": {"results": results_ablation},
         }
     }

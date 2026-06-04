@@ -15,3 +15,11 @@ Checks the same odometry setting while also tracking velocity quality for the co
 - **Metric**: `avg_translation_error_pct` (lower is better)
 - **Constraint metrics**: `avg_rotation_error_deg_per_100m` and `velocity_rmse_mps` (lower is better)
 - **How to run**: `bash scripts/reproduce.sh`.
+
+## Additional Settings: synthetic_doppler_structured and synthetic_doppler_tunnel
+
+Report the primary odometry metric separately for the two generated scenarios so future agents can see whether improvements hold in both a landmark-rich setting and a feature-degenerate tunnel-like setting.
+
+- **Metric**: `translation_error_pct` (lower is better)
+- **Constraint metric**: `rotation_error_deg_per_100m` (lower is better)
+- **How to run**: `bash scripts/reproduce.sh`.

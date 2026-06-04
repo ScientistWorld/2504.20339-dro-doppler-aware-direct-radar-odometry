@@ -28,12 +28,15 @@
 - The audit rerun reproduced the core scores exactly: fixed-velocity gyro baseline `25.05%` average translation error, `dro_d` `10.90%`, and `dro_gd` `10.90%`, with near-zero heading error and `1.05 m/s` velocity RMSE for the combined method.
 - Follow-up audit found that the previous core-claim state was too weak: up/down infill used neighbor averaging instead of GP regression, velocity RMSE only compared speed magnitudes, and exact synthetic yaw rates made rotation nearly trivial. I have not claimed a higher milestone after these concerns.
 - Current pending changes replace the infill with local squared-exponential GP cross-correlation weights, add deterministic noisy/bias gyro measurements to the generated data, use those measurements in baseline and method, score vector body-frame velocity RMSE, and replace the local optimizer's Nelder-Mead refinement with normalized finite-difference gradient ascent in the form of the paper's update rule. These changes are awaiting a full container job rerun.
+- CPU audit job `cf4a04e5-70e` completed with exit code 0 and passed `python validate.py --compare` after regenerating data, baseline predictions, DRO-D/G/GD predictions, and `scoring/scores.json`.
+- The revised reproduction restores `core_claim`: fixed-velocity gyro baseline average translation error is `24.999%`, DRO-D is `2.668%`, and DRO-GD is `2.668%`. DRO-GD also reports `1.489 deg/100m` rotation error under the noisy gyro constraint and `0.123 m/s` vector body-frame velocity RMSE.
+- The latest edit extends the evaluator and scoring reference with separate `synthetic_doppler_structured` and `synthetic_doppler_tunnel` experiments, using anchors computed from the completed job artifacts. These per-scenario score groups are awaiting a fresh container job before claiming `core_claim_plus`.
 
 ## Remaining
 
-- Higher milestones would require scaling beyond this compact gym: adding more synthetic scenarios, running on public Boreas/MulRan sequences, or reproducing additional paper tables.
+- The next CPU job must regenerate scores with the new per-scenario experiments. If DRO-GD remains better than the fixed-velocity baseline in both `structured` and `tunnel`, this supports `core_claim_plus`.
+- Higher milestones beyond `core_claim_plus` would require scaling beyond this compact gym: adding more synthetic scenarios, running on public Boreas/MulRan sequences, or reproducing additional paper tables.
 - The real automotive Doppler dataset used for the paper's strongest Table I result is not fully public, so this environment stops at the validated synthetic core claim.
-- The next job must determine whether the strengthened, more faithful compact implementation still supports the core claim.
 
 ## Issues
 
@@ -44,8 +47,9 @@
 - The fifth run confirmed the raw Doppler initializer is too noisy to anchor the combined objective directly. This was not claimed as `core_claim`; the implementation has been adjusted and a new job will be submitted.
 - The final core-claim run depends on a two-stage reduced-scale optimization for DRO-GD. This is documented as a scaling adaptation: it preserves the paper's Doppler and direct objective computations while making the reduced synthetic benchmark stable.
 - The validator requires every scored experiment to appear in `reference.json`, so the file includes two clearly labeled synthetic replacement benchmark anchors in addition to the original paper-reported experiments.
-- A later read-only audit judged the earlier `core_claim` status overly optimistic. The milestone has been kept at `method_runs` until the revised, more faithful implementation is rerun in the container.
+- A later read-only audit judged the earlier `core_claim` status overly optimistic. The milestone was kept at `method_runs` until job `cf4a04e5-70e` reran the revised, more faithful implementation in the container.
 - During the continuation audit, the GP infill operator was corrected from SciPy convolution to cross-correlation so asymmetric interpolation kernels are applied in the same orientation as the paper's neural-network-style convolution implementation.
+- The absolute stdout/stderr paths reported for job `cf4a04e5-70e` were not mounted in this interactive session, but the workspace artifacts and `validate.py --compare` output confirm successful execution.
 
 ## Deviations from Paper
 
