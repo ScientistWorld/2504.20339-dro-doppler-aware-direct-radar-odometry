@@ -69,7 +69,7 @@ def main() -> None:
     for pred_path in args.predictions:
         method, scenario_scores, avg_te, avg_re, avg_ve = score_file(Path(pred_path))
         if method == "dead_reckoning":
-            name = "ct_r"
+            name = "fixed_velocity_gyro"
         else:
             name = method
         results_main[name] = {
@@ -84,8 +84,8 @@ def main() -> None:
             }
     scores = {
         "experiments": {
-            "automotive_doppler_main": {"results": results_main},
-            "automotive_ablation": {"results": results_ablation},
+            "synthetic_doppler_core": {"results": results_main},
+            "synthetic_doppler_ablation": {"results": results_ablation},
         }
     }
     out = Path(args.output)

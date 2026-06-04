@@ -1,6 +1,6 @@
 # Evaluation Targets
 
-## Primary: automotive_doppler_main
+## Primary: synthetic_doppler_core
 
 Tests whether radar odometry produces accurate relative pose estimates in structured and feature-degenerate driving-like scenes.
 
@@ -8,7 +8,7 @@ Tests whether radar odometry produces accurate relative pose estimates in struct
 - **Constraint metric**: `avg_rotation_error_deg_per_100m` (lower is better)
 - **How to run**: `bash scripts/reproduce.sh`, or generate prediction JSON files and run `bash scripts/evaluate.sh <predictions...>`.
 
-## Ablation: automotive_ablation
+## Ablation: synthetic_doppler_ablation
 
 Checks the same odometry setting while also tracking velocity quality for the combined direct-plus-Doppler method.
 

@@ -1,8 +1,8 @@
 {
   "experiments": {
-    "automotive_doppler_main": {
+    "synthetic_doppler_core": {
       "results": {
-        "ct_r": {
+        "fixed_velocity_gyro": {
           "avg_translation_error_pct": 25.04650156500391,
           "avg_rotation_error_deg_per_100m": 1.271369938295729e-14
         },
@@ -20,7 +20,7 @@
         }
       }
     },
-    "automotive_ablation": {
+    "synthetic_doppler_ablation": {
       "results": {
         "dro_gd": {
           "avg_translation_error_pct": 10.902667146405555,

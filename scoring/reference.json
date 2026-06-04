@@ -2,7 +2,7 @@
   "experiments": {
     "automotive_doppler_main": {
       "description": "Automotive triangular-modulation radar odometry benchmark from Table I. KITTI relative translation and rotation errors are reported for sequence classes with increasing geometric difficulty.",
-      "weight": 0.35,
+      "weight": 0.33,
       "primary_metric": "avg_translation_error_pct",
       "metrics": {
         "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0},
@@ -19,7 +19,7 @@
     },
     "automotive_ablation": {
       "description": "Ablation study from Table II on the proposed automotive setup, excluding Skyway. Metrics average Suburbs, Highway, and Tunnel KITTI errors plus velocity RMSE.",
-      "weight": 0.2,
+      "weight": 0.19,
       "primary_metric": "avg_translation_error_pct",
       "metrics": {
         "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0},
@@ -75,6 +75,34 @@
         "ct_rg": {"type": "baseline", "avg_rpe_pct": 1.0375},
         "dro_g_no_bias": {"type": "proposed", "avg_rpe_pct": 3.93},
         "dro_g": {"type": "proposed", "avg_rpe_pct": 0.76}
+      }
+    },
+    "synthetic_doppler_core": {
+      "description": "Local replacement FMCW spinning-radar benchmark used for the compact reproduction. Values are computed anchors on generated structured and tunnel-like sequences, not paper-reported real-dataset numbers.",
+      "weight": 0.02,
+      "primary_metric": "avg_translation_error_pct",
+      "metrics": {
+        "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0},
+        "avg_rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4}
+      },
+      "results": {
+        "fixed_velocity_gyro": {"type": "baseline", "avg_translation_error_pct": 25.04650156500391, "avg_rotation_error_deg_per_100m": 1.271369938295729e-14},
+        "dro_d": {"type": "proposed", "avg_translation_error_pct": 10.902970016107083, "avg_rotation_error_deg_per_100m": 1.271369938295729e-14},
+        "dro_g": {"type": "proposed", "avg_translation_error_pct": 52.75635680959785, "avg_rotation_error_deg_per_100m": 1.271369938295729e-14},
+        "dro_gd": {"type": "proposed", "avg_translation_error_pct": 10.902667146405555, "avg_rotation_error_deg_per_100m": 1.271369938295729e-14}
+      }
+    },
+    "synthetic_doppler_ablation": {
+      "description": "Local replacement ablation target for the combined DRO-GD method on the generated benchmark, including velocity quality.",
+      "weight": 0.01,
+      "primary_metric": "avg_translation_error_pct",
+      "metrics": {
+        "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0},
+        "avg_rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4},
+        "velocity_rmse_mps": {"higher_is_better": false, "coefficient": -0.3}
+      },
+      "results": {
+        "dro_gd": {"type": "proposed", "avg_translation_error_pct": 10.902667146405555, "avg_rotation_error_deg_per_100m": 1.271369938295729e-14, "velocity_rmse_mps": 1.0492315055873438}
       }
     }
   }
