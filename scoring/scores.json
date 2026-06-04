@@ -7,15 +7,15 @@
           "avg_rotation_error_deg_per_100m": 1.271369938295729e-14
         },
         "dro_d": {
-          "avg_translation_error_pct": 25.02394745669809,
+          "avg_translation_error_pct": 24.872435784931284,
           "avg_rotation_error_deg_per_100m": 1.271369938295729e-14
         },
         "dro_g": {
-          "avg_translation_error_pct": 35.702314570958976,
+          "avg_translation_error_pct": 35.7101163288568,
           "avg_rotation_error_deg_per_100m": 1.271369938295729e-14
         },
         "dro_gd": {
-          "avg_translation_error_pct": 35.8237669696576,
+          "avg_translation_error_pct": 35.49625033384202,
           "avg_rotation_error_deg_per_100m": 1.271369938295729e-14
         }
       }
@@ -23,9 +23,9 @@
     "automotive_ablation": {
       "results": {
         "dro_gd": {
-          "avg_translation_error_pct": 35.8237669696576,
+          "avg_translation_error_pct": 35.49625033384202,
           "avg_rotation_error_deg_per_100m": 1.271369938295729e-14,
-          "velocity_rmse_mps": 2.2232677774106864
+          "velocity_rmse_mps": 2.2032004981228694
         }
       }
     }
