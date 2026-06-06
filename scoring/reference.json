@@ -5,8 +5,8 @@
       "weight": 0.33,
       "primary_metric": "avg_translation_error_pct",
       "metrics": {
-        "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0},
-        "avg_rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4}
+        "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0, "description": "Average KITTI-style relative translation error across the automotive sequence groups."},
+        "avg_rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4, "description": "Average KITTI-style relative rotation error across the automotive sequence groups."}
       },
       "results": {
         "ct_r": {"type": "baseline", "avg_translation_error_pct": 18.57, "avg_rotation_error_deg_per_100m": 0.8925},
@@ -22,9 +22,9 @@
       "weight": 0.19,
       "primary_metric": "avg_translation_error_pct",
       "metrics": {
-        "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0},
-        "avg_rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4},
-        "velocity_rmse_mps": {"higher_is_better": false, "coefficient": -0.3}
+        "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0, "description": "Average KITTI-style relative translation error for the automotive ablation setting."},
+        "avg_rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4, "description": "Average KITTI-style relative rotation error for the automotive ablation setting."},
+        "velocity_rmse_mps": {"higher_is_better": false, "coefficient": -0.3, "description": "Root mean squared body-velocity error in meters per second."}
       },
       "results": {
         "dro_gd": {"type": "proposed", "avg_translation_error_pct": 0.2567, "avg_rotation_error_deg_per_100m": 0.02, "velocity_rmse_mps": 0.119},
@@ -39,8 +39,8 @@
       "weight": 0.2,
       "primary_metric": "translation_error_pct",
       "metrics": {
-        "translation_error_pct": {"higher_is_better": false, "coefficient": -1.0},
-        "rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4}
+        "translation_error_pct": {"higher_is_better": false, "coefficient": -1.0, "description": "KITTI-style relative translation error on the Boreas leaderboard sequences."},
+        "rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4, "description": "KITTI-style relative rotation error on the Boreas leaderboard sequences."}
       },
       "results": {
         "cfear_pp": {"type": "baseline", "translation_error_pct": 0.51, "rotation_error_deg_per_100m": 0.14},
@@ -54,8 +54,8 @@
       "weight": 0.15,
       "primary_metric": "avg_translation_error_pct",
       "metrics": {
-        "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0},
-        "avg_rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4}
+        "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0, "description": "Average KITTI-style relative translation error across the MulRan sequence groups."},
+        "avg_rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4, "description": "Average KITTI-style relative rotation error across the MulRan sequence groups."}
       },
       "results": {
         "cfear_3": {"type": "baseline", "avg_translation_error_pct": 1.62, "avg_rotation_error_deg_per_100m": 0.57},
@@ -68,7 +68,7 @@
       "weight": 0.1,
       "primary_metric": "avg_rpe_pct",
       "metrics": {
-        "avg_rpe_pct": {"higher_is_better": false, "coefficient": -1.0}
+        "avg_rpe_pct": {"higher_is_better": false, "coefficient": -1.0, "description": "Average relative position error on the off-road sequence groups."}
       },
       "results": {
         "ct_rg_no_bias": {"type": "baseline", "avg_rpe_pct": 4.3525},
@@ -82,8 +82,10 @@
       "weight": 0.005,
       "primary_metric": "avg_translation_error_pct",
       "metrics": {
-        "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0},
-        "avg_rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4}
+        "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0, "description": "Average sliced KITTI-style relative translation error across the generated scenarios."},
+        "avg_rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4, "description": "Average sliced KITTI-style relative rotation error across the generated scenarios."},
+        "endpoint_position_error_m": {"higher_is_better": false, "coefficient": -0.25, "description": "Mean final-position drift in meters, which catches globally inconsistent trajectories."},
+        "path_length_error_pct": {"higher_is_better": false, "coefficient": -0.2, "description": "Mean absolute path-length mismatch as a percentage of ground-truth path length."}
       },
       "results": {
         "fixed_velocity_gyro": {"type": "baseline", "avg_translation_error_pct": 24.999117176518897, "avg_rotation_error_deg_per_100m": 1.4890202715540672},
@@ -97,8 +99,10 @@
       "weight": 0.01,
       "primary_metric": "translation_error_pct",
       "metrics": {
-        "translation_error_pct": {"higher_is_better": false, "coefficient": -1.0},
-        "rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4}
+        "translation_error_pct": {"higher_is_better": false, "coefficient": -1.0, "description": "Sliced KITTI-style relative translation error on the landmark-rich generated sequence."},
+        "rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4, "description": "Sliced KITTI-style relative rotation error on the landmark-rich generated sequence."},
+        "endpoint_position_error_m": {"higher_is_better": false, "coefficient": -0.25, "description": "Final-position drift in meters on the landmark-rich generated sequence."},
+        "path_length_error_pct": {"higher_is_better": false, "coefficient": -0.2, "description": "Absolute path-length mismatch as a percentage of ground-truth path length."}
       },
       "results": {
         "fixed_velocity_gyro": {"type": "baseline", "translation_error_pct": 22.572344799508805, "rotation_error_deg_per_100m": 1.6101579284070635},
@@ -112,8 +116,10 @@
       "weight": 0.01,
       "primary_metric": "translation_error_pct",
       "metrics": {
-        "translation_error_pct": {"higher_is_better": false, "coefficient": -1.0},
-        "rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4}
+        "translation_error_pct": {"higher_is_better": false, "coefficient": -1.0, "description": "Sliced KITTI-style relative translation error on the tunnel-like generated sequence."},
+        "rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4, "description": "Sliced KITTI-style relative rotation error on the tunnel-like generated sequence."},
+        "endpoint_position_error_m": {"higher_is_better": false, "coefficient": -0.25, "description": "Final-position drift in meters on the tunnel-like generated sequence."},
+        "path_length_error_pct": {"higher_is_better": false, "coefficient": -0.2, "description": "Absolute path-length mismatch as a percentage of ground-truth path length."}
       },
       "results": {
         "fixed_velocity_gyro": {"type": "baseline", "translation_error_pct": 27.425889553528986, "rotation_error_deg_per_100m": 1.3678826147010708},
@@ -127,9 +133,11 @@
       "weight": 0.005,
       "primary_metric": "avg_translation_error_pct",
       "metrics": {
-        "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0},
-        "avg_rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4},
-        "velocity_rmse_mps": {"higher_is_better": false, "coefficient": -0.3}
+        "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0, "description": "Average sliced KITTI-style relative translation error for DRO variants on the generated scenarios."},
+        "avg_rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4, "description": "Average sliced KITTI-style relative rotation error for DRO variants on the generated scenarios."},
+        "velocity_rmse_mps": {"higher_is_better": false, "coefficient": -0.3, "description": "Root mean squared body-velocity error from the prediction artifact."},
+        "endpoint_position_error_m": {"higher_is_better": false, "coefficient": -0.25, "description": "Mean final-position drift in meters for DRO variants."},
+        "path_length_error_pct": {"higher_is_better": false, "coefficient": -0.2, "description": "Mean absolute path-length mismatch as a percentage of ground-truth path length."}
       },
       "results": {
         "dro_d": {"type": "proposed", "avg_translation_error_pct": 2.668160341429319, "avg_rotation_error_deg_per_100m": 1.4890202715540672, "velocity_rmse_mps": 0.12228225453081742},

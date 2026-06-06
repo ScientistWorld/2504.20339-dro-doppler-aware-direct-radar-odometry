@@ -19,4 +19,7 @@ if [ ${#predictions[@]} -eq 0 ]; then
   exit 1
 fi
 
-python eval/train/evaluate.py --predictions "${predictions[@]}" --output scoring/scores_train.json
+python eval/train/evaluate.py \
+  --predictions "${predictions[@]}" \
+  --data data/synthetic_dro.npz \
+  --output scoring/scores_train.json

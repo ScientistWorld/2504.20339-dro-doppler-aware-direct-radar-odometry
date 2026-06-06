@@ -21,5 +21,6 @@ fi
 
 python eval/test/evaluate.py \
   --predictions "${predictions[@]}" \
+  --data data/synthetic_dro.npz \
   --output scoring/scores_test.json \
   --match-train scoring/scores_train.json
