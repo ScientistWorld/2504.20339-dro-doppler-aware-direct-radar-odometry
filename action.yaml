@@ -2,8 +2,8 @@
 # Once you set action to 'done', STOP immediately.
 # Do NOT sleep, poll, or wait. The system reads this file
 # only after your turn ends.
-action: pending
+action: done
 gpus: 0
 test: false
 milestone: core_claim
-notes: ""
+notes: "Improvements: canonical ground truth loading for split evaluators, added endpoint/path-length anti-shortcut metrics, explicit data wiring, metric descriptions, and DESIGN_NOTES.md. Notes: split scripts passed bash -n; score stubs absent; runtime metric generation deferred."
