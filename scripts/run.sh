@@ -1,10 +1,10 @@
 #!/bin/bash
-# Audit job: regenerate data, run baseline and revised DRO variants, then score
-# aggregate and per-scenario replacement benchmark experiments.
+# Split evaluation job: score the existing final prediction artifacts on the
+# visible train slice and held-out test slice.
 
 set -e
 
 cd /home/user
 
-bash scripts/reproduce.sh
-python validate.py --compare
+bash scripts/evaluate_train.sh
+bash scripts/evaluate_test.sh
