@@ -36,6 +36,8 @@
 - Split-score audit job `c758ed34-2b1` completed with exit code 0 on 2026-06-06. On the held-out odd-frame test slice, DRO-GD reached `2.703%` average translation error versus `24.999%` for the fixed-velocity gyro baseline; the train slice was similarly stable at `2.652%` versus `25.001%`.
 - The standalone evaluator has been tightened to report endpoint-position drift and path-length error alongside the primary translation/rotation metrics, matching the richer train/test evaluator contract.
 - Final verification added those endpoint/path metrics to the committed `scores.json` and synthetic reference anchors, adjusted the reproduced synthetic experiment weights for sensible gym scoring, and confirmed `python validate.py` plus `python validate.py --compare` pass.
+- Current audit tightened evaluation integrity further: `scripts/evaluate.sh` now passes the benchmark data file to `eval/odometry_metrics.py`, which loads ground truth from `data/synthetic_dro.npz` instead of trusting the prediction artifact. The evaluator also raises on trajectories too short for the configured segment lengths.
+- The paper reference table now includes the omitted Table I `CT-LG` lidar baseline average (`5.1675%`, `0.12 deg/100m`), and `scoring/TARGETS.md` explicitly lists endpoint and path-length constraints.
 
 ## Remaining
 
@@ -54,6 +56,7 @@
 - The absolute stdout/stderr paths reported for job `cf4a04e5-70e` were not mounted in this interactive session, but the workspace artifacts and `validate.py --compare` output confirm successful execution.
 - The absolute stdout/stderr paths reported for job `99110a51-e02` were also not mounted in this interactive session, but the regenerated `scoring/scores.json` and final `python validate.py` output confirm successful execution.
 - The final verifier did not rerun `scripts/evaluate.sh` on the login node because the login Python lacks NumPy; the packaged container installs NumPy via `environment/setup.sh`, prior container jobs exercised the pipeline, and `validate.py --compare` passes on the committed artifacts.
+- The latest standalone evaluator change also cannot be exercised on the login node for the same NumPy reason. A CPU container validation job is being submitted to regenerate the synthetic data, predictions, score files, and validators.
 
 ## Deviations from Paper
 

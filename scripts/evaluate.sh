@@ -17,4 +17,7 @@ if [ ${#predictions[@]} -eq 0 ]; then
   )
 fi
 
-python eval/odometry_metrics.py --predictions "${predictions[@]}" --output scoring/scores.json
+python eval/odometry_metrics.py \
+  --predictions "${predictions[@]}" \
+  --data data/synthetic_dro.npz \
+  --output scoring/scores.json

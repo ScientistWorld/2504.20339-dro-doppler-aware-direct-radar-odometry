@@ -12,6 +12,7 @@
         "ct_r": {"type": "baseline", "avg_translation_error_pct": 18.57, "avg_rotation_error_deg_per_100m": 0.8925},
         "dg": {"type": "baseline", "avg_translation_error_pct": 0.965, "avg_rotation_error_deg_per_100m": 0.035},
         "ct_rdg": {"type": "baseline", "avg_translation_error_pct": 0.5925, "avg_rotation_error_deg_per_100m": 0.035},
+        "ct_lg": {"type": "baseline", "avg_translation_error_pct": 5.1675, "avg_rotation_error_deg_per_100m": 0.12},
         "dro_d": {"type": "proposed", "avg_translation_error_pct": 0.7025, "avg_rotation_error_deg_per_100m": 0.0175},
         "dro_g": {"type": "proposed", "avg_translation_error_pct": 13.305, "avg_rotation_error_deg_per_100m": 0.0175},
         "dro_gd": {"type": "proposed", "avg_translation_error_pct": 0.2925, "avg_rotation_error_deg_per_100m": 0.0175}

@@ -33,5 +33,11 @@
 - `python validate.py` and `python validate.py --compare` pass after adding the missing scored endpoint/path metrics to `scores.json` and balancing the reproduced synthetic experiment weights.
 - Milestone remains `core_claim` because the packaged gym validates the central claim on a compact synthetic replacement benchmark, not the paper's full real-data suite.
 
+### [2026-06-07 00:13] - core_claim
+- Tightened the standalone evaluator to load ground truth from `data/synthetic_dro.npz` instead of trusting prediction artifacts.
+- Added guards against too-short trajectories producing empty segment metrics.
+- Added the missing Table I `CT-LG` reference baseline and updated `TARGETS.md` to name endpoint and path-length constraint metrics.
+- Submitting a CPU container validation job because the login-node Python environment lacks NumPy.
+
 ## Stop Justification
 - Completed at milestone `core_claim`.

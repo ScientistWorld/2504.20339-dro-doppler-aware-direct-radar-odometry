@@ -1,3 +1,5 @@
-action: done
+action: submit
+gpus: 0
+test: true
 milestone: core_claim
-notes: "Final verification passed; scoring/docs tightened and validate.py --compare succeeds."
+notes: "CPU container validation after tightening evaluator ground-truth loading and reference/target metadata."
