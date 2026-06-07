@@ -22,5 +22,11 @@
 - `python validate.py` passes on the final workspace.
 - Final milestone is kept at `core_claim` because the reproduction uses a compact synthetic replacement benchmark rather than the paper's full real automotive, Boreas, MulRan, and off-road evaluation suite.
 
+### [2026-06-07 00:03] - core_claim
+- Verified the later split-score audit job `c758ed34-2b1` completed with exit code 0.
+- Held-out odd-frame scores still support the core claim: DRO-GD reached `2.703%` average translation error versus `24.999%` for the fixed-velocity gyro baseline.
+- Tightened the standalone evaluator so `scripts/evaluate.sh` reports endpoint drift and path-length constraint metrics in the same prediction-artifact contract as the train/test evaluators.
+- Submitting a CPU validation job to regenerate artifacts and rerun all validators inside the packaged container.
+
 ## Stop Justification
 - Completed at milestone `core_claim`.

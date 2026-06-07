@@ -33,6 +33,9 @@
 - CPU follow-up job `99110a51-e02` completed with exit code 0 and regenerated `scoring/scores.json` with four experiments: aggregate core, structured scenario, tunnel scenario, and ablation/velocity constraints.
 - Final per-scenario scores show DRO-GD remains better than the fixed-velocity gyro baseline in both generated settings: `2.385%` versus `22.572%` translation error on `structured`, and `2.952%` versus `27.426%` on `tunnel`.
 - Final validation with `python validate.py` passes.
+- Split-score audit job `c758ed34-2b1` completed with exit code 0 on 2026-06-06. On the held-out odd-frame test slice, DRO-GD reached `2.703%` average translation error versus `24.999%` for the fixed-velocity gyro baseline; the train slice was similarly stable at `2.652%` versus `25.001%`.
+- The standalone evaluator has been tightened to report endpoint-position drift and path-length error alongside the primary translation/rotation metrics, matching the richer train/test evaluator contract.
+- A CPU validation job is being submitted to regenerate all artifacts and rerun `scripts/reproduce.sh`, `scripts/evaluate_train.sh`, `scripts/evaluate_test.sh`, `python validate.py`, and `python validate.py --compare` inside the container.
 
 ## Remaining
 

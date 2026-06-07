@@ -13,13 +13,16 @@ def wrap_angle(x: np.ndarray) -> np.ndarray:
     return np.arctan2(np.sin(x), np.cos(x))
 
 
-def segment_metrics(pred: np.ndarray, gt: np.ndarray, step: int = 4) -> tuple[float, float, float]:
+def segment_metrics(pred: np.ndarray, gt: np.ndarray, step: int = 4) -> tuple[float, float, float, float, float]:
     n = min(len(pred), len(gt))
     pred = pred[:n]
     gt = gt[:n]
     distances = np.zeros(n)
     if n > 1:
         distances[1:] = np.cumsum(np.linalg.norm(np.diff(gt[:, 1:3], axis=0), axis=1))
+    pred_distances = np.zeros(n)
+    if n > 1:
+        pred_distances[1:] = np.cumsum(np.linalg.norm(np.diff(pred[:, 1:3], axis=0), axis=1))
     segment_lengths = [20.0, 35.0, 50.0]
     trans_err = []
     rot_err = []
@@ -49,7 +52,11 @@ def segment_metrics(pred: np.ndarray, gt: np.ndarray, step: int = 4) -> tuple[fl
         vel_rmse = float(np.sqrt(np.mean((pred_body_velocity - gt_body_velocity) ** 2)))
     else:
         vel_rmse = 0.0
-    return float(np.mean(trans_err)), float(np.mean(rot_err)), vel_rmse
+    endpoint_error = float(np.linalg.norm(pred[-1, 1:3] - gt[-1, 1:3]))
+    path_length_error = float(
+        100.0 * abs(pred_distances[-1] - distances[-1]) / max(distances[-1], 1e-6)
+    )
+    return float(np.mean(trans_err)), float(np.mean(rot_err)), vel_rmse, endpoint_error, path_length_error
 
 
 def score_file(path: Path) -> dict:
@@ -60,16 +67,20 @@ def score_file(path: Path) -> dict:
     for scenario, seq in artifact["scenarios"].items():
         pred = np.asarray(seq["trajectory"], dtype=np.float64)
         gt = np.asarray(seq["ground_truth"], dtype=np.float64)
-        te, re, ve = segment_metrics(pred, gt)
+        te, re, ve, ee, pe = segment_metrics(pred, gt)
         scenario_scores[scenario] = {
             "translation_error_pct": te,
             "rotation_error_deg_per_100m": re,
             "velocity_rmse_mps": ve,
+            "endpoint_position_error_m": ee,
+            "path_length_error_pct": pe,
         }
     avg_te = float(np.mean([v["translation_error_pct"] for v in scenario_scores.values()]))
     avg_re = float(np.mean([v["rotation_error_deg_per_100m"] for v in scenario_scores.values()]))
     avg_ve = float(np.mean([v["velocity_rmse_mps"] for v in scenario_scores.values()]))
-    return method, scenario_scores, avg_te, avg_re, avg_ve
+    avg_ee = float(np.mean([v["endpoint_position_error_m"] for v in scenario_scores.values()]))
+    avg_pe = float(np.mean([v["path_length_error_pct"] for v in scenario_scores.values()]))
+    return method, scenario_scores, avg_te, avg_re, avg_ve, avg_ee, avg_pe
 
 
 def main() -> None:
@@ -81,7 +92,7 @@ def main() -> None:
     results_ablation = {}
     scenario_results: dict[str, dict[str, dict[str, float]]] = {}
     for pred_path in args.predictions:
-        method, scenario_scores, avg_te, avg_re, avg_ve = score_file(Path(pred_path))
+        method, scenario_scores, avg_te, avg_re, avg_ve, avg_ee, avg_pe = score_file(Path(pred_path))
         if method == "dead_reckoning":
             name = "fixed_velocity_gyro"
         else:
@@ -89,17 +100,23 @@ def main() -> None:
         results_main[name] = {
             "avg_translation_error_pct": avg_te,
             "avg_rotation_error_deg_per_100m": avg_re,
+            "endpoint_position_error_m": avg_ee,
+            "path_length_error_pct": avg_pe,
         }
         for scenario, metrics in scenario_scores.items():
             scenario_results.setdefault(scenario, {})[name] = {
                 "translation_error_pct": metrics["translation_error_pct"],
                 "rotation_error_deg_per_100m": metrics["rotation_error_deg_per_100m"],
+                "endpoint_position_error_m": metrics["endpoint_position_error_m"],
+                "path_length_error_pct": metrics["path_length_error_pct"],
             }
         if name in {"dro_d", "dro_g", "dro_gd"}:
             results_ablation[name] = {
                 "avg_translation_error_pct": avg_te,
                 "avg_rotation_error_deg_per_100m": avg_re,
                 "velocity_rmse_mps": avg_ve,
+                "endpoint_position_error_m": avg_ee,
+                "path_length_error_pct": avg_pe,
             }
     scores = {
         "experiments": {
