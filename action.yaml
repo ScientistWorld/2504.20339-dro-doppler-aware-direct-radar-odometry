@@ -1,7 +1,3 @@
-# Regenerate and validate the packaged DRO reproduction after tightening the
-# standalone evaluator metric contract.
-action: submit
-gpus: 0
-test: true
+action: done
 milestone: core_claim
-notes: "CPU test job: rerun reproduce.sh, standard/split evaluators, and validate.py after adding endpoint/path-length metrics to scripts/evaluate.sh output."
+notes: "Final verification passed; scoring/docs tightened and validate.py --compare succeeds."

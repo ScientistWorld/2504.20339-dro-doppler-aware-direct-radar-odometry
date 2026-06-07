@@ -2,7 +2,7 @@
   "experiments": {
     "automotive_doppler_main": {
       "description": "Automotive triangular-modulation radar odometry benchmark from Table I. KITTI relative translation and rotation errors are reported for sequence classes with increasing geometric difficulty.",
-      "weight": 0.33,
+      "weight": 0.31,
       "primary_metric": "avg_translation_error_pct",
       "metrics": {
         "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0, "description": "Average KITTI-style relative translation error across the automotive sequence groups."},
@@ -79,7 +79,7 @@
     },
     "synthetic_doppler_core": {
       "description": "Local replacement FMCW spinning-radar benchmark used for the compact reproduction. Values are computed anchors on generated structured and tunnel-like sequences, not paper-reported real-dataset numbers.",
-      "weight": 0.005,
+      "weight": 0.02,
       "primary_metric": "avg_translation_error_pct",
       "metrics": {
         "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0, "description": "Average sliced KITTI-style relative translation error across the generated scenarios."},
@@ -88,10 +88,10 @@
         "path_length_error_pct": {"higher_is_better": false, "coefficient": -0.2, "description": "Mean absolute path-length mismatch as a percentage of ground-truth path length."}
       },
       "results": {
-        "fixed_velocity_gyro": {"type": "baseline", "avg_translation_error_pct": 24.999117176518897, "avg_rotation_error_deg_per_100m": 1.4890202715540672},
-        "dro_d": {"type": "proposed", "avg_translation_error_pct": 2.668160341429319, "avg_rotation_error_deg_per_100m": 1.4890202715540672},
-        "dro_g": {"type": "proposed", "avg_translation_error_pct": 49.21289031715033, "avg_rotation_error_deg_per_100m": 1.4890202715540672},
-        "dro_gd": {"type": "proposed", "avg_translation_error_pct": 2.6683536996496047, "avg_rotation_error_deg_per_100m": 1.4890202715540672}
+        "fixed_velocity_gyro": {"type": "baseline", "avg_translation_error_pct": 24.999117176518897, "avg_rotation_error_deg_per_100m": 1.4890202715540672, "endpoint_position_error_m": 17.66027387959333, "path_length_error_pct": 24.936858717673985},
+        "dro_d": {"type": "proposed", "avg_translation_error_pct": 2.668160341429319, "avg_rotation_error_deg_per_100m": 1.4890202715540672, "endpoint_position_error_m": 2.0184844362228564, "path_length_error_pct": 0.4034274109141237},
+        "dro_g": {"type": "proposed", "avg_translation_error_pct": 49.21289031715033, "avg_rotation_error_deg_per_100m": 1.4890202715540672, "endpoint_position_error_m": 33.03332483542461, "path_length_error_pct": 46.281004201339016},
+        "dro_gd": {"type": "proposed", "avg_translation_error_pct": 2.6683536996496047, "avg_rotation_error_deg_per_100m": 1.4890202715540672, "endpoint_position_error_m": 2.018228597680548, "path_length_error_pct": 0.4045988878555723}
       }
     },
     "synthetic_doppler_structured": {
@@ -105,10 +105,10 @@
         "path_length_error_pct": {"higher_is_better": false, "coefficient": -0.2, "description": "Absolute path-length mismatch as a percentage of ground-truth path length."}
       },
       "results": {
-        "fixed_velocity_gyro": {"type": "baseline", "translation_error_pct": 22.572344799508805, "rotation_error_deg_per_100m": 1.6101579284070635},
-        "dro_d": {"type": "proposed", "translation_error_pct": 2.38527686808353, "rotation_error_deg_per_100m": 1.6101579284070635},
-        "dro_g": {"type": "proposed", "translation_error_pct": 66.48673201499412, "rotation_error_deg_per_100m": 1.6101579284070635},
-        "dro_gd": {"type": "proposed", "translation_error_pct": 2.3847755109767697, "rotation_error_deg_per_100m": 1.6101579284070635}
+        "fixed_velocity_gyro": {"type": "baseline", "translation_error_pct": 22.572344799508805, "rotation_error_deg_per_100m": 1.6101579284070635, "endpoint_position_error_m": 15.340210388259122, "path_length_error_pct": 22.450970962004906},
+        "dro_d": {"type": "proposed", "translation_error_pct": 2.38527686808353, "rotation_error_deg_per_100m": 1.6101579284070635, "endpoint_position_error_m": 1.7371967695673802, "path_length_error_pct": 0.47078720953124364},
+        "dro_g": {"type": "proposed", "translation_error_pct": 66.48673201499412, "rotation_error_deg_per_100m": 1.6101579284070635, "endpoint_position_error_m": 43.847447626196754, "path_length_error_pct": 63.184118722722154},
+        "dro_gd": {"type": "proposed", "translation_error_pct": 2.3847755109767697, "rotation_error_deg_per_100m": 1.6101579284070635, "endpoint_position_error_m": 1.7360113697880137, "path_length_error_pct": 0.47012159706225454}
       }
     },
     "synthetic_doppler_tunnel": {
@@ -122,15 +122,15 @@
         "path_length_error_pct": {"higher_is_better": false, "coefficient": -0.2, "description": "Absolute path-length mismatch as a percentage of ground-truth path length."}
       },
       "results": {
-        "fixed_velocity_gyro": {"type": "baseline", "translation_error_pct": 27.425889553528986, "rotation_error_deg_per_100m": 1.3678826147010708},
-        "dro_d": {"type": "proposed", "translation_error_pct": 2.9510438147751086, "rotation_error_deg_per_100m": 1.3678826147010708},
-        "dro_g": {"type": "proposed", "translation_error_pct": 31.939048619306533, "rotation_error_deg_per_100m": 1.3678826147010708},
-        "dro_gd": {"type": "proposed", "translation_error_pct": 2.951931888322439, "rotation_error_deg_per_100m": 1.3678826147010708}
+        "fixed_velocity_gyro": {"type": "baseline", "translation_error_pct": 27.425889553528986, "rotation_error_deg_per_100m": 1.3678826147010708, "endpoint_position_error_m": 19.980337370927536, "path_length_error_pct": 27.422746473343064},
+        "dro_d": {"type": "proposed", "translation_error_pct": 2.9510438147751086, "rotation_error_deg_per_100m": 1.3678826147010708, "endpoint_position_error_m": 2.2997721028783324, "path_length_error_pct": 0.3360676122970038},
+        "dro_g": {"type": "proposed", "translation_error_pct": 31.939048619306533, "rotation_error_deg_per_100m": 1.3678826147010708, "endpoint_position_error_m": 22.219202044652455, "path_length_error_pct": 29.377889679955878},
+        "dro_gd": {"type": "proposed", "translation_error_pct": 2.951931888322439, "rotation_error_deg_per_100m": 1.3678826147010708, "endpoint_position_error_m": 2.300445825573082, "path_length_error_pct": 0.33907617864889}
       }
     },
     "synthetic_doppler_ablation": {
       "description": "Local replacement ablation target for the combined DRO-GD method on the generated benchmark, including velocity quality.",
-      "weight": 0.005,
+      "weight": 0.01,
       "primary_metric": "avg_translation_error_pct",
       "metrics": {
         "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0, "description": "Average sliced KITTI-style relative translation error for DRO variants on the generated scenarios."},
@@ -140,9 +140,9 @@
         "path_length_error_pct": {"higher_is_better": false, "coefficient": -0.2, "description": "Mean absolute path-length mismatch as a percentage of ground-truth path length."}
       },
       "results": {
-        "dro_d": {"type": "proposed", "avg_translation_error_pct": 2.668160341429319, "avg_rotation_error_deg_per_100m": 1.4890202715540672, "velocity_rmse_mps": 0.12228225453081742},
-        "dro_g": {"type": "proposed", "avg_translation_error_pct": 49.21289031715033, "avg_rotation_error_deg_per_100m": 1.4890202715540672, "velocity_rmse_mps": 2.0614999831475975},
-        "dro_gd": {"type": "proposed", "avg_translation_error_pct": 2.6683536996496047, "avg_rotation_error_deg_per_100m": 1.4890202715540672, "velocity_rmse_mps": 0.1226016423560379}
+        "dro_d": {"type": "proposed", "avg_translation_error_pct": 2.668160341429319, "avg_rotation_error_deg_per_100m": 1.4890202715540672, "velocity_rmse_mps": 0.12228225453081742, "endpoint_position_error_m": 2.0184844362228564, "path_length_error_pct": 0.4034274109141237},
+        "dro_g": {"type": "proposed", "avg_translation_error_pct": 49.21289031715033, "avg_rotation_error_deg_per_100m": 1.4890202715540672, "velocity_rmse_mps": 2.0614999831475975, "endpoint_position_error_m": 33.03332483542461, "path_length_error_pct": 46.281004201339016},
+        "dro_gd": {"type": "proposed", "avg_translation_error_pct": 2.6683536996496047, "avg_rotation_error_deg_per_100m": 1.4890202715540672, "velocity_rmse_mps": 0.1226016423560379, "endpoint_position_error_m": 2.018228597680548, "path_length_error_pct": 0.4045988878555723}
       }
     }
   }

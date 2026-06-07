@@ -2,7 +2,7 @@
 
 ## synthetic_doppler_core
 
-Compares odometry predictions on two generated driving-like radar sequences. The experiment is meant to establish whether the proposed odometry family improves relative pose accuracy while maintaining heading accuracy on the replacement benchmark.
+Compares odometry predictions on two generated driving-like radar sequences. The experiment is meant to establish whether a submitted odometry system improves relative pose accuracy while maintaining heading accuracy on the replacement benchmark.
 
 ## synthetic_doppler_structured
 

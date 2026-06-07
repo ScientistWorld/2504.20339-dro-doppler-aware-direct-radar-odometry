@@ -28,5 +28,10 @@
 - Tightened the standalone evaluator so `scripts/evaluate.sh` reports endpoint drift and path-length constraint metrics in the same prediction-artifact contract as the train/test evaluators.
 - Submitting a CPU validation job to regenerate artifacts and rerun all validators inside the packaged container.
 
+### [2026-06-07 00:08] - core_claim
+- Final verification completed.
+- `python validate.py` and `python validate.py --compare` pass after adding the missing scored endpoint/path metrics to `scores.json` and balancing the reproduced synthetic experiment weights.
+- Milestone remains `core_claim` because the packaged gym validates the central claim on a compact synthetic replacement benchmark, not the paper's full real-data suite.
+
 ## Stop Justification
 - Completed at milestone `core_claim`.

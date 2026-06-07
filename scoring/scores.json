@@ -4,19 +4,27 @@
       "results": {
         "fixed_velocity_gyro": {
           "avg_translation_error_pct": 24.999117176518897,
-          "avg_rotation_error_deg_per_100m": 1.4890202715540672
+          "avg_rotation_error_deg_per_100m": 1.4890202715540672,
+          "endpoint_position_error_m": 17.66027387959333,
+          "path_length_error_pct": 24.936858717673985
         },
         "dro_d": {
           "avg_translation_error_pct": 2.668160341429319,
-          "avg_rotation_error_deg_per_100m": 1.4890202715540672
+          "avg_rotation_error_deg_per_100m": 1.4890202715540672,
+          "endpoint_position_error_m": 2.0184844362228564,
+          "path_length_error_pct": 0.4034274109141237
         },
         "dro_g": {
           "avg_translation_error_pct": 49.21289031715033,
-          "avg_rotation_error_deg_per_100m": 1.4890202715540672
+          "avg_rotation_error_deg_per_100m": 1.4890202715540672,
+          "endpoint_position_error_m": 33.03332483542461,
+          "path_length_error_pct": 46.281004201339016
         },
         "dro_gd": {
           "avg_translation_error_pct": 2.6683536996496047,
-          "avg_rotation_error_deg_per_100m": 1.4890202715540672
+          "avg_rotation_error_deg_per_100m": 1.4890202715540672,
+          "endpoint_position_error_m": 2.018228597680548,
+          "path_length_error_pct": 0.4045988878555723
         }
       }
     },
@@ -24,19 +32,27 @@
       "results": {
         "fixed_velocity_gyro": {
           "translation_error_pct": 22.5723447995088,
-          "rotation_error_deg_per_100m": 1.6101579284070635
+          "rotation_error_deg_per_100m": 1.6101579284070635,
+          "endpoint_position_error_m": 15.340210388259122,
+          "path_length_error_pct": 22.450970962004906
         },
         "dro_d": {
           "translation_error_pct": 2.38527686808353,
-          "rotation_error_deg_per_100m": 1.6101579284070635
+          "rotation_error_deg_per_100m": 1.6101579284070635,
+          "endpoint_position_error_m": 1.7371967695673802,
+          "path_length_error_pct": 0.47078720953124364
         },
         "dro_g": {
           "translation_error_pct": 66.48673201499413,
-          "rotation_error_deg_per_100m": 1.6101579284070635
+          "rotation_error_deg_per_100m": 1.6101579284070635,
+          "endpoint_position_error_m": 43.847447626196754,
+          "path_length_error_pct": 63.184118722722154
         },
         "dro_gd": {
           "translation_error_pct": 2.38477551097677,
-          "rotation_error_deg_per_100m": 1.6101579284070635
+          "rotation_error_deg_per_100m": 1.6101579284070635,
+          "endpoint_position_error_m": 1.7360113697880137,
+          "path_length_error_pct": 0.47012159706225454
         }
       }
     },
@@ -44,19 +60,27 @@
       "results": {
         "fixed_velocity_gyro": {
           "translation_error_pct": 27.425889553528993,
-          "rotation_error_deg_per_100m": 1.3678826147010708
+          "rotation_error_deg_per_100m": 1.3678826147010708,
+          "endpoint_position_error_m": 19.980337370927536,
+          "path_length_error_pct": 27.422746473343064
         },
         "dro_d": {
           "translation_error_pct": 2.951043814775108,
-          "rotation_error_deg_per_100m": 1.3678826147010708
+          "rotation_error_deg_per_100m": 1.3678826147010708,
+          "endpoint_position_error_m": 2.2997721028783324,
+          "path_length_error_pct": 0.3360676122970038
         },
         "dro_g": {
           "translation_error_pct": 31.939048619306533,
-          "rotation_error_deg_per_100m": 1.3678826147010708
+          "rotation_error_deg_per_100m": 1.3678826147010708,
+          "endpoint_position_error_m": 22.219202044652455,
+          "path_length_error_pct": 29.377889679955878
         },
         "dro_gd": {
           "translation_error_pct": 2.951931888322439,
-          "rotation_error_deg_per_100m": 1.3678826147010708
+          "rotation_error_deg_per_100m": 1.3678826147010708,
+          "endpoint_position_error_m": 2.300445825573082,
+          "path_length_error_pct": 0.33907617864889
         }
       }
     },
@@ -65,17 +89,23 @@
         "dro_d": {
           "avg_translation_error_pct": 2.668160341429319,
           "avg_rotation_error_deg_per_100m": 1.4890202715540672,
-          "velocity_rmse_mps": 0.12228225453081742
+          "velocity_rmse_mps": 0.12228225453081742,
+          "endpoint_position_error_m": 2.0184844362228564,
+          "path_length_error_pct": 0.4034274109141237
         },
         "dro_g": {
           "avg_translation_error_pct": 49.21289031715033,
           "avg_rotation_error_deg_per_100m": 1.4890202715540672,
-          "velocity_rmse_mps": 2.0614999831475975
+          "velocity_rmse_mps": 2.0614999831475975,
+          "endpoint_position_error_m": 33.03332483542461,
+          "path_length_error_pct": 46.281004201339016
         },
         "dro_gd": {
           "avg_translation_error_pct": 2.6683536996496047,
           "avg_rotation_error_deg_per_100m": 1.4890202715540672,
-          "velocity_rmse_mps": 0.1226016423560379
+          "velocity_rmse_mps": 0.1226016423560379,
+          "endpoint_position_error_m": 2.018228597680548,
+          "path_length_error_pct": 0.4045988878555723
         }
       }
     }

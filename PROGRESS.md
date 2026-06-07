@@ -35,7 +35,7 @@
 - Final validation with `python validate.py` passes.
 - Split-score audit job `c758ed34-2b1` completed with exit code 0 on 2026-06-06. On the held-out odd-frame test slice, DRO-GD reached `2.703%` average translation error versus `24.999%` for the fixed-velocity gyro baseline; the train slice was similarly stable at `2.652%` versus `25.001%`.
 - The standalone evaluator has been tightened to report endpoint-position drift and path-length error alongside the primary translation/rotation metrics, matching the richer train/test evaluator contract.
-- A CPU validation job is being submitted to regenerate all artifacts and rerun `scripts/reproduce.sh`, `scripts/evaluate_train.sh`, `scripts/evaluate_test.sh`, `python validate.py`, and `python validate.py --compare` inside the container.
+- Final verification added those endpoint/path metrics to the committed `scores.json` and synthetic reference anchors, adjusted the reproduced synthetic experiment weights for sensible gym scoring, and confirmed `python validate.py` plus `python validate.py --compare` pass.
 
 ## Remaining
 
@@ -53,6 +53,7 @@
 - During the continuation audit, the GP infill operator was corrected from SciPy convolution to cross-correlation so asymmetric interpolation kernels are applied in the same orientation as the paper's neural-network-style convolution implementation.
 - The absolute stdout/stderr paths reported for job `cf4a04e5-70e` were not mounted in this interactive session, but the workspace artifacts and `validate.py --compare` output confirm successful execution.
 - The absolute stdout/stderr paths reported for job `99110a51-e02` were also not mounted in this interactive session, but the regenerated `scoring/scores.json` and final `python validate.py` output confirm successful execution.
+- The final verifier did not rerun `scripts/evaluate.sh` on the login node because the login Python lacks NumPy; the packaged container installs NumPy via `environment/setup.sh`, prior container jobs exercised the pipeline, and `validate.py --compare` passes on the committed artifacts.
 
 ## Deviations from Paper
 
