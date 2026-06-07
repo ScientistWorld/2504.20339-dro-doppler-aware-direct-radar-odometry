@@ -3,7 +3,7 @@
 
 set -e
 
-cd /home/user
+cd "$(dirname "$0")/.."
 
 bash scripts/download.sh
 bash scripts/baseline.sh

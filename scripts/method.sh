@@ -3,7 +3,7 @@
 
 set -e
 
-cd /home/user
+cd "$(dirname "$0")/.."
 
 [ -e data/synthetic_dro.npz ] || bash scripts/download.sh
 mkdir -p checkpoints/dro_synthetic
