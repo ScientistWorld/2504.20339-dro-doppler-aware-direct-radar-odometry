@@ -39,5 +39,11 @@
 - Added the missing Table I `CT-LG` reference baseline and updated `TARGETS.md` to name endpoint and path-length constraint metrics.
 - Submitting a CPU container validation job because the login-node Python environment lacks NumPy.
 
+### [2026-06-07 00:18] - core_claim
+- Final verification kept the milestone at `core_claim`.
+- Cleaned method-safe scoring guidance so from-scratch agents receive task and evaluation constraints without implementation details.
+- Removed a generated cache artifact and reran `python validate.py --compare`, which passes.
+- Signaling done with the remaining limitation that the gym uses a compact synthetic replacement benchmark.
+
 ## Stop Justification
 - Completed at milestone `core_claim`.

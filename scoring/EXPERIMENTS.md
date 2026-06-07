@@ -6,11 +6,11 @@ Compares odometry predictions on two generated driving-like radar sequences. The
 
 ## synthetic_doppler_structured
 
-Reports the same odometry metrics on the landmark-rich generated sequence alone. This checks whether a method works when the scene has enough geometric structure for scan matching to be informative.
+Reports the same odometry metrics on the landmark-rich generated sequence alone. This checks whether a method works when the scene contains many stable landmarks and geometric constraints.
 
 ## synthetic_doppler_tunnel
 
-Reports the same odometry metrics on the tunnel-like generated sequence alone. This checks whether a method remains useful when geometric structure is weaker and velocity information matters more.
+Reports the same odometry metrics on the tunnel-like generated sequence alone. This checks whether a method remains useful when geometric structure is less distinctive and motion-related sensor cues are important.
 
 ## synthetic_doppler_ablation
 

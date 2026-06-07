@@ -130,14 +130,14 @@
       }
     },
     "synthetic_doppler_ablation": {
-      "description": "Local replacement ablation target for the combined DRO-GD method on the generated benchmark, including velocity quality.",
+      "description": "Local replacement ablation target on the generated benchmark, including velocity quality.",
       "weight": 0.01,
       "primary_metric": "avg_translation_error_pct",
       "metrics": {
-        "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0, "description": "Average sliced KITTI-style relative translation error for DRO variants on the generated scenarios."},
-        "avg_rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4, "description": "Average sliced KITTI-style relative rotation error for DRO variants on the generated scenarios."},
+        "avg_translation_error_pct": {"higher_is_better": false, "coefficient": -1.0, "description": "Average sliced KITTI-style relative translation error for submitted trajectories on the generated scenarios."},
+        "avg_rotation_error_deg_per_100m": {"higher_is_better": false, "coefficient": -0.4, "description": "Average sliced KITTI-style relative rotation error for submitted trajectories on the generated scenarios."},
         "velocity_rmse_mps": {"higher_is_better": false, "coefficient": -0.3, "description": "Root mean squared body-velocity error from the prediction artifact."},
-        "endpoint_position_error_m": {"higher_is_better": false, "coefficient": -0.25, "description": "Mean final-position drift in meters for DRO variants."},
+        "endpoint_position_error_m": {"higher_is_better": false, "coefficient": -0.25, "description": "Mean final-position drift in meters for submitted trajectories."},
         "path_length_error_pct": {"higher_is_better": false, "coefficient": -0.2, "description": "Mean absolute path-length mismatch as a percentage of ground-truth path length."}
       },
       "results": {

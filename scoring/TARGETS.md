@@ -26,7 +26,7 @@ Checks the feature-degenerate generated scenario separately. A scientist should 
 
 ## Ablation: synthetic_doppler_ablation
 
-Checks the same odometry setting while also tracking velocity quality for the combined direct-plus-Doppler method.
+Checks the same odometry setting while also tracking whether the reported body-frame velocity is physically consistent with the ground-truth trajectory.
 
 - **Metric**: `avg_translation_error_pct` (lower is better)
 - **Constraint metrics**: `avg_rotation_error_deg_per_100m`, `velocity_rmse_mps`, `endpoint_position_error_m`, and `path_length_error_pct` (lower is better)

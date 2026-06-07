@@ -1,7 +1,7 @@
 # Research Direction
 
-Work within Doppler-aware direct radar odometry for spinning FMCW radar. The intended improvement space is better use of dense radar intensity, Doppler shift constraints, continuous-time scan correction, gyro-aided motion modeling, and local-map registration.
+Work on radar odometry for a vehicle carrying a 360-degree spinning FMCW radar and yaw-rate sensor. The intended research space is estimating accurate SE(2) pose and body-frame velocity from the provided radar intensity sequences and sensor metadata.
 
-Acceptable research directions include changing how up/down chirp evidence is infilled, how the direct and Doppler objectives are weighted or optimized, how scans are corrected for range distortion and motion distortion, and how the local radar map is maintained.
+Acceptable directions include better use of radar intensity patterns, sensor timing, range and azimuth measurement structure, yaw-rate measurements, temporal consistency, and robust handling of sparse or ambiguous scene structure.
 
-Do not switch to unrelated localization paradigms that bypass the paper's claim, such as training a generic regressor from scans to poses, fitting a trajectory smoother to the ground truth, replacing radar odometry with an external SLAM system, or using privileged ground-truth trajectory information at inference time.
+Do not switch to unrelated localization paradigms that bypass the benchmark, such as fitting to ground-truth trajectories, using external maps or sensors, training a generic predictor only to memorize this generated benchmark, or changing the data generator/evaluator to make the task easier.
