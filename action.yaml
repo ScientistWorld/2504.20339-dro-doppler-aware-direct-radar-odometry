@@ -1,4 +1,4 @@
 action: submit
 gpus: 0
 test: false
-notes: "CPU gym audit: seeded references, real temporal/gyro refinements, weaker variants, and 14 artifact/scoring shortcuts in isolated workspaces"
+notes: "Follow-up audit: test physical chirp-row interpolation fix, temporal robustness across data seeds, and fixed-ground-truth replacement across all report rows"
