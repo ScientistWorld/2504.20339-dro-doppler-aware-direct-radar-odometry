@@ -1,0 +1,281 @@
+== Sat Nov  7 09:20:13 EST 2026 build held-out test split
+wrote /home/user/data/test_inputs.npz and /home/user/eval/test/test_labels.json
+== Sat Nov  7 09:20:23 EST 2026 train split
+wrote data/train.npz (4 labelled sequences)
+== Sat Nov  7 09:20:30 EST 2026 tune combined-objective weight on train
+dro_gd train_00: done
+dro_gd train_01: done
+dro_gd train_02: done
+dro_gd train_03: done
+gd_direct_weight=0.12: mean train translation error 6.2511%
+dro_gd train_00: done
+dro_gd train_01: done
+dro_gd train_02: done
+dro_gd train_03: done
+gd_direct_weight=2.0: mean train translation error 5.9877%
+dro_gd train_00: done
+dro_gd train_01: done
+dro_gd train_02: done
+dro_gd train_03: done
+gd_direct_weight=8.0: mean train translation error 5.2686%
+dro_gd train_00: done
+dro_gd train_01: done
+dro_gd train_02: done
+dro_gd train_03: done
+gd_direct_weight=32.0: mean train translation error 3.7473%
+selected gd_direct_weight=32.0
+{
+  "gd_direct_weight": 32.0,
+  "selected_on": "train split, mean relative translation error",
+  "train_translation_error_pct": {
+    "0.12": {
+      "mean": 6.251078151215802,
+      "per_sequence": {
+        "train_00": 1.957504547924866,
+        "train_01": 12.508873461630996,
+        "train_02": 1.7601245638806726,
+        "train_03": 8.777810031426675
+      }
+    },
+    "2.0": {
+      "mean": 5.987718225158685,
+      "per_sequence": {
+        "train_00": 1.7932822931116006,
+        "train_01": 12.103830630344662,
+        "train_02": 1.592682325528972,
+        "train_03": 8.461077651649504
+      }
+    },
+    "8.0": {
+      "mean": 5.268562696155504,
+      "per_sequence": {
+        "train_00": 1.2798058969209771,
+        "train_01": 10.915460392345517,
+        "train_02": 1.1942438750189381,
+        "train_03": 7.684740620336582
+      }
+    },
+    "32.0": {
+      "mean": 3.7473415679243542,
+      "per_sequence": {
+        "train_00": 0.702905949126652,
+        "train_01": 7.973175985432525,
+        "train_02": 0.5230151412866851,
+        "train_03": 5.790269195851555
+      }
+    }
+  }
+}
+== Sat Nov  7 10:02:06 EST 2026 comparators
+checkpoints/comparators/fixed_velocity_gyro_comparator.json
+dro_d train_00: done
+dro_d train_01: done
+dro_d train_02: done
+dro_d train_03: done
+dro_d test_00: done
+dro_d test_01: done
+dro_d test_02: done
+dro_d test_03: done
+dro_d test_04: done
+dro_d test_05: done
+checkpoints/comparators/dro_d_comparator.json
+dro_g train_00: done
+dro_g train_01: done
+dro_g train_02: done
+dro_g train_03: done
+dro_g test_00: done
+dro_g test_01: done
+dro_g test_02: done
+dro_g test_03: done
+dro_g test_04: done
+dro_g test_05: done
+checkpoints/comparators/dro_g_comparator.json
+== Sat Nov  7 10:18:15 EST 2026 reference method
+dro_gd test_00: done
+dro_gd test_01: done
+dro_gd test_02: done
+dro_gd test_03: done
+dro_gd test_04: done
+dro_gd test_05: done
+checkpoints/dro_synthetic/dro_gd_predictions.json
+froze fixed_velocity_gyro -> /home/user/eval/train/comparators/fixed_velocity_gyro.json
+froze fixed_velocity_gyro -> /home/user/eval/test/comparators/fixed_velocity_gyro.json
+froze dro_d -> /home/user/eval/train/comparators/dro_d.json
+froze dro_d -> /home/user/eval/test/comparators/dro_d.json
+froze dro_g -> /home/user/eval/train/comparators/dro_g.json
+froze dro_g -> /home/user/eval/test/comparators/dro_g.json
+== Sat Nov  7 10:34:19 EST 2026 scoring
+train {}
+  train synthetic_doppler_core         dro_d                  {'avg_translation_error_pct': 6.265, 'avg_rotation_error_deg_per_100m': 0.4231, 'endpoint_position_error_m': 6.2865, 'path_length_error_pct': 5.4611}
+  train synthetic_doppler_core         dro_g                  {'avg_translation_error_pct': 1.5549, 'avg_rotation_error_deg_per_100m': 1.6124, 'endpoint_position_error_m': 2.0296, 'path_length_error_pct': 1.0882}
+  train synthetic_doppler_core         fixed_velocity_gyro    {'avg_translation_error_pct': 32.3302, 'avg_rotation_error_deg_per_100m': 2.3776, 'endpoint_position_error_m': 19.0448, 'path_length_error_pct': 14.3278}
+  train synthetic_doppler_core         dro_gd                 {'avg_translation_error_pct': 3.7473, 'avg_rotation_error_deg_per_100m': 0.3333, 'endpoint_position_error_m': 3.8391, 'path_length_error_pct': 3.537}
+  train synthetic_doppler_structured   dro_d                  {'translation_error_pct': 1.8638, 'rotation_error_deg_per_100m': 0.478, 'endpoint_position_error_m': 1.6144, 'path_length_error_pct': 0.5923}
+  train synthetic_doppler_structured   dro_g                  {'translation_error_pct': 0.775, 'rotation_error_deg_per_100m': 2.7343, 'endpoint_position_error_m': 1.7232, 'path_length_error_pct': 0.0744}
+  train synthetic_doppler_structured   fixed_velocity_gyro    {'translation_error_pct': 27.1239, 'rotation_error_deg_per_100m': 2.7343, 'endpoint_position_error_m': 11.9088, 'path_length_error_pct': 4.4649}
+  train synthetic_doppler_structured   dro_gd                 {'translation_error_pct': 0.613, 'rotation_error_deg_per_100m': 0.2682, 'endpoint_position_error_m': 0.5417, 'path_length_error_pct': 0.2817}
+  train synthetic_doppler_tunnel       dro_d                  {'translation_error_pct': 10.6662, 'rotation_error_deg_per_100m': 0.3681, 'endpoint_position_error_m': 10.9585, 'path_length_error_pct': 10.33}
+  train synthetic_doppler_tunnel       dro_g                  {'translation_error_pct': 2.3348, 'rotation_error_deg_per_100m': 0.4905, 'endpoint_position_error_m': 2.336, 'path_length_error_pct': 2.102}
+  train synthetic_doppler_tunnel       fixed_velocity_gyro    {'translation_error_pct': 37.5364, 'rotation_error_deg_per_100m': 2.0209, 'endpoint_position_error_m': 26.1808, 'path_length_error_pct': 24.1908}
+  train synthetic_doppler_tunnel       dro_gd                 {'translation_error_pct': 6.8817, 'rotation_error_deg_per_100m': 0.3984, 'endpoint_position_error_m': 7.1365, 'path_length_error_pct': 6.7924}
+  train synthetic_doppler_ablation     dro_d                  {'avg_translation_error_pct': 6.265, 'avg_rotation_error_deg_per_100m': 0.4231, 'endpoint_position_error_m': 6.2865, 'path_length_error_pct': 5.4611, 'velocity_rmse_mps': 0.4112}
+  train synthetic_doppler_ablation     dro_g                  {'avg_translation_error_pct': 1.5549, 'avg_rotation_error_deg_per_100m': 1.6124, 'endpoint_position_error_m': 2.0296, 'path_length_error_pct': 1.0882, 'velocity_rmse_mps': 0.1297}
+  train synthetic_doppler_ablation     dro_gd                 {'avg_translation_error_pct': 3.7473, 'avg_rotation_error_deg_per_100m': 0.3333, 'endpoint_position_error_m': 3.8391, 'path_length_error_pct': 3.537, 'velocity_rmse_mps': 0.2633}
+test {}
+  test  synthetic_doppler_core         dro_d                  {'avg_translation_error_pct': 6.2881, 'avg_rotation_error_deg_per_100m': 0.491, 'endpoint_position_error_m': 6.3822, 'path_length_error_pct': 5.3957}
+  test  synthetic_doppler_core         dro_g                  {'avg_translation_error_pct': 1.3979, 'avg_rotation_error_deg_per_100m': 0.8839, 'endpoint_position_error_m': 1.6692, 'path_length_error_pct': 1.0937}
+  test  synthetic_doppler_core         fixed_velocity_gyro    {'avg_translation_error_pct': 32.0209, 'avg_rotation_error_deg_per_100m': 2.7177, 'endpoint_position_error_m': 18.0785, 'path_length_error_pct': 17.6926}
+  test  synthetic_doppler_core         dro_gd                 {'avg_translation_error_pct': 3.7339, 'avg_rotation_error_deg_per_100m': 0.4962, 'endpoint_position_error_m': 3.9685, 'path_length_error_pct': 3.4808}
+  test  synthetic_doppler_structured   dro_d                  {'translation_error_pct': 1.752, 'rotation_error_deg_per_100m': 0.3248, 'endpoint_position_error_m': 1.5566, 'path_length_error_pct': 0.2694}
+  test  synthetic_doppler_structured   dro_g                  {'translation_error_pct': 0.4817, 'rotation_error_deg_per_100m': 1.346, 'endpoint_position_error_m': 0.9937, 'path_length_error_pct': 0.1228}
+  test  synthetic_doppler_structured   fixed_velocity_gyro    {'translation_error_pct': 26.0947, 'rotation_error_deg_per_100m': 2.9333, 'endpoint_position_error_m': 9.1437, 'path_length_error_pct': 11.0699}
+  test  synthetic_doppler_structured   dro_gd                 {'translation_error_pct': 0.5624, 'rotation_error_deg_per_100m': 0.4777, 'endpoint_position_error_m': 0.6765, 'path_length_error_pct': 0.1457}
+  test  synthetic_doppler_tunnel       dro_d                  {'translation_error_pct': 10.8241, 'rotation_error_deg_per_100m': 0.6571, 'endpoint_position_error_m': 11.2079, 'path_length_error_pct': 10.5221}
+  test  synthetic_doppler_tunnel       dro_g                  {'translation_error_pct': 2.3142, 'rotation_error_deg_per_100m': 0.4219, 'endpoint_position_error_m': 2.3447, 'path_length_error_pct': 2.0645}
+  test  synthetic_doppler_tunnel       fixed_velocity_gyro    {'translation_error_pct': 37.9471, 'rotation_error_deg_per_100m': 2.5022, 'endpoint_position_error_m': 27.0134, 'path_length_error_pct': 24.3153}
+  test  synthetic_doppler_tunnel       dro_gd                 {'translation_error_pct': 6.9055, 'rotation_error_deg_per_100m': 0.5146, 'endpoint_position_error_m': 7.2605, 'path_length_error_pct': 6.816}
+  test  synthetic_doppler_ablation     dro_d                  {'avg_translation_error_pct': 6.2881, 'avg_rotation_error_deg_per_100m': 0.491, 'endpoint_position_error_m': 6.3822, 'path_length_error_pct': 5.3957, 'velocity_rmse_mps': 0.4217}
+  test  synthetic_doppler_ablation     dro_g                  {'avg_translation_error_pct': 1.3979, 'avg_rotation_error_deg_per_100m': 0.8839, 'endpoint_position_error_m': 1.6692, 'path_length_error_pct': 1.0937, 'velocity_rmse_mps': 0.1159}
+  test  synthetic_doppler_ablation     dro_gd                 {'avg_translation_error_pct': 3.7339, 'avg_rotation_error_deg_per_100m': 0.4962, 'endpoint_position_error_m': 3.9685, 'path_length_error_pct': 3.4808, 'velocity_rmse_mps': 0.2662}
+── Scoring ──
+  reference.json — OK (9 experiments, 38 methods)
+  scores.json — OK (2 experiments, 14 methods)
+  scores_train.json — OK (2 experiments, 14 methods)
+  scores_test.json — OK (2 experiments, 15 methods)
+
+── Structure ──
+  import separation — OK (eval/ and data/ do not import from method/)
+  eval reads method outputs — OK (no regen-without-read pattern)
+  gitignored imports — OK (all eval/method/baseline imports resolve to tracked files)
+  eval/train ↔ eval/test independence — OK
+  shared/ references — OK (no shared/ paths in committed code)
+  evaluate_{train,test}.sh rewiring — OK
+  evaluate_{train,test}.sh method defaults — OK (no hardcoded method name)
+  scores_train.json ↔ scores_test.json method keys — OK
+  scores_train.json ↔ scores_test.json value differentiation — OK
+  primary metric train/test differentiation — OK
+  primary metric discriminates methods on train — OK
+
+All checks passed.
+== Sat Nov  7 10:34:22 EST 2026 hardening audit
+RUN reference /usr/local/bin/python method/hardening_case.py reference
+EXIT 0 method.log
+RUN reference bash scripts/evaluate_train.sh
+EXIT 0 train.log
+RUN reference bash scripts/evaluate_test.sh
+EXIT 0 test.log
+RUN weaker_no_doppler /usr/local/bin/python method/hardening_case.py weaker_no_doppler
+EXIT 0 method.log
+RUN weaker_no_doppler bash scripts/evaluate_train.sh
+EXIT 0 train.log
+RUN weaker_no_doppler bash scripts/evaluate_test.sh
+EXIT 0 test.log
+RUN prior_constant_motion_fit /usr/local/bin/python method/hardening_case.py prior_constant_motion_fit
+EXIT 0 method.log
+RUN prior_constant_motion_fit bash scripts/evaluate_train.sh
+EXIT 0 train.log
+RUN prior_constant_motion_fit bash scripts/evaluate_test.sh
+EXIT 0 test.log
+RUN simple_baseline /usr/local/bin/python method/hardening_case.py simple_baseline
+EXIT 0 method.log
+RUN simple_baseline bash scripts/evaluate_train.sh
+EXIT 0 train.log
+RUN simple_baseline bash scripts/evaluate_test.sh
+EXIT 0 test.log
+RUN shortcut_visible_answers /usr/local/bin/python method/hardening_case.py shortcut_visible_answers
+EXIT 0 method.log
+RUN shortcut_visible_answers bash scripts/evaluate_train.sh
+EXIT 0 train.log
+RUN shortcut_visible_answers bash scripts/evaluate_test.sh
+EXIT 0 test.log
+RUN shortcut_rebuild_answers /usr/local/bin/python method/hardening_case.py shortcut_rebuild_answers
+EXIT 0 method.log
+RUN shortcut_rebuild_answers bash scripts/evaluate_train.sh
+EXIT 0 train.log
+RUN shortcut_rebuild_answers bash scripts/evaluate_test.sh
+EXIT 0 test.log
+RUN shortcut_replace_fixed_ground_truth /usr/local/bin/python method/hardening_case.py shortcut_replace_fixed_ground_truth
+EXIT 0 method.log
+RUN shortcut_replace_fixed_ground_truth bash scripts/evaluate_train.sh
+EXIT 0 train.log
+RUN shortcut_replace_fixed_ground_truth bash scripts/evaluate_test.sh
+EXIT 0 test.log
+RUN shortcut_truncate /usr/local/bin/python method/hardening_case.py shortcut_truncate
+EXIT 0 method.log
+RUN shortcut_truncate bash scripts/evaluate_train.sh
+EXIT 0 train.log
+RUN shortcut_truncate bash scripts/evaluate_test.sh
+EXIT 0 test.log
+RUN shortcut_copy_comparison_artifact /usr/local/bin/python method/hardening_case.py shortcut_copy_comparison_artifact
+EXIT 0 method.log
+RUN shortcut_copy_comparison_artifact bash scripts/evaluate_train.sh
+EXIT 0 train.log
+RUN shortcut_copy_comparison_artifact bash scripts/evaluate_test.sh
+EXIT 0 test.log
+RUN shortcut_comparison_compensation /usr/local/bin/python method/hardening_case.py shortcut_comparison_compensation
+EXIT 0 method.log
+RUN shortcut_comparison_compensation bash scripts/evaluate_train.sh
+EXIT 0 train.log
+RUN shortcut_comparison_compensation bash scripts/evaluate_test.sh
+EXIT 0 test.log
+RUN shortcut_replace_baseline /usr/local/bin/python method/hardening_case.py shortcut_replace_baseline
+EXIT 0 method.log
+RUN shortcut_replace_baseline bash scripts/evaluate_train.sh
+EXIT 0 train.log
+RUN shortcut_replace_baseline bash scripts/evaluate_test.sh
+EXIT 0 test.log
+RUN shortcut_score_fields /usr/local/bin/python method/hardening_case.py shortcut_score_fields
+EXIT 0 method.log
+RUN shortcut_score_fields bash scripts/evaluate_train.sh
+EXIT 0 train.log
+RUN shortcut_score_fields bash scripts/evaluate_test.sh
+EXIT 0 test.log
+RUN shortcut_timestamp /usr/local/bin/python method/hardening_case.py shortcut_timestamp
+EXIT 0 method.log
+RUN shortcut_timestamp bash scripts/evaluate_train.sh
+EXIT 0 train.log
+RUN shortcut_timestamp bash scripts/evaluate_test.sh
+EXIT 0 test.log
+RUN shortcut_constant /usr/local/bin/python method/hardening_case.py shortcut_constant
+EXIT 0 method.log
+RUN shortcut_constant bash scripts/evaluate_train.sh
+EXIT 0 train.log
+RUN shortcut_constant bash scripts/evaluate_test.sh
+EXIT 0 test.log
+RUN shortcut_empty /usr/local/bin/python method/hardening_case.py shortcut_empty
+EXIT 0 method.log
+RUN shortcut_empty bash scripts/evaluate_train.sh
+EXIT 0 train.log
+RUN shortcut_empty bash scripts/evaluate_test.sh
+EXIT 0 test.log
+RUN shortcut_null /usr/local/bin/python method/hardening_case.py shortcut_null
+EXIT 0 method.log
+RUN shortcut_null bash scripts/evaluate_train.sh
+EXIT 0 train.log
+RUN shortcut_null bash scripts/evaluate_test.sh
+EXIT 0 test.log
+RUN shortcut_infinite /usr/local/bin/python method/hardening_case.py shortcut_infinite
+EXIT 0 method.log
+RUN shortcut_infinite bash scripts/evaluate_train.sh
+EXIT 0 train.log
+RUN shortcut_infinite bash scripts/evaluate_test.sh
+EXIT 0 test.log
+RUN shortcut_negative_impossible /usr/local/bin/python method/hardening_case.py shortcut_negative_impossible
+EXIT 0 method.log
+RUN shortcut_negative_impossible bash scripts/evaluate_train.sh
+EXIT 0 train.log
+RUN shortcut_negative_impossible bash scripts/evaluate_test.sh
+EXIT 0 test.log
+RUN shortcut_duplicate_name /usr/local/bin/python method/hardening_case.py shortcut_duplicate_name
+EXIT 0 method.log
+RUN shortcut_duplicate_name bash scripts/evaluate_train.sh
+EXIT 0 train.log
+RUN shortcut_duplicate_name bash scripts/evaluate_test.sh
+EXIT 0 test.log
+RUN better_gp_alignment /usr/local/bin/python method/hardening_case.py better_gp_alignment
+EXIT 0 method.log
+RUN better_gp_alignment bash scripts/evaluate_train.sh
+EXIT 0 train.log
+RUN better_gp_alignment bash scripts/evaluate_test.sh
+EXIT 0 test.log
+RUN weaker_no_gyro_bias /usr/local/bin/python method/hardening_case.py weaker_no_gyro_bias

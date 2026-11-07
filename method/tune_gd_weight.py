@@ -20,7 +20,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import dro_synthetic as dro  # noqa: E402
 
-CANDIDATE_WEIGHTS = (0.12, 2.0, 8.0, 32.0)
+CANDIDATE_WEIGHTS = (0.12, 8.0, 32.0, 128.0, 512.0)
 SEGMENTS_M = (20.0, 35.0, 50.0)
 
 

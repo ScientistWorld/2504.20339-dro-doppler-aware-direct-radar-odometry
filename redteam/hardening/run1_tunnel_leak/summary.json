@@ -1,0 +1,244 @@
+{
+ "better_gp_alignment": {
+  "candidate_rank": 1.0450135946187578,
+  "all_rows_rank": 1.0450135946187578,
+  "failed": {},
+  "core": {
+   "avg_translation_error_pct": 2.9955935790412602,
+   "avg_rotation_error_deg_per_100m": 0.4961585600370048,
+   "endpoint_position_error_m": 3.118598245658248,
+   "path_length_error_pct": 2.8595613021308495
+  }
+ },
+ "prior_constant_motion_fit": {
+  "candidate_rank": -32.04430626105829,
+  "all_rows_rank": -32.04430626105829,
+  "failed": {},
+  "core": {
+   "avg_translation_error_pct": 25.60768283160183,
+   "avg_rotation_error_deg_per_100m": 15.961936592359853,
+   "endpoint_position_error_m": 21.72893120652695,
+   "path_length_error_pct": 22.725785527890334
+  }
+ },
+ "reference": {
+  "candidate_rank": 0.0,
+  "all_rows_rank": 0.0,
+  "failed": {},
+  "core": {
+   "avg_translation_error_pct": 3.7339461799517637,
+   "avg_rotation_error_deg_per_100m": 0.4961585600370048,
+   "endpoint_position_error_m": 3.9684916702426456,
+   "path_length_error_pct": 3.480834885051113
+  }
+ },
+ "shortcut_comparison_compensation": {
+  "candidate_rank": -161.55850768160983,
+  "all_rows_rank": -161.55850768160983,
+  "failed": {
+   "dro_gd": "average translation error is not better than fixed-velocity dead reckoning"
+  },
+  "core": {
+   "avg_translation_error_pct": 100.0,
+   "avg_rotation_error_deg_per_100m": 100.0,
+   "endpoint_position_error_m": 100.0,
+   "path_length_error_pct": 100.0
+  }
+ },
+ "shortcut_constant": {
+  "candidate_rank": -161.55850768160983,
+  "all_rows_rank": -161.55850768160983,
+  "failed": {
+   "dro_gd": "average translation error is not better than fixed-velocity dead reckoning"
+  },
+  "core": {
+   "avg_translation_error_pct": 100.0,
+   "avg_rotation_error_deg_per_100m": 100.0,
+   "endpoint_position_error_m": 100.0,
+   "path_length_error_pct": 100.0
+  }
+ },
+ "shortcut_copy_comparison_artifact": {
+  "candidate_rank": 0.0,
+  "all_rows_rank": 0.0,
+  "failed": {},
+  "core": {
+   "avg_translation_error_pct": 3.7339461799517637,
+   "avg_rotation_error_deg_per_100m": 0.4961585600370048,
+   "endpoint_position_error_m": 3.9684916702426456,
+   "path_length_error_pct": 3.480834885051113
+  }
+ },
+ "shortcut_duplicate_name": {
+  "candidate_rank": -161.55850768160983,
+  "all_rows_rank": -161.55850768160983,
+  "failed": {
+   "dro_gd": "several artifacts claim this method name: checkpoints/dro_synthetic/dro_gd_predictions.json, checkpoints/extra/dro_gd_predictions.json"
+  },
+  "core": {
+   "avg_translation_error_pct": 100.0,
+   "avg_rotation_error_deg_per_100m": 100.0,
+   "endpoint_position_error_m": 100.0,
+   "path_length_error_pct": 100.0
+  }
+ },
+ "shortcut_empty": {
+  "candidate_rank": -161.55850768160983,
+  "all_rows_rank": -161.55850768160983,
+  "failed": {
+   "dro_gd": "trajectory has 0 rows, expected one per frame (72)"
+  },
+  "core": {
+   "avg_translation_error_pct": 100.0,
+   "avg_rotation_error_deg_per_100m": 100.0,
+   "endpoint_position_error_m": 100.0,
+   "path_length_error_pct": 100.0
+  }
+ },
+ "shortcut_infinite": {
+  "candidate_rank": -161.55850768160983,
+  "all_rows_rank": -161.55850768160983,
+  "failed": {
+   "dro_gd": "trajectory contains non-finite values"
+  },
+  "core": {
+   "avg_translation_error_pct": 100.0,
+   "avg_rotation_error_deg_per_100m": 100.0,
+   "endpoint_position_error_m": 100.0,
+   "path_length_error_pct": 100.0
+  }
+ },
+ "shortcut_negative_impossible": {
+  "candidate_rank": -161.55850768160983,
+  "all_rows_rank": -161.55850768160983,
+  "failed": {
+   "dro_gd": "positions are physically impossible"
+  },
+  "core": {
+   "avg_translation_error_pct": 100.0,
+   "avg_rotation_error_deg_per_100m": 100.0,
+   "endpoint_position_error_m": 100.0,
+   "path_length_error_pct": 100.0
+  }
+ },
+ "shortcut_null": {
+  "candidate_rank": -161.55850768160983,
+  "all_rows_rank": -161.55850768160983,
+  "failed": {
+   "dro_gd": "trajectory rows must contain only numbers"
+  },
+  "core": {
+   "avg_translation_error_pct": 100.0,
+   "avg_rotation_error_deg_per_100m": 100.0,
+   "endpoint_position_error_m": 100.0,
+   "path_length_error_pct": 100.0
+  }
+ },
+ "shortcut_rebuild_answers": {
+  "candidate_rank": -59.80433355770279,
+  "all_rows_rank": -59.80433355770279,
+  "failed": {},
+  "core": {
+   "avg_translation_error_pct": 31.87378703024139,
+   "avg_rotation_error_deg_per_100m": 60.86434763168456,
+   "endpoint_position_error_m": 47.149332201063864,
+   "path_length_error_pct": 20.96183298061577
+  }
+ },
+ "shortcut_replace_baseline": {
+  "candidate_rank": 0.0,
+  "all_rows_rank": 0.0,
+  "failed": {},
+  "core": {
+   "avg_translation_error_pct": 3.7339461799517637,
+   "avg_rotation_error_deg_per_100m": 0.4961585600370048,
+   "endpoint_position_error_m": 3.9684916702426456,
+   "path_length_error_pct": 3.480834885051113
+  }
+ },
+ "shortcut_replace_fixed_ground_truth": {
+  "candidate_rank": -161.55850768160983,
+  "all_rows_rank": -161.55850768160983,
+  "failed": {
+   "dro_gd": "test inputs data/test_inputs.npz are modified"
+  },
+  "core": {
+   "avg_translation_error_pct": 100.0,
+   "avg_rotation_error_deg_per_100m": 100.0,
+   "endpoint_position_error_m": 100.0,
+   "path_length_error_pct": 100.0
+  }
+ },
+ "shortcut_score_fields": {
+  "candidate_rank": 0.0,
+  "all_rows_rank": 0.0,
+  "failed": {},
+  "core": {
+   "avg_translation_error_pct": 3.7339461799517637,
+   "avg_rotation_error_deg_per_100m": 0.4961585600370048,
+   "endpoint_position_error_m": 3.9684916702426456,
+   "path_length_error_pct": 3.480834885051113
+  }
+ },
+ "shortcut_timestamp": {
+  "candidate_rank": -161.55850768160983,
+  "all_rows_rank": -161.55850768160983,
+  "failed": {
+   "dro_gd": "timestamps do not match the scan start times"
+  },
+  "core": {
+   "avg_translation_error_pct": 100.0,
+   "avg_rotation_error_deg_per_100m": 100.0,
+   "endpoint_position_error_m": 100.0,
+   "path_length_error_pct": 100.0
+  }
+ },
+ "shortcut_truncate": {
+  "candidate_rank": -161.55850768160983,
+  "all_rows_rank": -161.55850768160983,
+  "failed": {
+   "dro_gd": "trajectory has 20 rows, expected one per frame (72)"
+  },
+  "core": {
+   "avg_translation_error_pct": 100.0,
+   "avg_rotation_error_deg_per_100m": 100.0,
+   "endpoint_position_error_m": 100.0,
+   "path_length_error_pct": 100.0
+  }
+ },
+ "shortcut_visible_answers": {
+  "candidate_rank": -59.80433355770279,
+  "all_rows_rank": -59.80433355770279,
+  "failed": {},
+  "core": {
+   "avg_translation_error_pct": 31.87378703024139,
+   "avg_rotation_error_deg_per_100m": 60.86434763168456,
+   "endpoint_position_error_m": 47.149332201063864,
+   "path_length_error_pct": 20.96183298061577
+  }
+ },
+ "simple_baseline": {
+  "candidate_rank": -161.55850768160983,
+  "all_rows_rank": -161.55850768160983,
+  "failed": {
+   "dro_gd": "average translation error is not better than fixed-velocity dead reckoning"
+  },
+  "core": {
+   "avg_translation_error_pct": 100.0,
+   "avg_rotation_error_deg_per_100m": 100.0,
+   "endpoint_position_error_m": 100.0,
+   "path_length_error_pct": 100.0
+  }
+ },
+ "weaker_no_doppler": {
+  "candidate_rank": 3.276319565533318,
+  "all_rows_rank": 3.276319565533318,
+  "failed": {},
+  "core": {
+   "avg_translation_error_pct": 1.3979258267066281,
+   "avg_rotation_error_deg_per_100m": 0.8839337166876616,
+   "endpoint_position_error_m": 1.6691894708120742,
+   "path_length_error_pct": 1.0936631127435008
+  }
+ }
+}

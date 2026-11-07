@@ -40,6 +40,7 @@ GYRO_NOISE_STD = 0.001
 RANGE_SIGMA_BINS = 1.15
 BEAM_SIGMA = (2.0 * np.pi / BEAMS) * 0.42
 RADAR_LEVER_ARM_M = 1.2
+PATH_EXTENSION_M = 100.0
 
 # Visible training split: (sequence name, scene type, seed).
 TRAIN_SEQUENCES = (
@@ -81,8 +82,8 @@ def sample_motion_profile(rng: np.random.Generator, scenario: str) -> dict:
         kappa1 = rng.uniform(0.006, 0.016)
     elif scenario == "tunnel":
         v_cruise = rng.uniform(6.5, 9.0)
-        kappa0 = rng.uniform(-0.004, 0.004)
-        kappa1 = rng.uniform(0.0, 0.004)
+        kappa0 = rng.uniform(-0.002, 0.002)
+        kappa1 = rng.uniform(0.0, 0.0015)
     else:
         raise ValueError(f"unknown scenario: {scenario}")
     return {
@@ -175,8 +176,9 @@ def _path_polyline(x: np.ndarray, y: np.ndarray, theta: np.ndarray) -> tuple[np.
     core = pts[keep]
     d0 = np.array([np.cos(theta[0]), np.sin(theta[0])])
     d1 = np.array([np.cos(theta[-1]), np.sin(theta[-1])])
-    back = core[0] - np.outer(np.arange(20.0, 0.0, -0.5), d0)
-    fwd = core[-1] + np.outer(np.arange(0.5, 90.0, 0.5), d1)
+    # Scene extends beyond radar range at both ends: no visible wall ends.
+    back = core[0] - np.outer(np.arange(PATH_EXTENSION_M, 0.0, -0.5), d0)
+    fwd = core[-1] + np.outer(np.arange(0.5, PATH_EXTENSION_M, 0.5), d1)
     poly = np.vstack([back, core, fwd])
     s = np.concatenate([[0.0], np.cumsum(np.hypot(*np.diff(poly, axis=0).T))])
     return poly, s
@@ -221,11 +223,13 @@ def make_landmarks(motion: dict, scenario: str) -> tuple[np.ndarray, np.ndarray]
         amps.append(np.full(q.shape, 0.8))
     elif scenario == "tunnel":
         for side in (-1.0, 1.0):
+            # Dense, smooth walls (spacing below the range/azimuth
+            # resolution) carry no along-track structure.
             offset = rng.uniform(4.6, 5.6)
-            q = np.arange(0.0, s_max, 0.3)
-            lateral = side * (offset + rng.normal(0.0, 0.03, size=q.shape))
+            q = np.arange(0.0, s_max, 0.2)
+            lateral = side * (offset + rng.normal(0.0, 0.02, size=q.shape))
             points.append(_along_path(poly, s, q, lateral))
-            amps.append(np.full(q.shape, 0.35))
+            amps.append(np.full(q.shape, 0.25))
     else:
         raise ValueError(f"unknown scenario: {scenario}")
     return np.vstack(points), np.concatenate(amps)
