@@ -1,0 +1,143 @@
+{
+  "_metadata": {
+    "slice": "train",
+    "split": "visible labelled sequences in data/train.npz",
+    "sequences": 4,
+    "segment_lengths_m": [
+      20.0,
+      35.0,
+      50.0
+    ],
+    "comparator_rows": [
+      "dro_d",
+      "dro_g",
+      "fixed_velocity_gyro"
+    ],
+    "ground_truth_data": "data/train.npz",
+    "prediction_files": [
+      "checkpoints/dro_synthetic/dro_gd_predictions.json"
+    ],
+    "ignored_artifacts": [],
+    "failed_methods": {
+      "dro_gd": "average translation error is not better than fixed-velocity dead reckoning"
+    },
+    "ceilings": {
+      "translation_error_pct": 100.0,
+      "rotation_error_deg_per_100m": 100.0,
+      "velocity_rmse_mps": 10.0,
+      "endpoint_position_error_m": 100.0,
+      "path_length_error_pct": 100.0
+    }
+  },
+  "experiments": {
+    "synthetic_doppler_core": {
+      "results": {
+        "dro_d": {
+          "avg_translation_error_pct": 0.0,
+          "avg_rotation_error_deg_per_100m": 0.0,
+          "endpoint_position_error_m": 0.0,
+          "path_length_error_pct": 0.0
+        },
+        "dro_g": {
+          "avg_translation_error_pct": 0.0,
+          "avg_rotation_error_deg_per_100m": 0.0,
+          "endpoint_position_error_m": 0.0,
+          "path_length_error_pct": 0.0
+        },
+        "fixed_velocity_gyro": {
+          "avg_translation_error_pct": 0.0,
+          "avg_rotation_error_deg_per_100m": 0.0,
+          "endpoint_position_error_m": 0.0,
+          "path_length_error_pct": 0.0
+        },
+        "dro_gd": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        }
+      }
+    },
+    "synthetic_doppler_structured": {
+      "results": {
+        "dro_d": {
+          "translation_error_pct": 0.0,
+          "rotation_error_deg_per_100m": 0.0,
+          "endpoint_position_error_m": 0.0,
+          "path_length_error_pct": 0.0
+        },
+        "dro_g": {
+          "translation_error_pct": 0.0,
+          "rotation_error_deg_per_100m": 0.0,
+          "endpoint_position_error_m": 0.0,
+          "path_length_error_pct": 0.0
+        },
+        "fixed_velocity_gyro": {
+          "translation_error_pct": 0.0,
+          "rotation_error_deg_per_100m": 0.0,
+          "endpoint_position_error_m": 0.0,
+          "path_length_error_pct": 0.0
+        },
+        "dro_gd": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        }
+      }
+    },
+    "synthetic_doppler_tunnel": {
+      "results": {
+        "dro_d": {
+          "translation_error_pct": 0.0,
+          "rotation_error_deg_per_100m": 0.0,
+          "endpoint_position_error_m": 0.0,
+          "path_length_error_pct": 0.0
+        },
+        "dro_g": {
+          "translation_error_pct": 0.0,
+          "rotation_error_deg_per_100m": 0.0,
+          "endpoint_position_error_m": 0.0,
+          "path_length_error_pct": 0.0
+        },
+        "fixed_velocity_gyro": {
+          "translation_error_pct": 0.0,
+          "rotation_error_deg_per_100m": 0.0,
+          "endpoint_position_error_m": 0.0,
+          "path_length_error_pct": 0.0
+        },
+        "dro_gd": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        }
+      }
+    },
+    "synthetic_doppler_ablation": {
+      "results": {
+        "dro_d": {
+          "avg_translation_error_pct": 0.0,
+          "avg_rotation_error_deg_per_100m": 0.0,
+          "endpoint_position_error_m": 0.0,
+          "path_length_error_pct": 0.0,
+          "velocity_rmse_mps": 0.0
+        },
+        "dro_g": {
+          "avg_translation_error_pct": 0.0,
+          "avg_rotation_error_deg_per_100m": 0.0,
+          "endpoint_position_error_m": 0.0,
+          "path_length_error_pct": 0.0,
+          "velocity_rmse_mps": 0.0
+        },
+        "dro_gd": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0,
+          "velocity_rmse_mps": 10.0
+        }
+      }
+    }
+  }
+}

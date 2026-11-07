@@ -1,0 +1,158 @@
+{
+  "_metadata": {
+    "slice": "test",
+    "split": "held-out sequences (labels only in eval/test/)",
+    "sequences": 6,
+    "frames_per_sequence": [
+      72
+    ],
+    "segment_lengths_m": [
+      20.0,
+      35.0,
+      50.0
+    ],
+    "comparator_rows": [
+      "dro_d",
+      "dro_g",
+      "fixed_velocity_gyro"
+    ],
+    "test_inputs": {
+      "path": "data/test_inputs.npz",
+      "status": "verified"
+    },
+    "prediction_files": [
+      "checkpoints/dro_synthetic/dro_d_predictions.json",
+      "checkpoints/dro_synthetic/dro_g_predictions.json",
+      "checkpoints/dro_synthetic/dro_gd_predictions.json"
+    ],
+    "ignored_artifacts": [
+      {
+        "file": "checkpoints/dro_synthetic/dro_d_predictions.json",
+        "reason": "'dro_d' is a fixed comparator row owned by the evaluator"
+      },
+      {
+        "file": "checkpoints/dro_synthetic/dro_g_predictions.json",
+        "reason": "'dro_g' is a fixed comparator row owned by the evaluator"
+      }
+    ],
+    "failed_methods": {},
+    "ceilings": {
+      "translation_error_pct": 100.0,
+      "rotation_error_deg_per_100m": 100.0,
+      "velocity_rmse_mps": 10.0,
+      "endpoint_position_error_m": 100.0,
+      "path_length_error_pct": 100.0
+    }
+  },
+  "experiments": {
+    "synthetic_doppler_core": {
+      "results": {
+        "dro_d": {
+          "avg_translation_error_pct": 7.028720960797549,
+          "avg_rotation_error_deg_per_100m": 0.35644178389210596,
+          "endpoint_position_error_m": 6.974677445953259,
+          "path_length_error_pct": 6.014212625966368
+        },
+        "dro_g": {
+          "avg_translation_error_pct": 1.4932296056468928,
+          "avg_rotation_error_deg_per_100m": 0.4384219542008742,
+          "endpoint_position_error_m": 1.4384080501790109,
+          "path_length_error_pct": 1.2785735725316574
+        },
+        "fixed_velocity_gyro": {
+          "avg_translation_error_pct": 31.971911536828646,
+          "avg_rotation_error_deg_per_100m": 2.7175693881267353,
+          "endpoint_position_error_m": 17.911881537018964,
+          "path_length_error_pct": 17.692461423060674
+        },
+        "dro_gd": {
+          "avg_translation_error_pct": 1.355368947548978,
+          "avg_rotation_error_deg_per_100m": 0.41704888369221144,
+          "endpoint_position_error_m": 1.3577396519691785,
+          "path_length_error_pct": 1.1933097807046993
+        }
+      }
+    },
+    "synthetic_doppler_structured": {
+      "results": {
+        "dro_d": {
+          "translation_error_pct": 1.8607792055180814,
+          "rotation_error_deg_per_100m": 0.3606110604498907,
+          "endpoint_position_error_m": 1.5757372446226645,
+          "path_length_error_pct": 0.4214947501097894
+        },
+        "dro_g": {
+          "translation_error_pct": 0.28681537189895684,
+          "rotation_error_deg_per_100m": 0.34141540362515105,
+          "endpoint_position_error_m": 0.22158470702493738,
+          "path_length_error_pct": 0.1578027794945558
+        },
+        "fixed_velocity_gyro": {
+          "translation_error_pct": 26.09472773553496,
+          "rotation_error_deg_per_100m": 2.9333235001808937,
+          "endpoint_position_error_m": 9.143673485541003,
+          "path_length_error_pct": 11.06994943951076
+        },
+        "dro_gd": {
+          "translation_error_pct": 0.23830960887028288,
+          "rotation_error_deg_per_100m": 0.2986692626078255,
+          "endpoint_position_error_m": 0.17481625996102068,
+          "path_length_error_pct": 0.09651559318331532
+        }
+      }
+    },
+    "synthetic_doppler_tunnel": {
+      "results": {
+        "dro_d": {
+          "translation_error_pct": 12.196662716077016,
+          "rotation_error_deg_per_100m": 0.3522725073343211,
+          "endpoint_position_error_m": 12.373617647283856,
+          "path_length_error_pct": 11.606930501822944
+        },
+        "dro_g": {
+          "translation_error_pct": 2.6996438393948288,
+          "rotation_error_deg_per_100m": 0.5354285047765973,
+          "endpoint_position_error_m": 2.655231393333084,
+          "path_length_error_pct": 2.399344365568759
+        },
+        "fixed_velocity_gyro": {
+          "translation_error_pct": 37.84909533812234,
+          "rotation_error_deg_per_100m": 2.5018152760725774,
+          "endpoint_position_error_m": 26.680089588496926,
+          "path_length_error_pct": 24.31497340661059
+        },
+        "dro_gd": {
+          "translation_error_pct": 2.472428286227673,
+          "rotation_error_deg_per_100m": 0.5354285047765973,
+          "endpoint_position_error_m": 2.5406630439773363,
+          "path_length_error_pct": 2.290103968226083
+        }
+      }
+    },
+    "synthetic_doppler_ablation": {
+      "results": {
+        "dro_d": {
+          "avg_translation_error_pct": 7.028720960797549,
+          "avg_rotation_error_deg_per_100m": 0.35644178389210596,
+          "endpoint_position_error_m": 6.974677445953259,
+          "path_length_error_pct": 6.014212625966368,
+          "velocity_rmse_mps": 0.45434617207882927
+        },
+        "dro_g": {
+          "avg_translation_error_pct": 1.4932296056468928,
+          "avg_rotation_error_deg_per_100m": 0.4384219542008742,
+          "endpoint_position_error_m": 1.4384080501790109,
+          "path_length_error_pct": 1.2785735725316574,
+          "velocity_rmse_mps": 0.1215971275276116
+        },
+        "dro_gd": {
+          "avg_translation_error_pct": 1.355368947548978,
+          "avg_rotation_error_deg_per_100m": 0.41704888369221144,
+          "endpoint_position_error_m": 1.3577396519691785,
+          "path_length_error_pct": 1.1933097807046993,
+          "velocity_rmse_mps": 0.1150207330656589
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "case": "shortcut_timestamp",
+  "returncodes": {
+    "method": 0,
+    "train": 0,
+    "test": 0
+  },
+  "candidate_rank": {
+    "rank": -165.034891835611,
+    "metric_count": 17,
+    "missing": [],
+    "per_experiment": {
+      "synthetic_doppler_core": -54.86991438895227,
+      "synthetic_doppler_structured": -27.68688232536895,
+      "synthetic_doppler_tunnel": -45.30505343930554,
+      "synthetic_doppler_ablation": -37.173041681984245
+    }
+  },
+  "all_rows_rank": {
+    "rank": -165.034891835611,
+    "metric_count": 63,
+    "missing": [],
+    "per_experiment": {
+      "synthetic_doppler_core": -54.86991438895227,
+      "synthetic_doppler_structured": -27.68688232536895,
+      "synthetic_doppler_tunnel": -45.30505343930554,
+      "synthetic_doppler_ablation": -37.173041681984245
+    }
+  },
+  "candidate_results": {
+    "synthetic_doppler_core": {
+      "avg_translation_error_pct": 100.0,
+      "avg_rotation_error_deg_per_100m": 100.0,
+      "endpoint_position_error_m": 100.0,
+      "path_length_error_pct": 100.0
+    },
+    "synthetic_doppler_structured": {
+      "translation_error_pct": 100.0,
+      "rotation_error_deg_per_100m": 100.0,
+      "endpoint_position_error_m": 100.0,
+      "path_length_error_pct": 100.0
+    },
+    "synthetic_doppler_tunnel": {
+      "translation_error_pct": 100.0,
+      "rotation_error_deg_per_100m": 100.0,
+      "endpoint_position_error_m": 100.0,
+      "path_length_error_pct": 100.0
+    },
+    "synthetic_doppler_ablation": {
+      "avg_translation_error_pct": 100.0,
+      "avg_rotation_error_deg_per_100m": 100.0,
+      "endpoint_position_error_m": 100.0,
+      "path_length_error_pct": 100.0,
+      "velocity_rmse_mps": 10.0
+    }
+  },
+  "failed_methods": {
+    "dro_gd": "timestamps do not match the scan start times"
+  },
+  "ignored_artifacts": [],
+  "test_inputs": {
+    "path": "data/test_inputs.npz",
+    "status": "verified"
+  },
+  "identical_to_reference_report": false,
+  "elapsed_seconds": 2.8067063170019537
+}

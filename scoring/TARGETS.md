@@ -1,33 +1,34 @@
 # Evaluation Targets
 
+Scores come from `bash scripts/evaluate_train.sh` on the visible split and from the hidden evaluator on the held-out split. Both score every `*_predictions.json` artifact on disk. Every metric is an error: lower is better, and the lower bound is 0.
+
 ## Primary: synthetic_doppler_core
 
-Tests whether radar odometry produces accurate relative pose estimates in structured and feature-degenerate driving-like scenes.
+Accurate relative odometry over all sequences.
 
-- **Metric**: `avg_translation_error_pct` (lower is better)
-- **Constraint metrics**: `avg_rotation_error_deg_per_100m`, `endpoint_position_error_m`, and `path_length_error_pct` (lower is better)
-- **How to run**: `bash scripts/reproduce.sh`, or generate prediction JSON files and run `bash scripts/evaluate.sh <predictions...>`.
+- **Metric**: `avg_translation_error_pct`
+- **Constraint metrics**: `avg_rotation_error_deg_per_100m`, `endpoint_position_error_m`, `path_length_error_pct`
+- **Eligibility**: a method whose average translation error is not better than fixed-velocity dead reckoning is scored as failed, with all metrics at their ceilings.
 
 ## Constraint: synthetic_doppler_structured
 
-Checks the landmark-rich generated scenario separately. A scientist should improve translation accuracy without degrading heading consistency on this easier geometric setting.
+Accuracy on landmark-rich scenes must not be sacrificed.
 
-- **Metric**: `translation_error_pct` (lower is better)
-- **Constraint metrics**: `rotation_error_deg_per_100m`, `endpoint_position_error_m`, and `path_length_error_pct` (lower is better)
-- **How to run**: `bash scripts/reproduce.sh`.
+- **Metric**: `translation_error_pct`
+- **Constraint metrics**: `rotation_error_deg_per_100m`, `endpoint_position_error_m`, `path_length_error_pct`
 
 ## Constraint: synthetic_doppler_tunnel
 
-Checks the feature-degenerate generated scenario separately. A scientist should improve translation accuracy without degrading heading consistency when scan geometry alone is weak.
+Usable odometry in geometrically degenerate scenes.
 
-- **Metric**: `translation_error_pct` (lower is better)
-- **Constraint metrics**: `rotation_error_deg_per_100m`, `endpoint_position_error_m`, and `path_length_error_pct` (lower is better)
-- **How to run**: `bash scripts/reproduce.sh`.
+- **Metric**: `translation_error_pct`
+- **Constraint metrics**: `rotation_error_deg_per_100m`, `endpoint_position_error_m`, `path_length_error_pct`
 
 ## Ablation: synthetic_doppler_ablation
 
-Checks the same odometry setting while also tracking whether the reported body-frame velocity is physically consistent with the ground-truth trajectory.
+Pose accuracy together with physically consistent velocity estimates.
 
-- **Metric**: `avg_translation_error_pct` (lower is better)
-- **Constraint metrics**: `avg_rotation_error_deg_per_100m`, `velocity_rmse_mps`, `endpoint_position_error_m`, and `path_length_error_pct` (lower is better)
-- **How to run**: `bash scripts/reproduce.sh`.
+- **Metric**: `avg_translation_error_pct`
+- **Constraint metrics**: `velocity_rmse_mps`, `avg_rotation_error_deg_per_100m`, `endpoint_position_error_m`, `path_length_error_pct`
+
+How to run: `bash scripts/reproduce.sh`, or write your own artifacts and then run `bash scripts/evaluate_train.sh`.

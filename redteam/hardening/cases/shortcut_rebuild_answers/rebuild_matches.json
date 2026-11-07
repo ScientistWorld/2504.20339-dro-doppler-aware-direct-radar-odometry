@@ -1,0 +1,18 @@
+{
+ "train_00": {
+  "seed": 101,
+  "scenario": "structured"
+ },
+ "train_01": {
+  "seed": 102,
+  "scenario": "tunnel"
+ },
+ "train_02": {
+  "seed": 103,
+  "scenario": "structured"
+ },
+ "train_03": {
+  "seed": 104,
+  "scenario": "tunnel"
+ }
+}

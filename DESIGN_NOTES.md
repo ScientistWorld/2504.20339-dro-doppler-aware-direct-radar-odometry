@@ -1,5 +1,7 @@
 # Train/Test Evaluation Design Notes
 
+> **Superseded (hardening iteration).** The even/odd frame split described below was replaced. The visible split is now four labelled sequences in `data/train.npz`. The held-out split is six separate sequences: their inputs are in `data/test_inputs.npz`, their labels and comparator rows only in `eval/test/`. See `HARDENING.md`.
+
 ## Checks and Changes
 
 - Checked `scripts/evaluate_train.sh` and `scripts/evaluate_test.sh` side by side. The test script calls `eval/test/evaluate.py`, writes `scoring/scores_test.json`, and uses a `test` slice marker through the evaluator metadata.

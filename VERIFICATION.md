@@ -1,5 +1,7 @@
 # Verification Report
 
+> **Superseded (hardening iteration).** This report describes the gym before hardening. For the current design, scores and remaining limitations, see `HARDENING.md`.
+
 ## Initial Assessment
 The workspace claimed `core_claim` and contained a working compact reproduction of the Doppler radar odometry paper on a generated FMCW benchmark. The method, baseline, evaluator, split-score artifacts, packaged environment files, and prior successful CPU validation outputs were present. The claimed milestone remained justified, but a few final gym-readiness issues needed cleanup.
 

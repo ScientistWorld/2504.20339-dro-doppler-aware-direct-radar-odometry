@@ -1,0 +1,11 @@
+dro_gd train_00: done
+dro_gd train_01: done
+dro_gd train_02: done
+dro_gd train_03: done
+dro_gd test_00: done
+dro_gd test_01: done
+dro_gd test_02: done
+dro_gd test_03: done
+dro_gd test_04: done
+dro_gd test_05: done
+checkpoints/dro_synthetic/dro_gd_predictions.json
