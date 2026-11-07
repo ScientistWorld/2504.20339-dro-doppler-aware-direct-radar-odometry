@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: false
 milestone: core_claim
-notes: "Hardening: build hidden test split (labels only in eval/test), regenerate train split with time-varying trajectories, tune GD weight on train, run comparators + reference DRO-GD, freeze comparator rows, score train/test, replay variants and shortcuts through the hidden test."
+notes: "Hardening run 2: regenerate hidden test + train splits with degenerate tunnels (no visible wall ends), tune GD weight on train (wider grid), comparators + reference, freeze comparator rows, score, replay variants and shortcuts through the hidden test."
