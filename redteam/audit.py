@@ -19,7 +19,9 @@ ROOT = Path(__file__).resolve().parents[1]
 AUDIT = ROOT / 'redteam'
 CASES = ['reference_seed_0', 'reference_seed_1', 'reference_seed_2',
          'reference_data_seed_17', 'reference_data_seed_27',
-         'better_temporal', 'better_gyro_bias', 'weaker_no_doppler', 'simple_baseline',
+         'better_temporal', 'better_gyro_bias', 'better_gp_alignment',
+         'better_gp_alignment_temporal', 'better_temporal_data_seed_17',
+         'better_temporal_data_seed_27', 'weaker_no_doppler', 'simple_baseline',
          'shortcut_visible_answers', 'shortcut_rebuild_answers',
          'shortcut_replace_fixed_ground_truth', 'shortcut_copy_comparison_artifact',
          'shortcut_comparison_compensation', 'shortcut_replace_baseline', 'shortcut_truncate', 'shortcut_score_fields',
@@ -63,6 +65,10 @@ def prepare(case):
     copy_file(folder / 'method.py', workspace / 'method/audit_entry.py')
     if case != 'reference_seed_0':
         reference = AUDIT / 'reference_seed_0/artifacts'
+        if case == 'better_gp_alignment_temporal':
+            reference = AUDIT / 'better_gp_alignment/artifacts'
+        if case.startswith('better_temporal_data_seed_'):
+            reference = AUDIT / f'reference_data_seed_{case.rsplit("_", 1)[1]}/artifacts'
         if not reference.exists():
             raise RuntimeError('run reference_seed_0 first')
         shutil.copytree(reference, workspace / 'checkpoints', dirs_exist_ok=True)
@@ -121,7 +127,7 @@ def run_case(case):
         (folder / name).unlink(missing_ok=True)
     workspace = prepare(case)
     returncodes = {}
-    if case.startswith('reference_data_seed_'):
+    if case.startswith('reference_data_seed_') or case.startswith('better_temporal_data_seed_'):
         seed = case.rsplit('_', 1)[1]
         code = execute([sys.executable, 'data/synthetic_radar.py', '--seed', seed], workspace, folder/'data.log')
         returncodes['data'] = code
