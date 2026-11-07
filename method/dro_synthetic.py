@@ -386,7 +386,9 @@ class GyroBias:
 
     The bias is initialized by averaging the first Q raw gyro samples taken
     while the velocity estimate is below a threshold, then low-pass updated
-    whenever the vehicle is again estimated to be stationary.
+    whenever the vehicle is again estimated to be stationary. While fewer than
+    Q samples exist, their running mean is applied provisionally so the
+    uncorrected bias does not rotate the map during the initial stop.
     """
 
     def __init__(self, enabled: bool, threshold: float, init_samples: int, lowpass: float):
@@ -405,11 +407,9 @@ class GyroBias:
         self.stationary_frames += 1
         if not self.initialized:
             self.samples.append(raw_rate)
-            if len(self.samples) >= self.init_samples:
-                self.value = float(np.mean(self.samples))
-                self.initialized = True
-                return True
-            return False
+            self.value = float(np.mean(self.samples))
+            self.initialized = len(self.samples) >= self.init_samples
+            return True
         self.value = (1.0 - self.lowpass) * self.value + self.lowpass * raw_rate
         return True
 

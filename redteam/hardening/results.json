@@ -2012,7 +2012,7 @@
       }
     },
     "task_failure_perfect_elsewhere_rank": -26.069941253578016,
-    "perfect_method_rank": 0.7029415039738991,
+    "perfect_method_rank": 3.2631350709338576,
     "reference_values": {
       "synthetic_doppler_core": {
         "avg_translation_error_pct": 1.9679994742306117,
@@ -2039,6 +2039,10 @@
         "path_length_error_pct": 1.571734155881769,
         "velocity_rmse_mps": 0.13365133203152285
       }
-    }
+    },
+    "perfect_method_rank_note": "recomputed after fixing a dict-comprehension bug that kept only the last experiment (job value was 0.703)",
+    "rank_if_candidate_equals_dro_d_row": -6.6652530281263,
+    "rank_if_candidate_equals_dro_g_row": 0.21973903152499813,
+    "rank_if_candidate_equals_fixed_velocity_gyro_row": -27.123331462307547
   }
 }

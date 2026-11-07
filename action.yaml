@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: false
 milestone: core_claim
-notes: "Hardening run 2: regenerate hidden test + train splits with degenerate tunnels (no visible wall ends), tune GD weight on train (wider grid), comparators + reference, freeze comparator rows, score, replay variants and shortcuts through the hidden test."
+notes: "Hardening run 3: provisional gyro-bias running mean (fixes stationarity-detection fragility behind the train/test structured gap), re-tune GD weight on train with extended grid, rerun comparators + reference, refreeze, rescore, replay variants and shortcuts through the hidden test."

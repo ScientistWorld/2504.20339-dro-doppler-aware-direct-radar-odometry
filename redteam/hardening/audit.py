@@ -31,7 +31,7 @@ import numpy as np
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-RUNS = HERE / "runs"
+RUNS = HERE / "cases"
 WS_ROOT = ROOT / "tmp" / "hardening_ws"
 
 VARIANTS = [
@@ -262,7 +262,7 @@ def analyze() -> dict:
                 row[metric] = 0.0
         hypo["experiments"][exp] = {"results": {"dro_gd": row}}
     out["task_failure_perfect_elsewhere_rank"] = rank(hypo, reference, config, ["dro_gd"])["rank"]
-    perfect = {"experiments": {e: {"results": {"dro_gd": {m: 0.0 for m in d["results"]["dro_gd"]}}}} for e, d in base.items()}
+    perfect = {"experiments": {e: {"results": {"dro_gd": {m: 0.0 for m in d["results"]["dro_gd"]}}} for e, d in base.items()}}
     out["perfect_method_rank"] = rank(perfect, reference, config, ["dro_gd"])["rank"]
     out["reference_values"] = {e: d["results"]["dro_gd"] for e, d in base.items()}
     return out

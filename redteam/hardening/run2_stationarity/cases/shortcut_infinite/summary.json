@@ -1,0 +1,67 @@
+{
+  "case": "shortcut_infinite",
+  "returncodes": {
+    "method": 0,
+    "train": 0,
+    "test": 0
+  },
+  "candidate_rank": {
+    "rank": -163.8368649290661,
+    "metric_count": 17,
+    "missing": [],
+    "per_experiment": {
+      "synthetic_doppler_core": -54.45761636392198,
+      "synthetic_doppler_structured": -27.420755806127886,
+      "synthetic_doppler_tunnel": -45.06143426299016,
+      "synthetic_doppler_ablation": -36.897058496026105
+    }
+  },
+  "all_rows_rank": {
+    "rank": -163.8368649290661,
+    "metric_count": 63,
+    "missing": [],
+    "per_experiment": {
+      "synthetic_doppler_core": -54.45761636392198,
+      "synthetic_doppler_structured": -27.420755806127886,
+      "synthetic_doppler_tunnel": -45.06143426299016,
+      "synthetic_doppler_ablation": -36.897058496026105
+    }
+  },
+  "candidate_results": {
+    "synthetic_doppler_core": {
+      "avg_translation_error_pct": 100.0,
+      "avg_rotation_error_deg_per_100m": 100.0,
+      "endpoint_position_error_m": 100.0,
+      "path_length_error_pct": 100.0
+    },
+    "synthetic_doppler_structured": {
+      "translation_error_pct": 100.0,
+      "rotation_error_deg_per_100m": 100.0,
+      "endpoint_position_error_m": 100.0,
+      "path_length_error_pct": 100.0
+    },
+    "synthetic_doppler_tunnel": {
+      "translation_error_pct": 100.0,
+      "rotation_error_deg_per_100m": 100.0,
+      "endpoint_position_error_m": 100.0,
+      "path_length_error_pct": 100.0
+    },
+    "synthetic_doppler_ablation": {
+      "avg_translation_error_pct": 100.0,
+      "avg_rotation_error_deg_per_100m": 100.0,
+      "endpoint_position_error_m": 100.0,
+      "path_length_error_pct": 100.0,
+      "velocity_rmse_mps": 10.0
+    }
+  },
+  "failed_methods": {
+    "dro_gd": "trajectory contains non-finite values"
+  },
+  "ignored_artifacts": [],
+  "test_inputs": {
+    "path": "data/test_inputs.npz",
+    "status": "verified"
+  },
+  "identical_to_reference_report": false,
+  "elapsed_seconds": 2.081294422969222
+}

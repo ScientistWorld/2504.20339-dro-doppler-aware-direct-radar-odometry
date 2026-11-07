@@ -1,0 +1,74 @@
+{
+  "case": "shortcut_replace_baseline",
+  "returncodes": {
+    "method": 0,
+    "train": 0,
+    "test": 0
+  },
+  "candidate_rank": {
+    "rank": 0.0,
+    "metric_count": 17,
+    "missing": [],
+    "per_experiment": {
+      "synthetic_doppler_core": 0.0,
+      "synthetic_doppler_structured": 0.0,
+      "synthetic_doppler_tunnel": 0.0,
+      "synthetic_doppler_ablation": 0.0
+    }
+  },
+  "all_rows_rank": {
+    "rank": 0.0,
+    "metric_count": 63,
+    "missing": [],
+    "per_experiment": {
+      "synthetic_doppler_core": 0.0,
+      "synthetic_doppler_structured": 0.0,
+      "synthetic_doppler_tunnel": 0.0,
+      "synthetic_doppler_ablation": 0.0
+    }
+  },
+  "candidate_results": {
+    "synthetic_doppler_core": {
+      "avg_translation_error_pct": 1.9679994742306117,
+      "avg_rotation_error_deg_per_100m": 1.4432634797974935,
+      "endpoint_position_error_m": 2.459841691736304,
+      "path_length_error_pct": 1.571734155881769
+    },
+    "synthetic_doppler_structured": {
+      "translation_error_pct": 0.7846446655940382,
+      "rotation_error_deg_per_100m": 2.3960329478291236,
+      "endpoint_position_error_m": 1.6521477964661535,
+      "path_length_error_pct": 0.19433249319249826
+    },
+    "synthetic_doppler_tunnel": {
+      "translation_error_pct": 3.1513542828671848,
+      "rotation_error_deg_per_100m": 0.4904940117658631,
+      "endpoint_position_error_m": 3.267535587006455,
+      "path_length_error_pct": 2.94913581857104
+    },
+    "synthetic_doppler_ablation": {
+      "avg_translation_error_pct": 1.9679994742306117,
+      "avg_rotation_error_deg_per_100m": 1.4432634797974935,
+      "endpoint_position_error_m": 2.459841691736304,
+      "path_length_error_pct": 1.571734155881769,
+      "velocity_rmse_mps": 0.13365133203152285
+    }
+  },
+  "failed_methods": {},
+  "ignored_artifacts": [
+    {
+      "file": "checkpoints/baseline/dead_reckoning_predictions.json",
+      "reason": "'dead_reckoning' is a fixed comparator row owned by the evaluator"
+    },
+    {
+      "file": "checkpoints/baseline/fixed_velocity_gyro_predictions.json",
+      "reason": "'fixed_velocity_gyro' is a fixed comparator row owned by the evaluator"
+    }
+  ],
+  "test_inputs": {
+    "path": "data/test_inputs.npz",
+    "status": "verified"
+  },
+  "identical_to_reference_report": true,
+  "elapsed_seconds": 1.995980815961957
+}

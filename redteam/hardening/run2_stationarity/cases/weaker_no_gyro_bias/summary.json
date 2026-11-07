@@ -1,0 +1,65 @@
+{
+  "case": "weaker_no_gyro_bias",
+  "returncodes": {
+    "method": 0,
+    "train": 0,
+    "test": 0
+  },
+  "candidate_rank": {
+    "rank": -0.7896933434000988,
+    "metric_count": 17,
+    "missing": [],
+    "per_experiment": {
+      "synthetic_doppler_core": -0.250737179460455,
+      "synthetic_doppler_structured": -0.06898334971445073,
+      "synthetic_doppler_tunnel": -0.30292304957667393,
+      "synthetic_doppler_ablation": -0.1670497646485192
+    }
+  },
+  "all_rows_rank": {
+    "rank": -0.7896933434000988,
+    "metric_count": 63,
+    "missing": [],
+    "per_experiment": {
+      "synthetic_doppler_core": -0.250737179460455,
+      "synthetic_doppler_structured": -0.06898334971445073,
+      "synthetic_doppler_tunnel": -0.30292304957667393,
+      "synthetic_doppler_ablation": -0.1670497646485192
+    }
+  },
+  "candidate_results": {
+    "synthetic_doppler_core": {
+      "avg_translation_error_pct": 2.082068651113154,
+      "avg_rotation_error_deg_per_100m": 2.7175693881267353,
+      "endpoint_position_error_m": 3.2993645470907,
+      "path_length_error_pct": 1.582325876625161
+    },
+    "synthetic_doppler_structured": {
+      "translation_error_pct": 0.909089204056667,
+      "rotation_error_deg_per_100m": 2.9333235001808937,
+      "endpoint_position_error_m": 2.1303394431381264,
+      "path_length_error_pct": 0.1992341283175391
+    },
+    "synthetic_doppler_tunnel": {
+      "translation_error_pct": 3.2550480981696412,
+      "rotation_error_deg_per_100m": 2.5018152760725774,
+      "endpoint_position_error_m": 4.468389651043274,
+      "path_length_error_pct": 2.9654176249327837
+    },
+    "synthetic_doppler_ablation": {
+      "avg_translation_error_pct": 2.082068651113154,
+      "avg_rotation_error_deg_per_100m": 2.7175693881267353,
+      "endpoint_position_error_m": 3.2993645470907,
+      "path_length_error_pct": 1.582325876625161,
+      "velocity_rmse_mps": 0.13184541550178766
+    }
+  },
+  "failed_methods": {},
+  "ignored_artifacts": [],
+  "test_inputs": {
+    "path": "data/test_inputs.npz",
+    "status": "verified"
+  },
+  "identical_to_reference_report": false,
+  "elapsed_seconds": 1674.6222358500818
+}
