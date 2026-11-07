@@ -1,0 +1,4 @@
+**/workspace/
+**/cache/
+**/__pycache__/
+*.pyc

@@ -1,0 +1,12 @@
+{
+  "start_commit": "9a5ad9cc8ccb27b6a127474dce27592938fe8b51",
+  "initial_status": " M README.md\n M manifest.json\n D trajectory/turn_0001_raw.jsonl\n D trajectory/turn_0002_raw.jsonl\n D trajectory/turn_0003_raw.jsonl\n D trajectory/turn_0004_raw.jsonl\n D trajectory/turn_0005_raw.jsonl\n D trajectory/turn_0006_raw.jsonl\n D trajectory/turn_0007_raw.jsonl\n D trajectory/turn_0008_raw.jsonl\n?? redteam/\n",
+  "protected_files_sha256": {
+    "scripts/run.sh": "156402b03e8f86094d3fabc473abebda0d5dd8f516ec50b8543737d1fe81be9c",
+    "action.yaml": "070beaf904ced86d44de0ed2f0d482ab2a7655fbe1ca55bab4f5f7a2d50cc203",
+    "method/dro_synthetic.py": "d65a210248e4bc148f6ba239232bae435283776be28d16299687e4de0b51c577",
+    "data/synthetic_radar.py": "80d834adbbd72906d467812f884de8cb61c240cc99c76ade507bc5c5eaf50bda",
+    "scoring/reference.json": "8220f899c38a882b3e52cd7c15b8fbaf925cc92a9a463370f773a47f6fb318c3",
+    "scoring/scores_test.json": "4298ce70587f1ef88a903011315ee96fc1db52ab747aee70ef0df8179b935aa5"
+  }
+}
