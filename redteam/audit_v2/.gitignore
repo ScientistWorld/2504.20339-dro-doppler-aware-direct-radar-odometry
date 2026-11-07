@@ -1,0 +1,5 @@
+workspaces/
+cache/
+__pycache__/
+*.log
+state/
