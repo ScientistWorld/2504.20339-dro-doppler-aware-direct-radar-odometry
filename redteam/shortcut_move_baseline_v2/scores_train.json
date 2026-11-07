@@ -1,0 +1,164 @@
+{
+  "_metadata": {
+    "slice": "train",
+    "split": "visible labelled sequences in data/train.npz",
+    "sequences": 4,
+    "segment_lengths_m": [
+      20.0,
+      35.0,
+      50.0
+    ],
+    "comparator_rows": [
+      "dro_d",
+      "dro_g",
+      "fixed_velocity_gyro"
+    ],
+    "ground_truth_data": "data/train.npz",
+    "prediction_files": [
+      "baseline/dead_reckoning_predictions.json",
+      "baseline/dro_d_predictions.json",
+      "baseline/dro_g_predictions.json",
+      "baseline/fixed_velocity_gyro_predictions.json",
+      "checkpoints/candidate_predictions.json"
+    ],
+    "ignored_artifacts": [
+      {
+        "file": "baseline/dead_reckoning_predictions.json",
+        "reason": "'dead_reckoning' is a fixed comparator row owned by the evaluator"
+      },
+      {
+        "file": "baseline/dro_d_predictions.json",
+        "reason": "'dro_d' is a fixed comparator row owned by the evaluator"
+      },
+      {
+        "file": "baseline/dro_g_predictions.json",
+        "reason": "'dro_g' is a fixed comparator row owned by the evaluator"
+      },
+      {
+        "file": "baseline/fixed_velocity_gyro_predictions.json",
+        "reason": "'fixed_velocity_gyro' is a fixed comparator row owned by the evaluator"
+      }
+    ],
+    "failed_methods": {
+      "dro_gd": "average translation error is not better than fixed-velocity dead reckoning"
+    },
+    "ceilings": {
+      "translation_error_pct": 100.0,
+      "rotation_error_deg_per_100m": 100.0,
+      "velocity_rmse_mps": 10.0,
+      "endpoint_position_error_m": 100.0,
+      "path_length_error_pct": 100.0
+    }
+  },
+  "experiments": {
+    "synthetic_doppler_core": {
+      "results": {
+        "dro_d": {
+          "avg_translation_error_pct": 1.421907531383766,
+          "avg_rotation_error_deg_per_100m": 0.301459288635106,
+          "endpoint_position_error_m": 1.3695914070773818,
+          "path_length_error_pct": 1.2794585083128167
+        },
+        "dro_g": {
+          "avg_translation_error_pct": 1.421907531383766,
+          "avg_rotation_error_deg_per_100m": 0.301459288635106,
+          "endpoint_position_error_m": 1.3695914070773818,
+          "path_length_error_pct": 1.2794585083128167
+        },
+        "fixed_velocity_gyro": {
+          "avg_translation_error_pct": 1.421907531383766,
+          "avg_rotation_error_deg_per_100m": 0.301459288635106,
+          "endpoint_position_error_m": 1.3695914070773818,
+          "path_length_error_pct": 1.2794585083128167
+        },
+        "dro_gd": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        }
+      }
+    },
+    "synthetic_doppler_structured": {
+      "results": {
+        "dro_d": {
+          "translation_error_pct": 0.20236761487473645,
+          "rotation_error_deg_per_100m": 0.18754649095915693,
+          "endpoint_position_error_m": 0.10523790033123448,
+          "path_length_error_pct": 0.07067748007415049
+        },
+        "dro_g": {
+          "translation_error_pct": 0.20236761487473645,
+          "rotation_error_deg_per_100m": 0.18754649095915693,
+          "endpoint_position_error_m": 0.10523790033123448,
+          "path_length_error_pct": 0.07067748007415049
+        },
+        "fixed_velocity_gyro": {
+          "translation_error_pct": 0.20236761487473645,
+          "rotation_error_deg_per_100m": 0.18754649095915693,
+          "endpoint_position_error_m": 0.10523790033123448,
+          "path_length_error_pct": 0.07067748007415049
+        },
+        "dro_gd": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        }
+      }
+    },
+    "synthetic_doppler_tunnel": {
+      "results": {
+        "dro_d": {
+          "translation_error_pct": 2.6414474478927956,
+          "rotation_error_deg_per_100m": 0.4153720863110551,
+          "endpoint_position_error_m": 2.6339449138235294,
+          "path_length_error_pct": 2.4882395365514833
+        },
+        "dro_g": {
+          "translation_error_pct": 2.6414474478927956,
+          "rotation_error_deg_per_100m": 0.4153720863110551,
+          "endpoint_position_error_m": 2.6339449138235294,
+          "path_length_error_pct": 2.4882395365514833
+        },
+        "fixed_velocity_gyro": {
+          "translation_error_pct": 2.6414474478927956,
+          "rotation_error_deg_per_100m": 0.4153720863110551,
+          "endpoint_position_error_m": 2.6339449138235294,
+          "path_length_error_pct": 2.4882395365514833
+        },
+        "dro_gd": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        }
+      }
+    },
+    "synthetic_doppler_ablation": {
+      "results": {
+        "dro_d": {
+          "avg_translation_error_pct": 1.421907531383766,
+          "avg_rotation_error_deg_per_100m": 0.301459288635106,
+          "endpoint_position_error_m": 1.3695914070773818,
+          "path_length_error_pct": 1.2794585083128167,
+          "velocity_rmse_mps": 0.12788692778082986
+        },
+        "dro_g": {
+          "avg_translation_error_pct": 1.421907531383766,
+          "avg_rotation_error_deg_per_100m": 0.301459288635106,
+          "endpoint_position_error_m": 1.3695914070773818,
+          "path_length_error_pct": 1.2794585083128167,
+          "velocity_rmse_mps": 0.12788692778082986
+        },
+        "dro_gd": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0,
+          "velocity_rmse_mps": 10.0
+        }
+      }
+    }
+  }
+}

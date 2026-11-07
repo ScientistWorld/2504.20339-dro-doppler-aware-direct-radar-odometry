@@ -1,0 +1,1738 @@
+{
+  "cases": {
+    "audit_ref_seed_0": {
+      "case": "audit_ref_seed_0",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": 0.0,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.0,
+          "synthetic_doppler_structured": 0.0,
+          "synthetic_doppler_tunnel": 0.0,
+          "synthetic_doppler_ablation": 0.0
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": 0.0,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.0,
+          "synthetic_doppler_structured": 0.0,
+          "synthetic_doppler_tunnel": 0.0,
+          "synthetic_doppler_ablation": 0.0
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 1.355368947548978,
+          "avg_rotation_error_deg_per_100m": 0.41704888369221144,
+          "endpoint_position_error_m": 1.3577396519691785,
+          "path_length_error_pct": 1.1933097807046993
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 0.23830960887028288,
+          "rotation_error_deg_per_100m": 0.2986692626078255,
+          "endpoint_position_error_m": 0.17481625996102068,
+          "path_length_error_pct": 0.09651559318331532
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 2.472428286227673,
+          "rotation_error_deg_per_100m": 0.5354285047765973,
+          "endpoint_position_error_m": 2.5406630439773363,
+          "path_length_error_pct": 2.290103968226083
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 1.355368947548978,
+          "avg_rotation_error_deg_per_100m": 0.41704888369221144,
+          "endpoint_position_error_m": 1.3577396519691785,
+          "path_length_error_pct": 1.1933097807046993,
+          "velocity_rmse_mps": 0.1150207330656589
+        }
+      },
+      "failed_methods": {},
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 1723.9547974789748
+    },
+    "audit_ref_seed_1": {
+      "case": "audit_ref_seed_1",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": 0.0,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.0,
+          "synthetic_doppler_structured": 0.0,
+          "synthetic_doppler_tunnel": 0.0,
+          "synthetic_doppler_ablation": 0.0
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": 0.0,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.0,
+          "synthetic_doppler_structured": 0.0,
+          "synthetic_doppler_tunnel": 0.0,
+          "synthetic_doppler_ablation": 0.0
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 1.355368947548978,
+          "avg_rotation_error_deg_per_100m": 0.41704888369221144,
+          "endpoint_position_error_m": 1.3577396519691785,
+          "path_length_error_pct": 1.1933097807046993
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 0.23830960887028288,
+          "rotation_error_deg_per_100m": 0.2986692626078255,
+          "endpoint_position_error_m": 0.17481625996102068,
+          "path_length_error_pct": 0.09651559318331532
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 2.472428286227673,
+          "rotation_error_deg_per_100m": 0.5354285047765973,
+          "endpoint_position_error_m": 2.5406630439773363,
+          "path_length_error_pct": 2.290103968226083
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 1.355368947548978,
+          "avg_rotation_error_deg_per_100m": 0.41704888369221144,
+          "endpoint_position_error_m": 1.3577396519691785,
+          "path_length_error_pct": 1.1933097807046993,
+          "velocity_rmse_mps": 0.1150207330656589
+        }
+      },
+      "failed_methods": {},
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 1147.5176148959436
+    },
+    "audit_ref_seed_2": {
+      "case": "audit_ref_seed_2",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": 0.0,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.0,
+          "synthetic_doppler_structured": 0.0,
+          "synthetic_doppler_tunnel": 0.0,
+          "synthetic_doppler_ablation": 0.0
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": 0.0,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.0,
+          "synthetic_doppler_structured": 0.0,
+          "synthetic_doppler_tunnel": 0.0,
+          "synthetic_doppler_ablation": 0.0
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 1.355368947548978,
+          "avg_rotation_error_deg_per_100m": 0.41704888369221144,
+          "endpoint_position_error_m": 1.3577396519691785,
+          "path_length_error_pct": 1.1933097807046993
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 0.23830960887028288,
+          "rotation_error_deg_per_100m": 0.2986692626078255,
+          "endpoint_position_error_m": 0.17481625996102068,
+          "path_length_error_pct": 0.09651559318331532
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 2.472428286227673,
+          "rotation_error_deg_per_100m": 0.5354285047765973,
+          "endpoint_position_error_m": 2.5406630439773363,
+          "path_length_error_pct": 2.290103968226083
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 1.355368947548978,
+          "avg_rotation_error_deg_per_100m": 0.41704888369221144,
+          "endpoint_position_error_m": 1.3577396519691785,
+          "path_length_error_pct": 1.1933097807046993,
+          "velocity_rmse_mps": 0.1150207330656589
+        }
+      },
+      "failed_methods": {},
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 1141.394821446971
+    },
+    "audit_better_gp": {
+      "case": "audit_better_gp",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": 0.02880308072956975,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.007821438400285338,
+          "synthetic_doppler_structured": -0.003953666025449105,
+          "synthetic_doppler_tunnel": 0.01962517404289057,
+          "synthetic_doppler_ablation": 0.005310134311842948
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": 0.02880308072956975,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.007821438400285338,
+          "synthetic_doppler_structured": -0.003953666025449105,
+          "synthetic_doppler_tunnel": 0.01962517404289057,
+          "synthetic_doppler_ablation": 0.005310134311842948
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 1.3303522731895698,
+          "avg_rotation_error_deg_per_100m": 0.44833550013643847,
+          "endpoint_position_error_m": 1.3279099137637418,
+          "path_length_error_pct": 1.16274978569866
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 0.24307412494823785,
+          "rotation_error_deg_per_100m": 0.36124249549627957,
+          "endpoint_position_error_m": 0.16835454672487696,
+          "path_length_error_pct": 0.08741255607678217
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 2.417630421430902,
+          "rotation_error_deg_per_100m": 0.5354285047765973,
+          "endpoint_position_error_m": 2.4874652808026068,
+          "path_length_error_pct": 2.238087015320538
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 1.3303522731895698,
+          "avg_rotation_error_deg_per_100m": 0.44833550013643847,
+          "endpoint_position_error_m": 1.3279099137637418,
+          "path_length_error_pct": 1.16274978569866,
+          "velocity_rmse_mps": 0.11342336564922462
+        }
+      },
+      "failed_methods": {},
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 1472.8760455050506
+    },
+    "audit_better_calibration": {
+      "case": "audit_better_calibration",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": 0.3840403117216358,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.0679381859650152,
+          "synthetic_doppler_structured": -0.233459767928233,
+          "synthetic_doppler_tunnel": 0.5023299231554136,
+          "synthetic_doppler_ablation": 0.04723197052944002
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": 0.3840403117216358,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.0679381859650152,
+          "synthetic_doppler_structured": -0.233459767928233,
+          "synthetic_doppler_tunnel": 0.5023299231554136,
+          "synthetic_doppler_ablation": 0.04723197052944002
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 1.2118786778026704,
+          "avg_rotation_error_deg_per_100m": 0.4269807507142879,
+          "endpoint_position_error_m": 1.0916019995659385,
+          "path_length_error_pct": 1.0912663614792144
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 1.3342783914516687,
+          "rotation_error_deg_per_100m": 0.35559604815568746,
+          "endpoint_position_error_m": 1.0053880690579315,
+          "path_length_error_pct": 1.246595612083957
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 1.0894789641536722,
+          "rotation_error_deg_per_100m": 0.4983654532728883,
+          "endpoint_position_error_m": 1.1778159300739457,
+          "path_length_error_pct": 0.9359371108744717
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 1.2118786778026704,
+          "avg_rotation_error_deg_per_100m": 0.4269807507142879,
+          "endpoint_position_error_m": 1.0916019995659385,
+          "path_length_error_pct": 1.0912663614792144,
+          "velocity_rmse_mps": 0.08268995718627185
+        }
+      },
+      "failed_methods": {},
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 4.788783072028309
+    },
+    "audit_weaker_no_doppler": {
+      "case": "audit_weaker_no_doppler",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": -0.17506895104056364,
+        "per_experiment": {
+          "synthetic_doppler_core": -0.055088923265768856,
+          "synthetic_doppler_structured": -0.013433065269574718,
+          "synthetic_doppler_tunnel": -0.06942642999365697,
+          "synthetic_doppler_ablation": -0.037120532511563074
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": -0.17506895104056364,
+        "per_experiment": {
+          "synthetic_doppler_core": -0.055088923265768856,
+          "synthetic_doppler_structured": -0.013433065269574718,
+          "synthetic_doppler_tunnel": -0.06942642999365697,
+          "synthetic_doppler_ablation": -0.037120532511563074
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 1.4932296056468928,
+          "avg_rotation_error_deg_per_100m": 0.4384219542008742,
+          "endpoint_position_error_m": 1.4384080501790109,
+          "path_length_error_pct": 1.2785735725316574
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 0.28681537189895684,
+          "rotation_error_deg_per_100m": 0.34141540362515105,
+          "endpoint_position_error_m": 0.22158470702493738,
+          "path_length_error_pct": 0.1578027794945558
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 2.6996438393948288,
+          "rotation_error_deg_per_100m": 0.5354285047765973,
+          "endpoint_position_error_m": 2.655231393333084,
+          "path_length_error_pct": 2.399344365568759
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 1.4932296056468928,
+          "avg_rotation_error_deg_per_100m": 0.4384219542008742,
+          "endpoint_position_error_m": 1.4384080501790109,
+          "path_length_error_pct": 1.2785735725316574,
+          "velocity_rmse_mps": 0.1215971275276116
+        }
+      },
+      "failed_methods": {},
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 196.5910538500175
+    },
+    "audit_weaker_no_gyro_bias": {
+      "case": "audit_weaker_no_gyro_bias",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": -1.6341916698305718,
+        "per_experiment": {
+          "synthetic_doppler_core": -0.5559272643173006,
+          "synthetic_doppler_structured": -0.3286685122420059,
+          "synthetic_doppler_tunnel": -0.37876458679215785,
+          "synthetic_doppler_ablation": -0.3708313064791076
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": -1.6341916698305718,
+        "per_experiment": {
+          "synthetic_doppler_core": -0.5559272643173006,
+          "synthetic_doppler_structured": -0.3286685122420059,
+          "synthetic_doppler_tunnel": -0.37876458679215785,
+          "synthetic_doppler_ablation": -0.3708313064791076
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 1.821546036833346,
+          "avg_rotation_error_deg_per_100m": 2.7175693881267353,
+          "endpoint_position_error_m": 3.1068594054222243,
+          "path_length_error_pct": 1.340438038885847
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 0.8721627299296367,
+          "rotation_error_deg_per_100m": 2.9333235001808937,
+          "endpoint_position_error_m": 2.094077075961743,
+          "path_length_error_pct": 0.21448256747303784
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 2.7709293437370555,
+          "rotation_error_deg_per_100m": 2.5018152760725774,
+          "endpoint_position_error_m": 4.1196417348827055,
+          "path_length_error_pct": 2.4663935102986554
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 1.821546036833346,
+          "avg_rotation_error_deg_per_100m": 2.7175693881267353,
+          "endpoint_position_error_m": 3.1068594054222243,
+          "path_length_error_pct": 1.340438038885847,
+          "velocity_rmse_mps": 0.11857290419188994
+        }
+      },
+      "failed_methods": {},
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 1179.9478574109962
+    },
+    "audit_simple_baseline": {
+      "case": "audit_simple_baseline",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0,
+          "velocity_rmse_mps": 10.0
+        }
+      },
+      "failed_methods": {
+        "dro_gd": "average translation error is not better than fixed-velocity dead reckoning"
+      },
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 10.520550868008286
+    },
+    "shortcut_visible_answers_v2": {
+      "case": "shortcut_visible_answers_v2",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0,
+          "velocity_rmse_mps": 10.0
+        }
+      },
+      "failed_methods": {
+        "dro_gd": "average translation error is not better than fixed-velocity dead reckoning"
+      },
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 8.987746984930709
+    },
+    "shortcut_rebuild_answers_v2": {
+      "case": "shortcut_rebuild_answers_v2",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0,
+          "velocity_rmse_mps": 10.0
+        }
+      },
+      "failed_methods": {
+        "dro_gd": "average translation error is not better than fixed-velocity dead reckoning"
+      },
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 7.754404177074321
+    },
+    "shortcut_generator_fit_v2": {
+      "case": "shortcut_generator_fit_v2",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": 0.05932043472700681,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.01318744455232844,
+          "synthetic_doppler_structured": -0.02029745458880258,
+          "synthetic_doppler_tunnel": 0.055808165235218254,
+          "synthetic_doppler_ablation": 0.010622279528262692
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": 0.05932043472700681,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.01318744455232844,
+          "synthetic_doppler_structured": -0.02029745458880258,
+          "synthetic_doppler_tunnel": 0.055808165235218254,
+          "synthetic_doppler_ablation": 0.010622279528262692
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 1.3243873224455183,
+          "avg_rotation_error_deg_per_100m": 0.39466612457122396,
+          "endpoint_position_error_m": 1.3590577399386221,
+          "path_length_error_pct": 1.1715450719633613
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 0.25945823160016623,
+          "rotation_error_deg_per_100m": 0.5110328138034247,
+          "endpoint_position_error_m": 0.29241941823999645,
+          "path_length_error_pct": 0.09562324892073319
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 2.3893164132908704,
+          "rotation_error_deg_per_100m": 0.2782994353390231,
+          "endpoint_position_error_m": 2.425696061637248,
+          "path_length_error_pct": 2.2474668950059895
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 1.3243873224455183,
+          "avg_rotation_error_deg_per_100m": 0.39466612457122396,
+          "endpoint_position_error_m": 1.3590577399386221,
+          "path_length_error_pct": 1.1715450719633613,
+          "velocity_rmse_mps": 0.08450990262048562
+        }
+      },
+      "failed_methods": {},
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 13.520529555971734
+    },
+    "shortcut_generator_zero_velocity_v2": {
+      "case": "shortcut_generator_zero_velocity_v2",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": -0.300752269107263,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.01318744455232844,
+          "synthetic_doppler_structured": -0.02029745458880258,
+          "synthetic_doppler_tunnel": 0.055808165235218254,
+          "synthetic_doppler_ablation": -0.3494504243060071
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": -0.300752269107263,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.01318744455232844,
+          "synthetic_doppler_structured": -0.02029745458880258,
+          "synthetic_doppler_tunnel": 0.055808165235218254,
+          "synthetic_doppler_ablation": -0.3494504243060071
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 1.3243873224455183,
+          "avg_rotation_error_deg_per_100m": 0.39466612457122396,
+          "endpoint_position_error_m": 1.3590577399386221,
+          "path_length_error_pct": 1.1715450719633613
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 0.25945823160016623,
+          "rotation_error_deg_per_100m": 0.5110328138034247,
+          "endpoint_position_error_m": 0.29241941823999645,
+          "path_length_error_pct": 0.09562324892073319
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 2.3893164132908704,
+          "rotation_error_deg_per_100m": 0.2782994353390231,
+          "endpoint_position_error_m": 2.425696061637248,
+          "path_length_error_pct": 2.2474668950059895
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 1.3243873224455183,
+          "avg_rotation_error_deg_per_100m": 0.39466612457122396,
+          "endpoint_position_error_m": 1.3590577399386221,
+          "path_length_error_pct": 1.1715450719633613,
+          "velocity_rmse_mps": 6.085721633191649
+        }
+      },
+      "failed_methods": {},
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 8.461890109931119
+    },
+    "shortcut_score_fields_v2": {
+      "case": "shortcut_score_fields_v2",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": 0.0,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.0,
+          "synthetic_doppler_structured": 0.0,
+          "synthetic_doppler_tunnel": 0.0,
+          "synthetic_doppler_ablation": 0.0
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": 0.0,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.0,
+          "synthetic_doppler_structured": 0.0,
+          "synthetic_doppler_tunnel": 0.0,
+          "synthetic_doppler_ablation": 0.0
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 1.355368947548978,
+          "avg_rotation_error_deg_per_100m": 0.41704888369221144,
+          "endpoint_position_error_m": 1.3577396519691785,
+          "path_length_error_pct": 1.1933097807046993
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 0.23830960887028288,
+          "rotation_error_deg_per_100m": 0.2986692626078255,
+          "endpoint_position_error_m": 0.17481625996102068,
+          "path_length_error_pct": 0.09651559318331532
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 2.472428286227673,
+          "rotation_error_deg_per_100m": 0.5354285047765973,
+          "endpoint_position_error_m": 2.5406630439773363,
+          "path_length_error_pct": 2.290103968226083
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 1.355368947548978,
+          "avg_rotation_error_deg_per_100m": 0.41704888369221144,
+          "endpoint_position_error_m": 1.3577396519691785,
+          "path_length_error_pct": 1.1933097807046993,
+          "velocity_rmse_mps": 0.1150207330656589
+        }
+      },
+      "failed_methods": {},
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 7.655378918047063
+    },
+    "shortcut_score_fields_bad_v2": {
+      "case": "shortcut_score_fields_bad_v2",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0,
+          "velocity_rmse_mps": 10.0
+        }
+      },
+      "failed_methods": {
+        "dro_gd": "average translation error is not better than fixed-velocity dead reckoning"
+      },
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 8.151288024964742
+    },
+    "shortcut_move_baseline_v2": {
+      "case": "shortcut_move_baseline_v2",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": 0.0,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.0,
+          "synthetic_doppler_structured": 0.0,
+          "synthetic_doppler_tunnel": 0.0,
+          "synthetic_doppler_ablation": 0.0
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": 0.0,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.0,
+          "synthetic_doppler_structured": 0.0,
+          "synthetic_doppler_tunnel": 0.0,
+          "synthetic_doppler_ablation": 0.0
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 1.355368947548978,
+          "avg_rotation_error_deg_per_100m": 0.41704888369221144,
+          "endpoint_position_error_m": 1.3577396519691785,
+          "path_length_error_pct": 1.1933097807046993
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 0.23830960887028288,
+          "rotation_error_deg_per_100m": 0.2986692626078255,
+          "endpoint_position_error_m": 0.17481625996102068,
+          "path_length_error_pct": 0.09651559318331532
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 2.472428286227673,
+          "rotation_error_deg_per_100m": 0.5354285047765973,
+          "endpoint_position_error_m": 2.5406630439773363,
+          "path_length_error_pct": 2.290103968226083
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 1.355368947548978,
+          "avg_rotation_error_deg_per_100m": 0.41704888369221144,
+          "endpoint_position_error_m": 1.3577396519691785,
+          "path_length_error_pct": 1.1933097807046993,
+          "velocity_rmse_mps": 0.1150207330656589
+        }
+      },
+      "failed_methods": {},
+      "ignored_artifacts": [
+        {
+          "file": "baseline/dead_reckoning_predictions.json",
+          "reason": "'dead_reckoning' is a fixed comparator row owned by the evaluator"
+        },
+        {
+          "file": "baseline/dro_d_predictions.json",
+          "reason": "'dro_d' is a fixed comparator row owned by the evaluator"
+        },
+        {
+          "file": "baseline/dro_g_predictions.json",
+          "reason": "'dro_g' is a fixed comparator row owned by the evaluator"
+        },
+        {
+          "file": "baseline/fixed_velocity_gyro_predictions.json",
+          "reason": "'fixed_velocity_gyro' is a fixed comparator row owned by the evaluator"
+        }
+      ],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 7.297307687927969
+    },
+    "shortcut_comparison_compensation_v2": {
+      "case": "shortcut_comparison_compensation_v2",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0,
+          "velocity_rmse_mps": 10.0
+        }
+      },
+      "failed_methods": {
+        "dro_gd": "average translation error is not better than fixed-velocity dead reckoning"
+      },
+      "ignored_artifacts": [
+        {
+          "file": "baseline/dead_reckoning_predictions.json",
+          "reason": "'dead_reckoning' is a fixed comparator row owned by the evaluator"
+        },
+        {
+          "file": "baseline/dro_d_predictions.json",
+          "reason": "'dro_d' is a fixed comparator row owned by the evaluator"
+        },
+        {
+          "file": "baseline/dro_g_predictions.json",
+          "reason": "'dro_g' is a fixed comparator row owned by the evaluator"
+        },
+        {
+          "file": "baseline/fixed_velocity_gyro_predictions.json",
+          "reason": "'fixed_velocity_gyro' is a fixed comparator row owned by the evaluator"
+        }
+      ],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 10.264420894905925
+    },
+    "shortcut_fixed_artifact_v2": {
+      "case": "shortcut_fixed_artifact_v2",
+      "returncodes": {
+        "method": 0,
+        "train": 1,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0,
+          "velocity_rmse_mps": 10.0
+        }
+      },
+      "failed_methods": {
+        "dro_gd": "test inputs data/test_inputs.npz are modified"
+      },
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "modified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 12.10693047894165
+    },
+    "shortcut_unscored_heading_v2": {
+      "case": "shortcut_unscored_heading_v2",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": 0.0,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.0,
+          "synthetic_doppler_structured": 0.0,
+          "synthetic_doppler_tunnel": 0.0,
+          "synthetic_doppler_ablation": 0.0
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": 0.0,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.0,
+          "synthetic_doppler_structured": 0.0,
+          "synthetic_doppler_tunnel": 0.0,
+          "synthetic_doppler_ablation": 0.0
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 1.355368947548978,
+          "avg_rotation_error_deg_per_100m": 0.41704888369221144,
+          "endpoint_position_error_m": 1.3577396519691785,
+          "path_length_error_pct": 1.1933097807046993
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 0.23830960887028288,
+          "rotation_error_deg_per_100m": 0.2986692626078255,
+          "endpoint_position_error_m": 0.17481625996102068,
+          "path_length_error_pct": 0.09651559318331532
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 2.472428286227673,
+          "rotation_error_deg_per_100m": 0.5354285047765973,
+          "endpoint_position_error_m": 2.5406630439773363,
+          "path_length_error_pct": 2.290103968226083
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 1.355368947548978,
+          "avg_rotation_error_deg_per_100m": 0.41704888369221144,
+          "endpoint_position_error_m": 1.3577396519691785,
+          "path_length_error_pct": 1.1933097807046993,
+          "velocity_rmse_mps": 0.1150207330656589
+        }
+      },
+      "failed_methods": {},
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 7.582754865987226
+    },
+    "shortcut_global_offset_v2": {
+      "case": "shortcut_global_offset_v2",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": 4.060293767871316e-15,
+        "per_experiment": {
+          "synthetic_doppler_core": 2.8976820942716587e-15,
+          "synthetic_doppler_structured": 8.440123600017557e-15,
+          "synthetic_doppler_tunnel": -9.209299989265672e-15,
+          "synthetic_doppler_ablation": 1.9317880628477738e-15
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": 4.060293767871316e-15,
+        "per_experiment": {
+          "synthetic_doppler_core": 2.8976820942716587e-15,
+          "synthetic_doppler_structured": 8.440123600017557e-15,
+          "synthetic_doppler_tunnel": -9.209299989265672e-15,
+          "synthetic_doppler_ablation": 1.9317880628477738e-15
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 1.355368947549002,
+          "avg_rotation_error_deg_per_100m": 0.41704888369221144,
+          "endpoint_position_error_m": 1.3577396519691727,
+          "path_length_error_pct": 1.1933097807045383
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 0.2383096088702823,
+          "rotation_error_deg_per_100m": 0.2986692626078255,
+          "endpoint_position_error_m": 0.17481625996099362,
+          "path_length_error_pct": 0.09651559318307072
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 2.4724282862277214,
+          "rotation_error_deg_per_100m": 0.5354285047765973,
+          "endpoint_position_error_m": 2.540663043977352,
+          "path_length_error_pct": 2.290103968226006
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 1.355368947549002,
+          "avg_rotation_error_deg_per_100m": 0.41704888369221144,
+          "endpoint_position_error_m": 1.3577396519691727,
+          "path_length_error_pct": 1.1933097807045383,
+          "velocity_rmse_mps": 0.1150207330656589
+        }
+      },
+      "failed_methods": {},
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 7.198594777029939
+    },
+    "shortcut_constant_v2": {
+      "case": "shortcut_constant_v2",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0,
+          "velocity_rmse_mps": 10.0
+        }
+      },
+      "failed_methods": {
+        "dro_gd": "average translation error is not better than fixed-velocity dead reckoning"
+      },
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 9.725891525973566
+    },
+    "shortcut_empty_v2": {
+      "case": "shortcut_empty_v2",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0,
+          "velocity_rmse_mps": 10.0
+        }
+      },
+      "failed_methods": {
+        "dro_gd": "trajectory has 0 rows, expected one per frame (72)"
+      },
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 7.738905749982223
+    },
+    "shortcut_null_v2": {
+      "case": "shortcut_null_v2",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0,
+          "velocity_rmse_mps": 10.0
+        }
+      },
+      "failed_methods": {
+        "dro_gd": "trajectory rows must contain only numbers"
+      },
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 8.85276611696463
+    },
+    "shortcut_infinite_v2": {
+      "case": "shortcut_infinite_v2",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0,
+          "velocity_rmse_mps": 10.0
+        }
+      },
+      "failed_methods": {
+        "dro_gd": "trajectory contains non-finite values"
+      },
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 8.095763948047534
+    },
+    "shortcut_impossible_v2": {
+      "case": "shortcut_impossible_v2",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0,
+          "velocity_rmse_mps": 10.0
+        }
+      },
+      "failed_methods": {
+        "dro_gd": "positions are physically impossible"
+      },
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 8.178556584054604
+    },
+    "shortcut_duplicate_v2": {
+      "case": "shortcut_duplicate_v2",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": -165.034891835611,
+        "per_experiment": {
+          "synthetic_doppler_core": -54.86991438895227,
+          "synthetic_doppler_structured": -27.68688232536895,
+          "synthetic_doppler_tunnel": -45.30505343930554,
+          "synthetic_doppler_ablation": -37.173041681984245
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 100.0,
+          "rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 100.0,
+          "avg_rotation_error_deg_per_100m": 100.0,
+          "endpoint_position_error_m": 100.0,
+          "path_length_error_pct": 100.0,
+          "velocity_rmse_mps": 10.0
+        }
+      },
+      "failed_methods": {
+        "dro_gd": "several artifacts claim this method name: checkpoints/candidate_predictions.json, method/duplicate_predictions.json"
+      },
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 9.267837802995928
+    }
+  },
+  "reference_cells_at_zero": [],
+  "seed_ranks": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "seed_rank_spread": 0.0,
+  "perfect_candidate_rank": {
+    "rank": 2.0651081643890032,
+    "per_experiment": {
+      "synthetic_doppler_core": 0.6300856110477291,
+      "synthetic_doppler_structured": 0.0631176746310497,
+      "synthetic_doppler_tunnel": 0.9449465606944656,
+      "synthetic_doppler_ablation": 0.426958318015759
+    },
+    "metric_count": 17,
+    "missing": []
+  },
+  "failed_candidate_rank": {
+    "rank": -165.034891835611,
+    "per_experiment": {
+      "synthetic_doppler_core": -54.86991438895227,
+      "synthetic_doppler_structured": -27.68688232536895,
+      "synthetic_doppler_tunnel": -45.30505343930554,
+      "synthetic_doppler_ablation": -37.173041681984245
+    },
+    "metric_count": 17,
+    "missing": []
+  },
+  "translation_failure_perfect_other_metrics_rank": {
+    "rank": -26.709612218756778,
+    "per_experiment": {
+      "synthetic_doppler_core": -8.961487850000864,
+      "synthetic_doppler_structured": -4.732669055893247,
+      "synthetic_doppler_tunnel": -7.048031323512696,
+      "synthetic_doppler_ablation": -5.96742398934997
+    },
+    "metric_count": 17,
+    "missing": []
+  },
+  "worst_velocity_perfect_poses_rank": {
+    "rank": 1.4651081643890032,
+    "per_experiment": {
+      "synthetic_doppler_core": 0.6300856110477291,
+      "synthetic_doppler_structured": 0.0631176746310497,
+      "synthetic_doppler_tunnel": 0.9449465606944656,
+      "synthetic_doppler_ablation": -0.173041681984241
+    },
+    "metric_count": 17,
+    "missing": []
+  }
+}

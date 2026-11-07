@@ -1,0 +1,65 @@
+{
+  "case": "shortcut_global_offset_v2",
+  "returncodes": {
+    "method": 0,
+    "train": 0,
+    "test": 0
+  },
+  "candidate_rank": {
+    "rank": 4.060293767871316e-15,
+    "per_experiment": {
+      "synthetic_doppler_core": 2.8976820942716587e-15,
+      "synthetic_doppler_structured": 8.440123600017557e-15,
+      "synthetic_doppler_tunnel": -9.209299989265672e-15,
+      "synthetic_doppler_ablation": 1.9317880628477738e-15
+    },
+    "metric_count": 17,
+    "missing": []
+  },
+  "all_rows_rank": {
+    "rank": 4.060293767871316e-15,
+    "per_experiment": {
+      "synthetic_doppler_core": 2.8976820942716587e-15,
+      "synthetic_doppler_structured": 8.440123600017557e-15,
+      "synthetic_doppler_tunnel": -9.209299989265672e-15,
+      "synthetic_doppler_ablation": 1.9317880628477738e-15
+    },
+    "metric_count": 63,
+    "missing": []
+  },
+  "results": {
+    "synthetic_doppler_core": {
+      "avg_translation_error_pct": 1.355368947549002,
+      "avg_rotation_error_deg_per_100m": 0.41704888369221144,
+      "endpoint_position_error_m": 1.3577396519691727,
+      "path_length_error_pct": 1.1933097807045383
+    },
+    "synthetic_doppler_structured": {
+      "translation_error_pct": 0.2383096088702823,
+      "rotation_error_deg_per_100m": 0.2986692626078255,
+      "endpoint_position_error_m": 0.17481625996099362,
+      "path_length_error_pct": 0.09651559318307072
+    },
+    "synthetic_doppler_tunnel": {
+      "translation_error_pct": 2.4724282862277214,
+      "rotation_error_deg_per_100m": 0.5354285047765973,
+      "endpoint_position_error_m": 2.540663043977352,
+      "path_length_error_pct": 2.290103968226006
+    },
+    "synthetic_doppler_ablation": {
+      "avg_translation_error_pct": 1.355368947549002,
+      "avg_rotation_error_deg_per_100m": 0.41704888369221144,
+      "endpoint_position_error_m": 1.3577396519691727,
+      "path_length_error_pct": 1.1933097807045383,
+      "velocity_rmse_mps": 0.1150207330656589
+    }
+  },
+  "failed_methods": {},
+  "ignored_artifacts": [],
+  "inputs": {
+    "path": "data/test_inputs.npz",
+    "status": "verified"
+  },
+  "frozen_comparators_unchanged": true,
+  "elapsed_seconds": 7.198594777029939
+}

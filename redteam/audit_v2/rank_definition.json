@@ -1,0 +1,444 @@
+{
+  "experiments": {
+    "automotive_doppler_main": {
+      "description": "Automotive triangular-modulation radar odometry benchmark from Table I. KITTI relative translation and rotation errors are reported for sequence classes with increasing geometric difficulty.",
+      "weight": 0.03,
+      "primary_metric": "avg_translation_error_pct",
+      "metrics": {
+        "avg_translation_error_pct": {
+          "higher_is_better": false,
+          "coefficient": -1.0,
+          "description": "Average KITTI-style relative translation error across the automotive sequence groups."
+        },
+        "avg_rotation_error_deg_per_100m": {
+          "higher_is_better": false,
+          "coefficient": -0.4,
+          "description": "Average KITTI-style relative rotation error across the automotive sequence groups."
+        }
+      },
+      "results": {
+        "ct_r": {
+          "type": "baseline",
+          "avg_translation_error_pct": 18.57,
+          "avg_rotation_error_deg_per_100m": 0.8925
+        },
+        "dg": {
+          "type": "baseline",
+          "avg_translation_error_pct": 0.965,
+          "avg_rotation_error_deg_per_100m": 0.035
+        },
+        "ct_rdg": {
+          "type": "baseline",
+          "avg_translation_error_pct": 0.5925,
+          "avg_rotation_error_deg_per_100m": 0.035
+        },
+        "ct_lg": {
+          "type": "baseline",
+          "avg_translation_error_pct": 5.1675,
+          "avg_rotation_error_deg_per_100m": 0.12
+        },
+        "dro_d": {
+          "type": "proposed",
+          "avg_translation_error_pct": 0.7025,
+          "avg_rotation_error_deg_per_100m": 0.0175
+        },
+        "dro_g": {
+          "type": "proposed",
+          "avg_translation_error_pct": 13.305,
+          "avg_rotation_error_deg_per_100m": 0.0175
+        },
+        "dro_gd": {
+          "type": "proposed",
+          "avg_translation_error_pct": 0.2925,
+          "avg_rotation_error_deg_per_100m": 0.0175
+        }
+      }
+    },
+    "automotive_ablation": {
+      "description": "Ablation study from Table II on the proposed automotive setup, excluding Skyway. Metrics average Suburbs, Highway, and Tunnel KITTI errors plus velocity RMSE.",
+      "weight": 0.02,
+      "primary_metric": "avg_translation_error_pct",
+      "metrics": {
+        "avg_translation_error_pct": {
+          "higher_is_better": false,
+          "coefficient": -1.0,
+          "description": "Average KITTI-style relative translation error for the automotive ablation setting."
+        },
+        "avg_rotation_error_deg_per_100m": {
+          "higher_is_better": false,
+          "coefficient": -0.4,
+          "description": "Average KITTI-style relative rotation error for the automotive ablation setting."
+        },
+        "velocity_rmse_mps": {
+          "higher_is_better": false,
+          "coefficient": -0.3,
+          "description": "Root mean squared body-velocity error in meters per second."
+        }
+      },
+      "results": {
+        "dro_gd": {
+          "type": "proposed",
+          "avg_translation_error_pct": 0.2567,
+          "avg_rotation_error_deg_per_100m": 0.02,
+          "velocity_rmse_mps": 0.119
+        },
+        "no_gyro_bias": {
+          "type": "proposed",
+          "avg_translation_error_pct": 0.3333,
+          "avg_rotation_error_deg_per_100m": 0.0367,
+          "velocity_rmse_mps": 0.119
+        },
+        "no_velocity_bias": {
+          "type": "proposed",
+          "avg_translation_error_pct": 0.2733,
+          "avg_rotation_error_deg_per_100m": 0.02,
+          "velocity_rmse_mps": 0.12
+        },
+        "no_local_map": {
+          "type": "proposed",
+          "avg_translation_error_pct": 0.3933,
+          "avg_rotation_error_deg_per_100m": 0.02,
+          "velocity_rmse_mps": 0.107
+        },
+        "no_gyroscope": {
+          "type": "proposed",
+          "avg_translation_error_pct": 1.8267,
+          "avg_rotation_error_deg_per_100m": 0.5367,
+          "velocity_rmse_mps": 0.132
+        }
+      }
+    },
+    "boreas_leaderboard": {
+      "description": "Boreas SE(2) odometry leaderboard results from Table III for sawtooth-modulation public automotive radar sequences.",
+      "weight": 0.02,
+      "primary_metric": "translation_error_pct",
+      "metrics": {
+        "translation_error_pct": {
+          "higher_is_better": false,
+          "coefficient": -1.0,
+          "description": "KITTI-style relative translation error on the Boreas leaderboard sequences."
+        },
+        "rotation_error_deg_per_100m": {
+          "higher_is_better": false,
+          "coefficient": -0.4,
+          "description": "KITTI-style relative rotation error on the Boreas leaderboard sequences."
+        }
+      },
+      "results": {
+        "cfear_pp": {
+          "type": "baseline",
+          "translation_error_pct": 0.51,
+          "rotation_error_deg_per_100m": 0.14
+        },
+        "cfear": {
+          "type": "baseline",
+          "translation_error_pct": 0.61,
+          "rotation_error_deg_per_100m": 0.21
+        },
+        "steam_rio_pp": {
+          "type": "baseline",
+          "translation_error_pct": 0.62,
+          "rotation_error_deg_per_100m": 0.18
+        },
+        "dro_g": {
+          "type": "proposed",
+          "translation_error_pct": 0.26,
+          "rotation_error_deg_per_100m": 0.05
+        }
+      }
+    },
+    "mulran_public": {
+      "description": "MulRan average KITTI odometry errors from Table IV across KAIST, DCC, and Riverside sequence groups.",
+      "weight": 0.015,
+      "primary_metric": "avg_translation_error_pct",
+      "metrics": {
+        "avg_translation_error_pct": {
+          "higher_is_better": false,
+          "coefficient": -1.0,
+          "description": "Average KITTI-style relative translation error across the MulRan sequence groups."
+        },
+        "avg_rotation_error_deg_per_100m": {
+          "higher_is_better": false,
+          "coefficient": -0.4,
+          "description": "Average KITTI-style relative rotation error across the MulRan sequence groups."
+        }
+      },
+      "results": {
+        "cfear_3": {
+          "type": "baseline",
+          "avg_translation_error_pct": 1.62,
+          "avg_rotation_error_deg_per_100m": 0.57
+        },
+        "cfear_3_50": {
+          "type": "baseline",
+          "avg_translation_error_pct": 1.5,
+          "avg_rotation_error_deg_per_100m": 0.56
+        },
+        "dro_g": {
+          "type": "proposed",
+          "avg_translation_error_pct": 1.45,
+          "avg_rotation_error_deg_per_100m": 0.38
+        }
+      }
+    },
+    "offroad_rpe": {
+      "description": "Off-road mobile robot relative position error from Table V across Parking, Industrial, Grass, and Woods environments.",
+      "weight": 0.015,
+      "primary_metric": "avg_rpe_pct",
+      "metrics": {
+        "avg_rpe_pct": {
+          "higher_is_better": false,
+          "coefficient": -1.0,
+          "description": "Average relative position error on the off-road sequence groups."
+        }
+      },
+      "results": {
+        "ct_rg_no_bias": {
+          "type": "baseline",
+          "avg_rpe_pct": 4.3525
+        },
+        "ct_rg": {
+          "type": "baseline",
+          "avg_rpe_pct": 1.0375
+        },
+        "dro_g_no_bias": {
+          "type": "proposed",
+          "avg_rpe_pct": 3.93
+        },
+        "dro_g": {
+          "type": "proposed",
+          "avg_rpe_pct": 0.76
+        }
+      }
+    },
+    "synthetic_doppler_core": {
+      "description": "Scaled replacement benchmark (paper's Doppler-enabled automotive data is not public): six held-out procedurally rendered spinning-FMCW radar sequences (three landmark-rich, three featureless-tunnel), 72 scans each, vehicles start from rest with time-varying speed and yaw rate. Values are the reference reproduction's held-out scores, not paper-reported numbers. Comparator rows are frozen by the evaluator.",
+      "weight": 0.3,
+      "primary_metric": "avg_translation_error_pct",
+      "metrics": {
+        "avg_translation_error_pct": {
+          "higher_is_better": false,
+          "coefficient": -1.0,
+          "description": "Mean KITTI-style relative translation error (%): segment-start-frame relative displacement error over 20/35/50 m segments divided by segment length, averaged per sequence then over sequences."
+        },
+        "avg_rotation_error_deg_per_100m": {
+          "higher_is_better": false,
+          "coefficient": -0.4,
+          "description": "Mean KITTI-style relative heading error in degrees per 100 m over the same segments."
+        },
+        "endpoint_position_error_m": {
+          "higher_is_better": false,
+          "coefficient": -0.25,
+          "description": "Final-position drift in metres, expressed in the first-pose frame (alignment-free)."
+        },
+        "path_length_error_pct": {
+          "higher_is_better": false,
+          "coefficient": -0.2,
+          "description": "Absolute mismatch of total travelled distance as a percentage of the ground-truth path length."
+        }
+      },
+      "results": {
+        "fixed_velocity_gyro": {
+          "type": "baseline",
+          "avg_translation_error_pct": 31.971911536828646,
+          "avg_rotation_error_deg_per_100m": 2.7175693881267353,
+          "endpoint_position_error_m": 17.911881537018964,
+          "path_length_error_pct": 17.692461423060674
+        },
+        "dro_d": {
+          "type": "proposed",
+          "avg_translation_error_pct": 7.028720960797549,
+          "avg_rotation_error_deg_per_100m": 0.35644178389210596,
+          "endpoint_position_error_m": 6.974677445953259,
+          "path_length_error_pct": 6.014212625966368
+        },
+        "dro_g": {
+          "type": "proposed",
+          "avg_translation_error_pct": 1.4932296056468928,
+          "avg_rotation_error_deg_per_100m": 0.4384219542008742,
+          "endpoint_position_error_m": 1.4384080501790109,
+          "path_length_error_pct": 1.2785735725316574
+        },
+        "dro_gd": {
+          "type": "proposed",
+          "avg_translation_error_pct": 1.355368947548978,
+          "avg_rotation_error_deg_per_100m": 0.41704888369221144,
+          "endpoint_position_error_m": 1.3577396519691785,
+          "path_length_error_pct": 1.1933097807046993
+        }
+      }
+    },
+    "synthetic_doppler_structured": {
+      "description": "Landmark-rich held-out sequences of the scaled replacement benchmark (buildings with gaps, poles, clutter). Values are the reference reproduction's held-out scores, not paper-reported numbers.",
+      "weight": 0.15,
+      "primary_metric": "translation_error_pct",
+      "metrics": {
+        "translation_error_pct": {
+          "higher_is_better": false,
+          "coefficient": -1.0,
+          "description": "KITTI-style relative translation error (%) over 20/35/50 m segments, averaged over the sequences of this scene type."
+        },
+        "rotation_error_deg_per_100m": {
+          "higher_is_better": false,
+          "coefficient": -0.4,
+          "description": "KITTI-style relative heading error in degrees per 100 m for this scene type."
+        },
+        "endpoint_position_error_m": {
+          "higher_is_better": false,
+          "coefficient": -0.25,
+          "description": "Final-position drift in metres, expressed in the first-pose frame (alignment-free)."
+        },
+        "path_length_error_pct": {
+          "higher_is_better": false,
+          "coefficient": -0.2,
+          "description": "Absolute mismatch of total travelled distance as a percentage of the ground-truth path length."
+        }
+      },
+      "results": {
+        "fixed_velocity_gyro": {
+          "type": "baseline",
+          "translation_error_pct": 26.09472773553496,
+          "rotation_error_deg_per_100m": 2.9333235001808937,
+          "endpoint_position_error_m": 9.143673485541003,
+          "path_length_error_pct": 11.06994943951076
+        },
+        "dro_d": {
+          "type": "proposed",
+          "translation_error_pct": 1.8607792055180814,
+          "rotation_error_deg_per_100m": 0.3606110604498907,
+          "endpoint_position_error_m": 1.5757372446226645,
+          "path_length_error_pct": 0.4214947501097894
+        },
+        "dro_g": {
+          "type": "proposed",
+          "translation_error_pct": 0.28681537189895684,
+          "rotation_error_deg_per_100m": 0.34141540362515105,
+          "endpoint_position_error_m": 0.22158470702493738,
+          "path_length_error_pct": 0.1578027794945558
+        },
+        "dro_gd": {
+          "type": "proposed",
+          "translation_error_pct": 0.23830960887028288,
+          "rotation_error_deg_per_100m": 0.2986692626078255,
+          "endpoint_position_error_m": 0.17481625996102068,
+          "path_length_error_pct": 0.09651559318331532
+        }
+      }
+    },
+    "synthetic_doppler_tunnel": {
+      "description": "Feature-degenerate held-out sequences of the scaled replacement benchmark (two dense smooth walls extending beyond radar range at both ends). Values are the reference reproduction's held-out scores, not paper-reported numbers.",
+      "weight": 0.25,
+      "primary_metric": "translation_error_pct",
+      "metrics": {
+        "translation_error_pct": {
+          "higher_is_better": false,
+          "coefficient": -1.0,
+          "description": "KITTI-style relative translation error (%) over 20/35/50 m segments, averaged over the sequences of this scene type."
+        },
+        "rotation_error_deg_per_100m": {
+          "higher_is_better": false,
+          "coefficient": -0.4,
+          "description": "KITTI-style relative heading error in degrees per 100 m for this scene type."
+        },
+        "endpoint_position_error_m": {
+          "higher_is_better": false,
+          "coefficient": -0.25,
+          "description": "Final-position drift in metres, expressed in the first-pose frame (alignment-free)."
+        },
+        "path_length_error_pct": {
+          "higher_is_better": false,
+          "coefficient": -0.2,
+          "description": "Absolute mismatch of total travelled distance as a percentage of the ground-truth path length."
+        }
+      },
+      "results": {
+        "fixed_velocity_gyro": {
+          "type": "baseline",
+          "translation_error_pct": 37.84909533812234,
+          "rotation_error_deg_per_100m": 2.5018152760725774,
+          "endpoint_position_error_m": 26.680089588496926,
+          "path_length_error_pct": 24.31497340661059
+        },
+        "dro_d": {
+          "type": "proposed",
+          "translation_error_pct": 12.196662716077016,
+          "rotation_error_deg_per_100m": 0.3522725073343211,
+          "endpoint_position_error_m": 12.373617647283856,
+          "path_length_error_pct": 11.606930501822944
+        },
+        "dro_g": {
+          "type": "proposed",
+          "translation_error_pct": 2.6996438393948288,
+          "rotation_error_deg_per_100m": 0.5354285047765973,
+          "endpoint_position_error_m": 2.655231393333084,
+          "path_length_error_pct": 2.399344365568759
+        },
+        "dro_gd": {
+          "type": "proposed",
+          "translation_error_pct": 2.472428286227673,
+          "rotation_error_deg_per_100m": 0.5354285047765973,
+          "endpoint_position_error_m": 2.5406630439773363,
+          "path_length_error_pct": 2.290103968226083
+        }
+      }
+    },
+    "synthetic_doppler_ablation": {
+      "description": "Aggregate held-out odometry of the scaled replacement benchmark plus body-frame velocity RMSE (vector norm, per scan). Values are the reference reproduction's held-out scores, not paper-reported numbers.",
+      "weight": 0.2,
+      "primary_metric": "avg_translation_error_pct",
+      "metrics": {
+        "avg_translation_error_pct": {
+          "higher_is_better": false,
+          "coefficient": -1.0,
+          "description": "Mean KITTI-style relative translation error (%): segment-start-frame relative displacement error over 20/35/50 m segments divided by segment length, averaged per sequence then over sequences."
+        },
+        "avg_rotation_error_deg_per_100m": {
+          "higher_is_better": false,
+          "coefficient": -0.4,
+          "description": "Mean KITTI-style relative heading error in degrees per 100 m over the same segments."
+        },
+        "velocity_rmse_mps": {
+          "higher_is_better": false,
+          "coefficient": -0.3,
+          "description": "Root mean squared vector error of the reported per-scan body-frame velocity in m/s."
+        },
+        "endpoint_position_error_m": {
+          "higher_is_better": false,
+          "coefficient": -0.25,
+          "description": "Final-position drift in metres, expressed in the first-pose frame (alignment-free)."
+        },
+        "path_length_error_pct": {
+          "higher_is_better": false,
+          "coefficient": -0.2,
+          "description": "Absolute mismatch of total travelled distance as a percentage of the ground-truth path length."
+        }
+      },
+      "results": {
+        "dro_d": {
+          "type": "proposed",
+          "avg_translation_error_pct": 7.028720960797549,
+          "avg_rotation_error_deg_per_100m": 0.35644178389210596,
+          "endpoint_position_error_m": 6.974677445953259,
+          "path_length_error_pct": 6.014212625966368,
+          "velocity_rmse_mps": 0.45434617207882927
+        },
+        "dro_g": {
+          "type": "proposed",
+          "avg_translation_error_pct": 1.4932296056468928,
+          "avg_rotation_error_deg_per_100m": 0.4384219542008742,
+          "endpoint_position_error_m": 1.4384080501790109,
+          "path_length_error_pct": 1.2785735725316574,
+          "velocity_rmse_mps": 0.1215971275276116
+        },
+        "dro_gd": {
+          "type": "proposed",
+          "avg_translation_error_pct": 1.355368947548978,
+          "avg_rotation_error_deg_per_100m": 0.41704888369221144,
+          "endpoint_position_error_m": 1.3577396519691785,
+          "path_length_error_pct": 1.1933097807046993,
+          "velocity_rmse_mps": 0.1150207330656589
+        }
+      }
+    }
+  }
+}

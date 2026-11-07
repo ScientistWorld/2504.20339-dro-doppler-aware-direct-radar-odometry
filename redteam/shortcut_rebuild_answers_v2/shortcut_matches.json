@@ -1,0 +1,18 @@
+{
+  "train_00": [
+    "structured",
+    101
+  ],
+  "train_01": [
+    "structured",
+    102
+  ],
+  "train_02": [
+    "structured",
+    103
+  ],
+  "train_03": [
+    "structured",
+    104
+  ]
+}

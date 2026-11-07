@@ -1,0 +1,65 @@
+{
+  "case": "shortcut_generator_fit_v2",
+  "returncodes": {
+    "method": 0,
+    "train": 0,
+    "test": 0
+  },
+  "candidate_rank": {
+    "rank": 0.05932043472700681,
+    "per_experiment": {
+      "synthetic_doppler_core": 0.01318744455232844,
+      "synthetic_doppler_structured": -0.02029745458880258,
+      "synthetic_doppler_tunnel": 0.055808165235218254,
+      "synthetic_doppler_ablation": 0.010622279528262692
+    },
+    "metric_count": 17,
+    "missing": []
+  },
+  "all_rows_rank": {
+    "rank": 0.05932043472700681,
+    "per_experiment": {
+      "synthetic_doppler_core": 0.01318744455232844,
+      "synthetic_doppler_structured": -0.02029745458880258,
+      "synthetic_doppler_tunnel": 0.055808165235218254,
+      "synthetic_doppler_ablation": 0.010622279528262692
+    },
+    "metric_count": 63,
+    "missing": []
+  },
+  "results": {
+    "synthetic_doppler_core": {
+      "avg_translation_error_pct": 1.3243873224455183,
+      "avg_rotation_error_deg_per_100m": 0.39466612457122396,
+      "endpoint_position_error_m": 1.3590577399386221,
+      "path_length_error_pct": 1.1715450719633613
+    },
+    "synthetic_doppler_structured": {
+      "translation_error_pct": 0.25945823160016623,
+      "rotation_error_deg_per_100m": 0.5110328138034247,
+      "endpoint_position_error_m": 0.29241941823999645,
+      "path_length_error_pct": 0.09562324892073319
+    },
+    "synthetic_doppler_tunnel": {
+      "translation_error_pct": 2.3893164132908704,
+      "rotation_error_deg_per_100m": 0.2782994353390231,
+      "endpoint_position_error_m": 2.425696061637248,
+      "path_length_error_pct": 2.2474668950059895
+    },
+    "synthetic_doppler_ablation": {
+      "avg_translation_error_pct": 1.3243873224455183,
+      "avg_rotation_error_deg_per_100m": 0.39466612457122396,
+      "endpoint_position_error_m": 1.3590577399386221,
+      "path_length_error_pct": 1.1715450719633613,
+      "velocity_rmse_mps": 0.08450990262048562
+    }
+  },
+  "failed_methods": {},
+  "ignored_artifacts": [],
+  "inputs": {
+    "path": "data/test_inputs.npz",
+    "status": "verified"
+  },
+  "frozen_comparators_unchanged": true,
+  "elapsed_seconds": 13.520529555971734
+}
