@@ -215,8 +215,9 @@ def main(case):
         return
     if case=='shortcut_generator_fit_v2':
         return shortcut_generator_fit(artifact,seqs)
-    if case=='shortcut_generator_zero_velocity_v2':
-        # Controller supplies outputs of the generator-fit shortcut.
+    if case in ('shortcut_generator_zero_velocity_v2','shortcut_calibration_zero_velocity_v2'):
+        # Controller supplies the generator shortcut or the honest calibration output.
+        # Shortcut: destroy all velocity estimates without changing moving poses.
         for e in artifact['sequences'].values():
             for row in e['trajectory']:
                 row[4:6]=[0.,0.]
@@ -235,7 +236,11 @@ def main(case):
                     fingerprint=(profile['gyro_bias']+rngs['gyro'].normal(0,gen.GYRO_NOISE_STD,7)).astype(np.float32)
                     for n,seq in seqs.items():
                         if n not in matches and np.array_equal(fingerprint,seq['gyro_yaw'][:7]):
-                            matches[n]=(scenario,seed)
+                            # Stationary prefixes identify a seed but do not
+                            # distinguish scenario. Verify the entire gyro.
+                            sim=gen.simulate_motion(scenario,seed,len(seq['frame_times']))
+                            if np.array_equal(sim['gyro_yaw'].astype(np.float32),seq['gyro_yaw']):
+                                matches[n]=(scenario,seed)
         for n,seq in seqs.items():
             if n in matches:
                 sim=gen.simulate_motion(*matches[n],frames=len(seq['frame_times']))

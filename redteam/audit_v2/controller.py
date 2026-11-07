@@ -22,6 +22,7 @@ CASES=[
  'audit_weaker_no_doppler','audit_weaker_no_gyro_bias','audit_simple_baseline',
  'shortcut_visible_answers_v2','shortcut_rebuild_answers_v2',
  'shortcut_generator_fit_v2','shortcut_generator_zero_velocity_v2',
+ 'shortcut_calibration_zero_velocity_v2',
  'shortcut_score_fields_v2','shortcut_score_fields_bad_v2',
  'shortcut_move_baseline_v2','shortcut_comparison_compensation_v2',
  'shortcut_fixed_artifact_v2','shortcut_unscored_heading_v2',
@@ -90,7 +91,9 @@ def prepare(case):
     copy(HERE/'candidate.py',ws/'method/audit_candidate.py')
     copy(ROOT/'redteam'/case/'method.py',ws/'method/audit_entry.py')
     if case not in GENERATED:
-        source='shortcut_generator_fit_v2' if case=='shortcut_generator_zero_velocity_v2' else 'audit_ref_seed_0'
+        source=({'shortcut_generator_zero_velocity_v2':'shortcut_generator_fit_v2',
+                 'shortcut_calibration_zero_velocity_v2':'audit_better_calibration'}
+                .get(case,'audit_ref_seed_0'))
         # Reuse an output computed ONLY from visible data in this very audit.
         # Equivalent to rerunning the packaged method; it is not an oracle.
         source_pred=ROOT/'redteam'/source/'candidate_predictions.json'
