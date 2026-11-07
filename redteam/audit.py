@@ -5,10 +5,8 @@ Every test invocation is exactly `bash scripts/evaluate_test.sh`, no arguments.
 """
 from __future__ import annotations
 import argparse
-import hashlib
 import json
 import math
-import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -130,6 +128,10 @@ def run_case(case):
     if case.startswith('reference_data_seed_') or case.startswith('better_temporal_data_seed_'):
         seed = case.rsplit('_', 1)[1]
         code = execute([sys.executable, 'data/synthetic_radar.py', '--seed', seed], workspace, folder/'data.log')
+        returncodes['data'] = code
+        if code: return save_summary(case, returncodes, time.monotonic()-started)
+    elif not (workspace/'data/synthetic_dro.npz').exists():
+        code = execute([sys.executable, 'data/synthetic_radar.py'], workspace, folder/'data.log')
         returncodes['data'] = code
         if code: return save_summary(case, returncodes, time.monotonic()-started)
     if case == 'reference_seed_0':

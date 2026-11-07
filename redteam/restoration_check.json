@@ -1,0 +1,12 @@
+{
+  "protected_files_match_start": {
+    "scripts/run.sh": true,
+    "action.yaml": true,
+    "method/dro_synthetic.py": true,
+    "data/synthetic_radar.py": true,
+    "scoring/reference.json": true,
+    "scoring/scores_test.json": true
+  },
+  "staged_non_audit_changes_from_start": "",
+  "completion_signal_exception": "action.yaml is set to done after the final audit commit"
+}

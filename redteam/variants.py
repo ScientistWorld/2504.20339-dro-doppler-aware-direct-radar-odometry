@@ -2,7 +2,6 @@
 from __future__ import annotations
 import importlib.util
 import json
-import os
 from pathlib import Path
 import sys
 import numpy as np
@@ -234,10 +233,6 @@ def main(case):
         elif case == 'shortcut_timestamp':
             # Shortcut: every output reports the same impossible timestamp.
             trajectory[:, 0] = 0.
-        elif case == 'shortcut_omit_gyro_ablation':
-            # Shortcut: erase every scored constraint comparison except the
-            # two easiest output rows by relabeling this method as the baseline.
-            raise ValueError('unused case')
         else:
             raise ValueError(case)
         seq['trajectory'] = trajectory.tolist()

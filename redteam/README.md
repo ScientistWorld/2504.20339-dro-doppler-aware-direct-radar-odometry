@@ -26,3 +26,9 @@ coefficients and unnormalized experiment weights from `scoring/reference.json`.
 `candidate_rank` compares DRO-GD alone; `all_rows_rank` sums all report method
 rows. Both are reported explicitly to distinguish candidate quality from moving
 an unrelated comparison. The reference value is zero.
+
+The completed audit contains 27 cases across two CPU jobs. The five follow-up
+runs are bundled by `redteam/followup.sh`. See `REDTEAM.md` for the conclusions,
+`redteam/audit_results.json` for exact results, and `redteam/job_logs/` for the
+scheduler logs. `python3 redteam/verify.py` checks the saved evidence without
+running inference.
