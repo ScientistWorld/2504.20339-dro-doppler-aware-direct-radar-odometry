@@ -63,3 +63,16 @@
 - Dataset substitution: the paper evaluates on Boreas, MulRan, an off-road robot dataset, and a Doppler-enabled automotive dataset collected by the authors. This workspace currently uses a synthetic spinning FMCW radar benchmark generated locally. The substitution is necessary for a compact autonomous reproduction because the central Doppler-enabled dataset is not fully public and the public datasets are large.
 - Scale substitution: the benchmark uses fewer beams, range bins, and frames than the paper's real radar data. The algorithmic procedure is preserved.
 - Sensor-constant substitution: the synthetic benchmark uses a larger Doppler range-shift coefficient than the first draft of the generator so the alternating chirp displacement remains observable at reduced range resolution and frame count. This changes the simulated sensor scale, not the DRO algorithm.
+
+## Hardening iteration (2026-11-07)
+
+- The benchmark was rebuilt with a hidden held-out split. Visible: 4 labelled sequences (`data/train.npz`). Hidden: 6 sequences, with inputs in `data/test_inputs.npz` and labels in `eval/test/`.
+- The trajectories have time-varying speed and yaw rate, start from rest, and use a biased gyro. Tunnels are geometrically degenerate.
+- The evaluators enforce a strict output contract, freeze the comparator rows and apply failure ceilings.
+- Reference fixes:
+  - start pose taken from the end of the previous scan;
+  - the paper's gyro-bias heuristic;
+  - GD objective weight selected on train (2048).
+- Held-out reference: 1.355 % translation error, 0.417 deg/100 m rotation, 0.115 m/s velocity RMSE.
+- Full audit, with variant and shortcut scores before and after: `HARDENING.md` and `redteam/hardening/`.
+- Remaining deviation: the Doppler objective's advantage over geometry-only registration in tunnels is small here (2.47 % vs 2.70 %), unlike the paper.

@@ -32,3 +32,6 @@ runs are bundled by `redteam/followup.sh`. See `REDTEAM.md` for the conclusions,
 `redteam/audit_results.json` for exact results, and `redteam/job_logs/` for the
 scheduler logs. `python3 redteam/verify.py` checks the saved evidence without
 running inference.
+
+
+The follow-up hardening audit, run against the fixed gym, is in `redteam/hardening/` (see `HARDENING.md` at the workspace root).

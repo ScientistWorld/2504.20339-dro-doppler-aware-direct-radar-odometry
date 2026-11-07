@@ -45,5 +45,10 @@
 - Removed a generated cache artifact and reran `python validate.py --compare`, which passes.
 - Signaling done with the remaining limitation that the gym uses a compact synthetic replacement benchmark.
 
+### [2026-11-07 16:40] - core_claim
+- Hardening iteration: the held-out test is now six separately rendered sequences. Their labels and seeds live only in `eval/test/`, and the inputs digest is verified. Comparator rows are frozen in `eval/`, invalid output is scored at the failure ceilings, and a method must beat dead reckoning to be eligible.
+- The scenes now have time-varying trajectories that start from rest, with a biased gyro. Two bugs were fixed: the renderer's rotation sign and the method's start-pose off-by-one. The paper's stationary gyro-bias heuristic was added, and the combined-objective weight is selected on train.
+- Held-out reference DRO-GD: 1.36 % translation error and 0.42 deg/100 m rotation, versus 32.0 % / 2.72 for dead reckoning. DRO-GD beats DRO-G (1.49 %) and DRO-D (7.03 %) in every group. Every major shortcut now fails or has no effect. See `HARDENING.md`.
+
 ## Stop Justification
 - Completed at milestone `core_claim`.

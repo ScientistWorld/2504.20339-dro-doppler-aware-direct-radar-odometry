@@ -1,8 +1,6 @@
 # Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends.
-action: submit
-gpus: 0
-test: false
+action: done
 milestone: core_claim
-notes: "Hardening run 3: provisional gyro-bias running mean (fixes stationarity-detection fragility behind the train/test structured gap), re-tune GD weight on train with extended grid, rerun comparators + reference, refreeze, rescore, replay variants and shortcuts through the hidden test."
+notes: "Hardened: hidden held-out sequences (labels/seeds only in eval/test, input digest), frozen comparator rows, strict contract with failure ceilings and dead-reckoning eligibility; all major shortcuts fail or have no effect; reference DRO-GD 1.36% vs 32.0% dead reckoning, beats DRO-G/DRO-D; see HARDENING.md."

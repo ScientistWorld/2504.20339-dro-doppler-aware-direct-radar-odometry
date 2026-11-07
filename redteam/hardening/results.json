@@ -2039,6 +2039,22 @@
         "path_length_error_pct": 1.1933097807046993,
         "velocity_rmse_mps": 0.1150207330656589
       }
-    }
+    },
+    "rank_if_candidate_equals_dro_d_row_ungated": -7.83163647788414,
+    "rank_if_candidate_equals_dro_g_row_ungated": -0.17506895104056364,
+    "rank_if_candidate_equals_fixed_velocity_gyro_row_ungated": -28.045375182894258,
+    "previous_reference_version_rank": {
+      "rank": -1.1980269065448543,
+      "metric_count": 17,
+      "missing": [],
+      "per_experiment": {
+        "synthetic_doppler_core": -0.4122980250302825,
+        "synthetic_doppler_structured": -0.2661265192410591,
+        "synthetic_doppler_tunnel": -0.24361917631537228,
+        "synthetic_doppler_ablation": -0.2759831859581402
+      }
+    },
+    "previous_reference_version_note": "run-2 reference (gd_direct_weight 512, gyro bias applied only after Q=5 stationary samples) scored on the same hidden test",
+    "train_vs_test_draw_rank_spread": -0.05156273331195977
   }
 }
