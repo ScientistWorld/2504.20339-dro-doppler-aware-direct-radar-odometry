@@ -1,12 +1,11 @@
 #!/bin/bash
-# Evaluate visible train-slice odometry scores from prediction JSON artifacts.
+# Score every prediction artifact on disk against the visible train labels.
 
 set -e
 
 cd "$(dirname "$0")/.."
 
 mkdir -p scoring
-
 predictions=("$@")
 if [ ${#predictions[@]} -eq 0 ]; then
   mapfile -t predictions < <(
@@ -14,12 +13,7 @@ if [ ${#predictions[@]} -eq 0 ]; then
   )
 fi
 
-if [ ${#predictions[@]} -eq 0 ]; then
-  echo "No prediction JSON artifacts found. Pass files explicitly or generate checkpoints first." >&2
-  exit 1
-fi
-
 python eval/train/evaluate.py \
-  --predictions "${predictions[@]}" \
-  --data data/synthetic_dro.npz \
-  --output scoring/scores_train.json
+  --data data/train.npz \
+  --output scoring/scores_train.json \
+  --predictions "${predictions[@]}"

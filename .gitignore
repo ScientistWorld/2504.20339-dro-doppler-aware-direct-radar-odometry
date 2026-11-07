@@ -7,6 +7,10 @@ checkpoints/
 *.bin
 *.npy
 *.npz
+# Agent-authored benchmark data is small and tracked: labelled train split
+# and held-out test inputs (no labels).
+!data/train.npz
+!data/test_inputs.npz
 *.h5
 *.hdf5
 *.pkl

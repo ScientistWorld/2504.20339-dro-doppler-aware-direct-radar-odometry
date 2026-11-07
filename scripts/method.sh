@@ -1,12 +1,13 @@
 #!/bin/bash
-# Run DRO variants on the local synthetic radar benchmark.
+# Run the full method (DRO-GD) on every train and test sequence.
+# Writes checkpoints/dro_synthetic/dro_gd_predictions.json.
 
 set -e
 
 cd "$(dirname "$0")/.."
 
-[ -e data/synthetic_dro.npz ] || bash scripts/download.sh
-mkdir -p checkpoints/dro_synthetic
-python method/dro_synthetic.py --mode dro_gd --data data/synthetic_dro.npz --output-dir checkpoints/dro_synthetic
-python method/dro_synthetic.py --mode dro_g --data data/synthetic_dro.npz --output-dir checkpoints/dro_synthetic
-python method/dro_synthetic.py --mode dro_d --data data/synthetic_dro.npz --output-dir checkpoints/dro_synthetic
+[ -f data/train.npz ] || bash scripts/download.sh
+python method/dro_synthetic.py --mode dro_gd \
+  --inputs data/train.npz data/test_inputs.npz \
+  --output checkpoints/dro_synthetic/dro_gd_predictions.json \
+  --cache-dir checkpoints/cache

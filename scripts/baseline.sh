@@ -1,9 +1,11 @@
 #!/bin/bash
-# Run a simple gyro-aided fixed-velocity baseline for evaluator sanity checks.
+# Fixed-velocity gyro dead reckoning comparator on every sequence. The
+# evaluators score frozen copies of this output (eval/*/comparators/).
 
 set -e
 
 cd "$(dirname "$0")/.."
 
-[ -e data/synthetic_dro.npz ] || bash scripts/download.sh
-python baseline/dead_reckoning.py --data data/synthetic_dro.npz --output-dir checkpoints/baseline
+[ -f data/train.npz ] || bash scripts/download.sh
+python baseline/dead_reckoning.py --inputs data/train.npz data/test_inputs.npz \
+  --output checkpoints/comparators/fixed_velocity_gyro_comparator.json

@@ -1,9 +1,24 @@
-"""Synthetic spinning FMCW radar data for the DRO reproduction.
+"""Synthetic spinning FMCW radar sequences for the radar-odometry benchmark.
 
 The real Doppler-enabled automotive dataset used in the paper is not fully
-public. This generator keeps the paper's sensing model: a scanning radar emits
-azimuth beams over time, observes dense range intensity, and Doppler shifts
-alternate up/down chirps by an amount proportional to radial velocity.
+public. This generator keeps the sensing model of a spinning FMCW radar with a
+triangular (alternating up/down chirp) modulation:
+
+* the radar dish sweeps 360 degrees per scan; every azimuth beam is collected
+  at its own timestamp while the vehicle keeps moving;
+* each beam returns dense range intensities (a polar image row);
+* the Doppler effect shifts every return along the beam by an amount
+  proportional to the radial velocity, with opposite sign for up and down
+  chirps;
+* a yaw-rate gyroscope provides one bias-affected, noisy angular-rate sample
+  per scan.
+
+Vehicles follow smooth, time-varying speed and yaw-rate profiles that start
+from rest. Scenes are either "structured" (buildings with gaps, poles,
+clutter) or "tunnel" (two dense, featureless walls along the road).
+
+Running this file writes the visible training split (inputs and labels).
+Held-out sequences are produced elsewhere and only their inputs are public.
 """
 
 from __future__ import annotations
@@ -14,174 +29,288 @@ from pathlib import Path
 
 import numpy as np
 
+FRAMES = 72
+BEAMS = 180
+BINS = 220
+RANGE_RES = 0.35
+FRAME_PERIOD = 0.25
+BETA = 0.6
+NOISE_STD = 0.015
+GYRO_NOISE_STD = 0.001
+RANGE_SIGMA_BINS = 1.15
+BEAM_SIGMA = (2.0 * np.pi / BEAMS) * 0.42
+RADAR_LEVER_ARM_M = 1.2
 
-def rot2(theta: float) -> np.ndarray:
+# Visible training split: (sequence name, scene type, seed).
+TRAIN_SEQUENCES = (
+    ("train_00", "structured", 101),
+    ("train_01", "tunnel", 102),
+    ("train_02", "structured", 103),
+    ("train_03", "tunnel", 104),
+)
+
+
+def sensor_geometry() -> dict[str, np.ndarray]:
+    return {
+        "azimuths": np.linspace(-np.pi, np.pi, BEAMS, endpoint=False),
+        "ranges": (np.arange(BINS, dtype=np.float64) + 0.5) * RANGE_RES,
+        "beam_times": np.linspace(0.0, FRAME_PERIOD, BEAMS, endpoint=False),
+        "chirps": np.where(np.arange(BEAMS) % 2 == 0, 1.0, -1.0),
+    }
+
+
+def sensor_manifest() -> dict:
+    return {
+        "beams": BEAMS,
+        "bins": BINS,
+        "range_res": RANGE_RES,
+        "frame_period": FRAME_PERIOD,
+        "beta": BETA,
+    }
+
+
+def smoothstep(x: np.ndarray) -> np.ndarray:
+    x = np.clip(x, 0.0, 1.0)
+    return x * x * (3.0 - 2.0 * x)
+
+
+def sample_motion_profile(rng: np.random.Generator, scenario: str) -> dict:
+    if scenario == "structured":
+        v_cruise = rng.uniform(5.5, 8.0)
+        kappa0 = rng.uniform(-0.012, 0.012)
+        kappa1 = rng.uniform(0.006, 0.016)
+    elif scenario == "tunnel":
+        v_cruise = rng.uniform(6.5, 9.0)
+        kappa0 = rng.uniform(-0.004, 0.004)
+        kappa1 = rng.uniform(0.0, 0.004)
+    else:
+        raise ValueError(f"unknown scenario: {scenario}")
+    return {
+        "scenario": scenario,
+        "t_stop": rng.uniform(2.0, 2.75),
+        "t_acc": rng.uniform(4.0, 6.0),
+        "v_cruise": v_cruise,
+        "speed_amp": rng.uniform(0.5, 1.3),
+        "speed_period": rng.uniform(5.0, 9.0),
+        "speed_phase": rng.uniform(0.0, 2.0 * np.pi),
+        "kappa0": kappa0,
+        "kappa1": kappa1,
+        "kappa_period": rng.uniform(6.0, 12.0),
+        "kappa_phase": rng.uniform(0.0, 2.0 * np.pi),
+        "slip": rng.uniform(-0.04, 0.04),
+        "gyro_bias": float(rng.choice([-1.0, 1.0]) * rng.uniform(0.001, 0.003)),
+    }
+
+
+def body_motion(profile: dict, t: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Body-frame forward/lateral velocity and yaw rate at times t."""
+    ramp = smoothstep((t - profile["t_stop"]) / profile["t_acc"])
+    oscillation = profile["speed_amp"] * np.sin(
+        2.0 * np.pi * (t - profile["t_stop"]) / profile["speed_period"] + profile["speed_phase"]
+    )
+    speed = ramp * (profile["v_cruise"] + oscillation)
+    kappa = profile["kappa0"] + profile["kappa1"] * np.sin(
+        2.0 * np.pi * t / profile["kappa_period"] + profile["kappa_phase"]
+    )
+    omega = speed * kappa
+    vx = speed
+    vy = RADAR_LEVER_ARM_M * omega + profile["slip"] * ramp
+    return vx, vy, omega
+
+
+def _cumtrapz(values: np.ndarray, dt: float) -> np.ndarray:
+    out = np.zeros_like(values)
+    out[1:] = np.cumsum(0.5 * (values[1:] + values[:-1]) * dt)
+    return out
+
+
+def _spawn_rngs(seed: int) -> dict[str, np.random.Generator]:
+    children = np.random.SeedSequence(int(seed)).spawn(4)
+    return {
+        name: np.random.default_rng(child)
+        for name, child in zip(("profile", "scene", "noise", "gyro"), children)
+    }
+
+
+def simulate_motion(scenario: str, seed: int, frames: int = FRAMES) -> dict:
+    """Continuous trajectory on a beam-rate grid, frame labels and gyro data."""
+    rngs = _spawn_rngs(seed)
+    profile = sample_motion_profile(rngs["profile"], scenario)
+    dt = FRAME_PERIOD / BEAMS
+    t = np.arange(frames * BEAMS + 1, dtype=np.float64) * dt
+    vx, vy, omega = body_motion(profile, t)
+    theta = _cumtrapz(omega, dt)
     c = np.cos(theta)
     s = np.sin(theta)
-    return np.array([[c, -s], [s, c]], dtype=np.float64)
+    x = _cumtrapz(c * vx - s * vy, dt)
+    y = _cumtrapz(s * vx + c * vy, dt)
+
+    frame_idx = np.arange(frames) * BEAMS
+    window = frame_idx[:, None] + np.arange(BEAMS)[None, :]
+    poses = np.column_stack([t[frame_idx], x[frame_idx], y[frame_idx], theta[frame_idx]])
+    velocities = np.column_stack([vx[window].mean(axis=1), vy[window].mean(axis=1)])
+    omega_frame = omega[window].mean(axis=1)
+    gyro = omega_frame + profile["gyro_bias"] + rngs["gyro"].normal(0.0, GYRO_NOISE_STD, size=frames)
+    return {
+        "profile": profile,
+        "rngs": rngs,
+        "t": t,
+        "x": x,
+        "y": y,
+        "theta": theta,
+        "vx": vx,
+        "vy": vy,
+        "poses": poses,
+        "velocities": velocities,
+        "gyro_yaw": gyro,
+    }
 
 
-def integrate_body_velocity(v_body: np.ndarray, omega: float, dt: float) -> np.ndarray:
-    if abs(omega) < 1e-9:
-        return v_body * dt
-    s = np.sin(omega * dt)
-    c = np.cos(omega * dt)
-    return np.array(
-        [
-            (s * v_body[0] - (1.0 - c) * v_body[1]) / omega,
-            ((1.0 - c) * v_body[0] + s * v_body[1]) / omega,
-        ],
-        dtype=np.float64,
-    )
+def _path_polyline(x: np.ndarray, y: np.ndarray, theta: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    pts = np.column_stack([x, y])
+    keep = [0]
+    for i in range(1, len(pts)):
+        if np.hypot(*(pts[i] - pts[keep[-1]])) >= 0.25:
+            keep.append(i)
+    core = pts[keep]
+    d0 = np.array([np.cos(theta[0]), np.sin(theta[0])])
+    d1 = np.array([np.cos(theta[-1]), np.sin(theta[-1])])
+    back = core[0] - np.outer(np.arange(20.0, 0.0, -0.5), d0)
+    fwd = core[-1] + np.outer(np.arange(0.5, 90.0, 0.5), d1)
+    poly = np.vstack([back, core, fwd])
+    s = np.concatenate([[0.0], np.cumsum(np.hypot(*np.diff(poly, axis=0).T))])
+    return poly, s
 
 
-def make_landmarks(scenario: str, rng: np.random.Generator) -> np.ndarray:
+def _along_path(poly: np.ndarray, s: np.ndarray, query: np.ndarray, lateral: np.ndarray) -> np.ndarray:
+    px = np.interp(query, s, poly[:, 0])
+    py = np.interp(query, s, poly[:, 1])
+    tx = np.interp(query + 0.5, s, poly[:, 0]) - np.interp(query - 0.5, s, poly[:, 0])
+    ty = np.interp(query + 0.5, s, poly[:, 1]) - np.interp(query - 0.5, s, poly[:, 1])
+    norm = np.maximum(np.hypot(tx, ty), 1e-9)
+    nx = -ty / norm
+    ny = tx / norm
+    return np.column_stack([px + lateral * nx, py + lateral * ny])
+
+
+def make_landmarks(motion: dict, scenario: str) -> tuple[np.ndarray, np.ndarray]:
+    rng = motion["rngs"]["scene"]
+    poly, s = _path_polyline(motion["x"], motion["y"], motion["theta"])
+    s_max = float(s[-1])
+    points = []
+    amps = []
     if scenario == "structured":
-        pts = []
-        for x in np.linspace(6, 58, 27):
-            pts.append([x, -8.0 + rng.normal(0, 0.18)])
-            pts.append([x, 8.0 + rng.normal(0, 0.18)])
-        for _ in range(50):
-            pts.append([rng.uniform(4, 62), rng.choice([-1, 1]) * rng.uniform(10, 18)])
-        return np.asarray(pts, dtype=np.float64)
-    if scenario == "tunnel":
-        pts = []
-        for x in np.linspace(4, 70, 34):
-            pts.append([x, -5.0 + rng.normal(0, 0.05)])
-            pts.append([x, 5.0 + rng.normal(0, 0.05)])
-        return np.asarray(pts, dtype=np.float64)
-    raise ValueError(f"unknown scenario: {scenario}")
-
-
-def body_pose_at_frame(frame_idx: int, frame_period: float, v_body: np.ndarray, omega: float) -> tuple[np.ndarray, float]:
-    t = frame_idx * frame_period
-    theta = omega * t
-    if abs(omega) < 1e-9:
-        pos = np.array([v_body[0] * t, v_body[1] * t], dtype=np.float64)
+        for side in (-1.0, 1.0):
+            offset = rng.uniform(7.0, 9.5)
+            q = np.arange(rng.uniform(0.0, 2.0), s_max, 2.0)
+            q = q + rng.normal(0.0, 0.15, size=q.shape)
+            q = q[rng.random(q.shape) > 0.15]
+            lateral = side * (offset + rng.normal(0.0, 0.18, size=q.shape))
+            points.append(_along_path(poly, s, q, lateral))
+            amps.append(np.ones(q.shape))
+        n_clutter = int(s_max / 1.6)
+        q = rng.uniform(0.0, s_max, size=n_clutter)
+        lateral = rng.choice([-1.0, 1.0], size=n_clutter) * rng.uniform(10.0, 20.0, size=n_clutter)
+        points.append(_along_path(poly, s, q, lateral))
+        amps.append(rng.uniform(0.4, 1.0, size=n_clutter))
+        q = np.cumsum(rng.uniform(12.0, 20.0, size=int(s_max / 12.0) + 1))
+        q = q[q < s_max]
+        sides = np.where(np.arange(len(q)) % 2 == 0, 1.0, -1.0)
+        lateral = sides * rng.uniform(3.5, 5.0, size=q.shape)
+        points.append(_along_path(poly, s, q, lateral))
+        amps.append(np.full(q.shape, 0.8))
+    elif scenario == "tunnel":
+        for side in (-1.0, 1.0):
+            offset = rng.uniform(4.6, 5.6)
+            q = np.arange(0.0, s_max, 0.3)
+            lateral = side * (offset + rng.normal(0.0, 0.03, size=q.shape))
+            points.append(_along_path(poly, s, q, lateral))
+            amps.append(np.full(q.shape, 0.35))
     else:
-        pos = integrate_body_velocity(v_body, omega, t)
-    return pos, theta
+        raise ValueError(f"unknown scenario: {scenario}")
+    return np.vstack(points), np.concatenate(amps)
 
 
-def render_sequence(
-    scenario: str,
-    frames: int,
-    beams: int,
-    bins: int,
-    range_res: float,
-    frame_period: float,
-    beta: float,
-    seed: int,
-) -> dict:
-    rng = np.random.default_rng(seed)
-    if scenario == "structured":
-        v_body = np.array([5.8, 0.18], dtype=np.float64)
-        omega = 0.028
-    else:
-        v_body = np.array([6.2, 0.06], dtype=np.float64)
-        omega = 0.006
-    landmarks = make_landmarks(scenario, rng)
-    azimuths = np.linspace(-np.pi, np.pi, beams, endpoint=False)
-    ranges = (np.arange(bins, dtype=np.float64) + 0.5) * range_res
-    scans = []
-    poses = []
-    beam_sigma = (2.0 * np.pi / beams) * 0.42
-    range_sigma_bins = 1.15
-    beam_times = np.linspace(0.0, frame_period, beams, endpoint=False)
-    chirps = np.where(np.arange(beams) % 2 == 0, 1.0, -1.0)
-    gyro_yaw = omega + 0.0015 + rng.normal(0.0, 0.001, size=frames)
-
+def render_scans(motion: dict, landmarks: np.ndarray, amps: np.ndarray, frames: int) -> np.ndarray:
+    geo = sensor_geometry()
+    azimuths = geo["azimuths"]
+    chirps = geo["chirps"]
+    max_range = geo["ranges"][-1] - 1.0
+    rng = motion["rngs"]["noise"]
+    offsets = np.arange(-4, 5)
+    scans = np.zeros((frames, BEAMS, BINS), dtype=np.uint8)
     for k in range(frames):
-        frame_start_pos, frame_start_theta = body_pose_at_frame(k, frame_period, v_body, omega)
-        poses.append([k * frame_period, frame_start_pos[0], frame_start_pos[1], frame_start_theta])
-        scan = np.zeros((beams, bins), dtype=np.float32)
-        for i, alpha in enumerate(azimuths):
-            dt = beam_times[i]
-            theta = frame_start_theta + omega * dt
-            pos = frame_start_pos + rot2(frame_start_theta) @ integrate_body_velocity(v_body, omega, dt)
-            r_world_body = rot2(theta).T
-            rel = (landmarks - pos) @ r_world_body
-            r = np.linalg.norm(rel, axis=1)
-            bearing = np.arctan2(rel[:, 1], rel[:, 0])
-            bearing_err = np.arctan2(np.sin(bearing - alpha), np.cos(bearing - alpha))
-            mask = (r > 1.0) & (r < ranges[-1] - 1.0) & (np.abs(bearing_err) < 3.0 * beam_sigma)
+        scan = np.zeros((BEAMS, BINS), dtype=np.float64)
+        for i in range(BEAMS):
+            f = k * BEAMS + i
+            c = np.cos(motion["theta"][f])
+            s = np.sin(motion["theta"][f])
+            dx = landmarks[:, 0] - motion["x"][f]
+            dy = landmarks[:, 1] - motion["y"][f]
+            rel_x = c * dx + s * dy
+            rel_y = -s * dx + c * dy
+            r = np.hypot(rel_x, rel_y)
+            bearing_err = np.arctan2(rel_y, rel_x) - azimuths[i]
+            bearing_err = np.arctan2(np.sin(bearing_err), np.cos(bearing_err))
+            mask = (r > 1.0) & (r < max_range) & (np.abs(bearing_err) < 3.0 * BEAM_SIGMA)
             if not np.any(mask):
                 continue
-            radial = np.cos(alpha) * v_body[0] + np.sin(alpha) * v_body[1]
-            measured_r = r[mask] - chirps[i] * 0.5 * beta * radial
-            bins_float = measured_r / range_res - 0.5
-            weights = np.exp(-0.5 * (bearing_err[mask] / beam_sigma) ** 2)
-            for bf, w in zip(bins_float, weights):
-                center = int(round(bf))
-                lo = max(0, center - 4)
-                hi = min(bins, center + 5)
-                idx = np.arange(lo, hi)
-                scan[i, lo:hi] += (w * np.exp(-0.5 * ((idx - bf) / range_sigma_bins) ** 2)).astype(np.float32)
-        scan += rng.normal(0.0, 0.015, size=scan.shape).astype(np.float32)
-        scan[scan < 0] = 0
+            radial = np.cos(azimuths[i]) * motion["vx"][f] + np.sin(azimuths[i]) * motion["vy"][f]
+            measured_r = r[mask] - chirps[i] * 0.5 * BETA * radial
+            bins_float = measured_r / RANGE_RES - 0.5
+            weights = amps[mask] * np.exp(-0.5 * (bearing_err[mask] / BEAM_SIGMA) ** 2)
+            idx = np.rint(bins_float).astype(np.int64)[:, None] + offsets[None, :]
+            vals = weights[:, None] * np.exp(-0.5 * ((idx - bins_float[:, None]) / RANGE_SIGMA_BINS) ** 2)
+            valid = (idx >= 0) & (idx < BINS)
+            np.add.at(scan[i], idx[valid], vals[valid])
+        scan += rng.normal(0.0, NOISE_STD, size=scan.shape)
+        scan[scan < 0] = 0.0
         row_max = scan.max(axis=1, keepdims=True)
         scan = np.divide(scan, np.maximum(row_max, 1e-6), out=np.zeros_like(scan), where=row_max > 0)
-        scans.append(scan)
+        scans[k] = np.rint(np.clip(scan, 0.0, 1.0) * 255.0).astype(np.uint8)
+    return scans
 
+
+def render_sequence(scenario: str, seed: int, frames: int = FRAMES) -> dict:
+    motion = simulate_motion(scenario, seed, frames)
+    landmarks, amps = make_landmarks(motion, scenario)
+    scans = render_scans(motion, landmarks, amps, frames)
     return {
-        "metadata": {
-            "scenario": scenario,
-            "frames": frames,
-            "beams": beams,
-            "bins": bins,
-            "range_res": range_res,
-            "frame_period": frame_period,
-            "beta": beta,
-            "omega": omega,
-            "v_body": v_body.tolist(),
-            "seed": seed,
-        },
-        "azimuths": azimuths.astype(np.float32),
-        "ranges": ranges.astype(np.float32),
-        "beam_times": beam_times.astype(np.float32),
-        "chirps": chirps.astype(np.float32),
-        "gyro_yaw": gyro_yaw.astype(np.float32),
-        "poses": np.asarray(poses, dtype=np.float64),
-        "scans": np.stack(scans, axis=0),
+        "scenario": scenario,
+        "scans": scans,
+        "gyro_yaw": motion["gyro_yaw"].astype(np.float32),
+        "frame_times": motion["poses"][:, 0].astype(np.float64),
+        "poses": motion["poses"].astype(np.float64),
+        "velocities": motion["velocities"].astype(np.float64),
     }
+
+
+def write_dataset(path: Path, sequences: dict[str, dict], include_labels: bool) -> None:
+    geo = sensor_geometry()
+    arrays: dict[str, np.ndarray] = {key: value.astype(np.float32) for key, value in geo.items()}
+    manifest: dict = {"sensor": sensor_manifest(), "sequences": {}}
+    for name, seq in sequences.items():
+        arrays[f"{name}_scans"] = seq["scans"]
+        arrays[f"{name}_gyro_yaw"] = seq["gyro_yaw"]
+        arrays[f"{name}_frame_times"] = seq["frame_times"]
+        entry = {"frames": int(seq["scans"].shape[0])}
+        if include_labels:
+            entry["scenario"] = seq["scenario"]
+            arrays[f"{name}_poses"] = seq["poses"]
+            arrays[f"{name}_velocities"] = seq["velocities"]
+        manifest["sequences"][name] = entry
+    arrays["manifest_json"] = np.array(json.dumps(manifest, indent=2, sort_keys=True))
+    path.parent.mkdir(parents=True, exist_ok=True)
+    np.savez_compressed(path, **arrays)
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--output", default="data/synthetic_dro.npz")
-    parser.add_argument("--frames", type=int, default=48)
-    parser.add_argument("--beams", type=int, default=180)
-    parser.add_argument("--bins", type=int, default=220)
-    parser.add_argument("--range-res", type=float, default=0.35)
-    parser.add_argument("--frame-period", type=float, default=0.25)
-    parser.add_argument("--beta", type=float, default=0.6)
-    parser.add_argument("--seed", type=int, default=7)
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--output", default="data/train.npz")
     args = parser.parse_args()
-    out = Path(args.output)
-    out.parent.mkdir(parents=True, exist_ok=True)
-    data = {
-        name: render_sequence(
-            name,
-            args.frames,
-            args.beams,
-            args.bins,
-            args.range_res,
-            args.frame_period,
-            args.beta,
-            args.seed + offset,
-        )
-        for offset, name in enumerate(["structured", "tunnel"])
-    }
-    arrays = {}
-    manifest = {}
-    for name, seq in data.items():
-        manifest[name] = seq["metadata"]
-        for key, value in seq.items():
-            if key != "metadata":
-                arrays[f"{name}_{key}"] = value
-    arrays["manifest_json"] = np.array(json.dumps(manifest, indent=2))
-    np.savez_compressed(out, **arrays)
-    print(f"wrote {out}")
+    sequences = {name: render_sequence(scenario, seed) for name, scenario, seed in TRAIN_SEQUENCES}
+    write_dataset(Path(args.output), sequences, include_labels=True)
+    print(f"wrote {args.output} ({len(sequences)} labelled sequences)")
 
 
 if __name__ == "__main__":

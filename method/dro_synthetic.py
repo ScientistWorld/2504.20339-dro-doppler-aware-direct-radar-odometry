@@ -1,20 +1,49 @@
 """Compact DRO implementation for the synthetic benchmark.
 
 This file implements the paper's computation at a smaller scale:
-- split up/down chirps and GP-like infill for the Doppler image pair,
+- split up/down chirps and GP infill for the Doppler image pair,
 - maximize Doppler and direct intensity cross-correlation objectives,
 - correct scans for continuous SE(2) motion and Doppler range distortion,
-- update an image-like local map with a low-pass filter.
+- update an image-like local map with a low-pass filter,
+- integrate the gyroscope for orientation, with the paper's stationary-
+  vehicle gyro-bias heuristic (Sec. IV-D2).
+
+Each scan k is registered with the trajectory starting at the pose estimated
+for the end of scan k-1 (= start of scan k); the estimated constant
+body-frame velocity of scan k then propagates the pose to the next scan.
 """
 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 
 import numpy as np
 from scipy.ndimage import correlate, gaussian_filter1d, map_coordinates
+
+DEFAULT_CONFIG = {
+    "gd_direct_weight": 0.12,
+    "gd_doppler_weight": 2.0,
+    "gd_anchor_weight": 0.04,
+    "d_doppler_weight": 0.9,
+    "velocity_prior_weight": 0.0002,
+    "gyro_bias_estimation": True,
+    "stationary_speed_mps": 0.05,
+    "gyro_bias_init_samples": 5,
+    "gyro_bias_lowpass": 0.1,
+    "map_update_gamma": 0.1,
+}
+CONFIG_PATH = Path(__file__).resolve().parent / "dro_config.json"
+
+
+def load_config(path: Path | None = CONFIG_PATH) -> dict:
+    cfg = dict(DEFAULT_CONFIG)
+    if path is not None and Path(path).is_file():
+        stored = json.loads(Path(path).read_text())
+        cfg.update({k: stored[k] for k in DEFAULT_CONFIG if k in stored})
+    return cfg
 
 
 def rot2(theta: float) -> np.ndarray:
@@ -39,7 +68,7 @@ def integrate_body_velocity(v_body: np.ndarray, omega: float, dt: np.ndarray) ->
 
 
 class LocalMap:
-    def __init__(self, half_extent: float = 90.0, resolution: float = 0.35, alpha: float = 0.1):
+    def __init__(self, half_extent: float = 200.0, resolution: float = 0.35, alpha: float = 0.1):
         self.resolution = resolution
         self.alpha = alpha
         self.size = int(round(2 * half_extent / resolution)) + 1
@@ -182,15 +211,15 @@ def corrected_points(
     return world, scan[rows, cols]
 
 
-def doppler_score(v_body: np.ndarray, scan: np.ndarray, azimuths: np.ndarray, beta: float, range_res: float) -> float:
-    up, down = infill_up_down(scan)
+def doppler_score(v_body: np.ndarray, infill: tuple[np.ndarray, np.ndarray], azimuths: np.ndarray, beta: float, range_res: float) -> float:
+    up, down = infill
     radial = np.cos(azimuths) * v_body[0] + np.sin(azimuths) * v_body[1]
-    # The synthetic generator writes up-chirp returns at true_range - d/2
-    # and down-chirp returns at true_range + d/2. Querying the up-chirp image
-    # at down_range - d therefore aligns both views of the same reflector.
+    # Up-chirp returns sit at true_range - d/2 and down-chirp returns at
+    # true_range + d/2. Querying the up-chirp image at down_range - d
+    # therefore aligns both views of the same reflector.
     shift_bins = -beta * radial / range_res
-    cols = np.arange(scan.shape[1], dtype=np.float64)[None, :] + shift_bins[:, None]
-    rows = np.arange(scan.shape[0], dtype=np.float64)[:, None] * np.ones_like(cols)
+    cols = np.arange(down.shape[1], dtype=np.float64)[None, :] + shift_bins[:, None]
+    rows = np.arange(down.shape[0], dtype=np.float64)[:, None] * np.ones_like(cols)
     aligned = map_coordinates(up, [rows, cols], order=1, mode="constant", cval=0.0)
     return float(np.sum(down * aligned) / (np.sum(down > 0) + 1.0))
 
@@ -206,16 +235,13 @@ def _shift_row(row: np.ndarray, shift: int) -> np.ndarray:
     return out
 
 
-def doppler_velocity_initializer(scan: np.ndarray, azimuths: np.ndarray, beta: float, range_res: float) -> np.ndarray | None:
+def doppler_velocity_initializer(infill: tuple[np.ndarray, np.ndarray], azimuths: np.ndarray, beta: float, range_res: float) -> np.ndarray | None:
     """Estimate body velocity from per-row Doppler cross-correlation shifts.
 
-    This is an explicit small-scale equivalent of maximizing the paper's
-    Doppler objective: find the range shift that best aligns up/down chirp
-    intensity images, then solve the radial-velocity relation
-    shift_bins = beta / range_res * [cos(a), sin(a)] v_body for the
-    integer row-moving convention used by _shift_row().
+    Find the integer range shift that best aligns up/down chirp intensity rows,
+    then solve shift_bins = beta / range_res * [cos(a), sin(a)] v_body.
     """
-    up, down = infill_up_down(scan)
+    up, down = infill
     max_shift = max(3, int(round(10.0 * beta / range_res)))
     shifts = []
     rows = []
@@ -240,9 +266,7 @@ def doppler_velocity_initializer(scan: np.ndarray, azimuths: np.ndarray, beta: f
     a = np.asarray(rows, dtype=np.float64)
     b = np.asarray(shifts, dtype=np.float64) * range_res / beta
     w = np.sqrt(np.asarray(weights, dtype=np.float64) / (np.max(weights) + 1e-9))
-    aw = a * w[:, None]
-    bw = b * w
-    v, *_ = np.linalg.lstsq(aw, bw, rcond=None)
+    v, *_ = np.linalg.lstsq(a * w[:, None], b * w, rcond=None)
     if not np.all(np.isfinite(v)):
         return None
     return np.clip(v, [-2.0, -3.0], [12.0, 3.0])
@@ -268,6 +292,7 @@ def direct_score(
 
 def estimate_velocity(
     scan: np.ndarray,
+    infill: tuple[np.ndarray, np.ndarray] | None,
     lmap: LocalMap,
     azimuths: np.ndarray,
     ranges: np.ndarray,
@@ -279,45 +304,41 @@ def estimate_velocity(
     range_res: float,
     previous_v: np.ndarray,
     mode: str,
+    cfg: dict,
 ) -> np.ndarray:
-    doppler_init = None
-    if mode in {"dro_d", "dro_gd"}:
-        doppler_init = doppler_velocity_initializer(scan, azimuths, beta, range_res)
+    uses_doppler = mode in {"dro_d", "dro_gd"}
+    uses_direct = mode in {"dro_g", "dro_gd"} and lmap.initialized
+    if not uses_doppler and not uses_direct:
+        return np.asarray(previous_v, dtype=np.float64).copy()
+    if uses_doppler and infill is None:
+        infill = infill_up_down(scan)
+
+    doppler_init = doppler_velocity_initializer(infill, azimuths, beta, range_res) if uses_doppler else None
     doppler_anchor = None
     if mode == "dro_gd":
         doppler_anchor = estimate_velocity(
-            scan,
-            lmap,
-            azimuths,
-            ranges,
-            beam_times,
-            chirps,
-            start_pose,
-            omega,
-            beta,
-            range_res,
-            previous_v,
-            "dro_d",
+            scan, infill, lmap, azimuths, ranges, beam_times, chirps, start_pose,
+            omega, beta, range_res, previous_v, "dro_d", cfg,
         )
 
     def score_fn(v: np.ndarray) -> float:
         v = np.asarray(v, dtype=np.float64)
         score = 0.0
-        if mode in {"dro_g", "dro_gd"} and lmap.initialized:
-            direct_weight = 0.12 if mode == "dro_gd" and doppler_init is not None else 1.0
+        if uses_direct:
+            direct_weight = cfg["gd_direct_weight"] if mode == "dro_gd" and doppler_init is not None else 1.0
             score += direct_weight * direct_score(v, scan, lmap, azimuths, ranges, beam_times, chirps, start_pose, omega, beta)
-        if mode in {"dro_d", "dro_gd"}:
-            doppler_weight = 2.0 if mode == "dro_gd" else 0.9
-            score += doppler_weight * doppler_score(v, scan, azimuths, beta, range_res)
-        score -= 0.0002 * float(np.sum((v - previous_v) ** 2))
+        if uses_doppler:
+            doppler_weight = cfg["gd_doppler_weight"] if mode == "dro_gd" else cfg["d_doppler_weight"]
+            score += doppler_weight * doppler_score(v, infill, azimuths, beta, range_res)
+        score -= cfg["velocity_prior_weight"] * float(np.sum((v - previous_v) ** 2))
         if mode == "dro_gd" and doppler_anchor is not None:
-            score -= 0.04 * float(np.sum((v - doppler_anchor) ** 2))
+            score -= cfg["gd_anchor_weight"] * float(np.sum((v - doppler_anchor) ** 2))
         return score
 
     if mode == "dro_gd" and doppler_anchor is not None:
         best = doppler_anchor
     else:
-        best = doppler_init if doppler_init is not None else previous_v
+        best = doppler_init if doppler_init is not None else np.asarray(previous_v, dtype=np.float64)
     best_value = -score_fn(best)
     vx_center = best[0]
     vy_center = best[1]
@@ -331,7 +352,8 @@ def estimate_velocity(
                 best = candidate
                 best_value = value
 
-    state = best.astype(np.float64)
+    # Normalized gradient ascent, step halved on every non-ascending step.
+    state = np.asarray(best, dtype=np.float64)
     step = 0.2
     eps = np.array([0.03, 0.03], dtype=np.float64)
     current = score_fn(state)
@@ -359,50 +381,134 @@ def estimate_velocity(
     return state
 
 
-def run_sequence(dataset: np.lib.npyio.NpzFile, scenario: str, mode: str) -> dict:
-    meta = json.loads(str(dataset["manifest_json"].item()))[scenario]
-    scans = dataset[f"{scenario}_scans"]
-    azimuths = dataset[f"{scenario}_azimuths"]
-    ranges = dataset[f"{scenario}_ranges"]
-    beam_times = dataset[f"{scenario}_beam_times"]
-    chirps = dataset[f"{scenario}_chirps"]
-    gyro_yaw = dataset[f"{scenario}_gyro_yaw"]
-    gt = dataset[f"{scenario}_poses"]
-    lmap = LocalMap()
-    beta = float(meta["beta"])
-    range_res = float(meta["range_res"])
-    frame_period = float(meta["frame_period"])
-    pose = np.array([gt[0, 1], gt[0, 2], gt[0, 3]], dtype=np.float64)
-    v = np.array([4.5, 0.0], dtype=np.float64)
-    trajectory = [[0.0, pose[0], pose[1], pose[2], v[0], v[1]]]
-    scores = []
-    for k, scan in enumerate(scans):
-        omega = float(gyro_yaw[k])
-        if k > 0:
-            v = estimate_velocity(scan, lmap, azimuths, ranges, beam_times, chirps, pose, omega, beta, range_res, v, mode)
-            delta_local = integrate_body_velocity(v, omega, frame_period)
-            pose[:2] += rot2(pose[2]) @ delta_local
-            pose[2] += omega * frame_period
-            trajectory.append([k * frame_period, pose[0], pose[1], pose[2], v[0], v[1]])
+class GyroBias:
+    """Stationary-vehicle gyro bias heuristic (paper Sec. IV-D2).
+
+    The bias is initialized by averaging the first Q raw gyro samples taken
+    while the velocity estimate is below a threshold, then low-pass updated
+    whenever the vehicle is again estimated to be stationary.
+    """
+
+    def __init__(self, enabled: bool, threshold: float, init_samples: int, lowpass: float):
+        self.enabled = enabled
+        self.threshold = threshold
+        self.init_samples = init_samples
+        self.lowpass = lowpass
+        self.value = 0.0
+        self.samples: list[float] = []
+        self.initialized = False
+        self.stationary_frames = 0
+
+    def update(self, v: np.ndarray, raw_rate: float) -> bool:
+        if not self.enabled or float(np.linalg.norm(v)) >= self.threshold:
+            return False
+        self.stationary_frames += 1
+        if not self.initialized:
+            self.samples.append(raw_rate)
+            if len(self.samples) >= self.init_samples:
+                self.value = float(np.mean(self.samples))
+                self.initialized = True
+                return True
+            return False
+        self.value = (1.0 - self.lowpass) * self.value + self.lowpass * raw_rate
+        return True
+
+
+def load_sequences(paths: list[str]) -> list[tuple[str, dict, dict]]:
+    sequences = []
+    for path in paths:
+        with np.load(path, allow_pickle=False) as data:
+            manifest = json.loads(str(data["manifest_json"].item()))
+            shared = {key: np.asarray(data[key], dtype=np.float64) for key in ("azimuths", "ranges", "beam_times", "chirps")}
+            for name in sorted(manifest["sequences"]):
+                seq = dict(shared)
+                seq["scans"] = np.asarray(data[f"{name}_scans"])
+                seq["gyro_yaw"] = np.asarray(data[f"{name}_gyro_yaw"], dtype=np.float64)
+                seq["frame_times"] = np.asarray(data[f"{name}_frame_times"], dtype=np.float64)
+                sequences.append((name, seq, manifest["sensor"]))
+    return sequences
+
+
+def run_sequence(seq: dict, sensor: dict, mode: str, cfg: dict) -> dict:
+    azimuths = seq["azimuths"]
+    ranges = seq["ranges"]
+    beam_times = seq["beam_times"]
+    chirps = seq["chirps"]
+    gyro = seq["gyro_yaw"]
+    beta = float(sensor["beta"])
+    range_res = float(sensor["range_res"])
+    frame_period = float(sensor["frame_period"])
+
+    lmap = LocalMap(alpha=cfg["map_update_gamma"])
+    bias = GyroBias(cfg["gyro_bias_estimation"], cfg["stationary_speed_mps"], int(cfg["gyro_bias_init_samples"]), cfg["gyro_bias_lowpass"])
+    pose = np.zeros(3, dtype=np.float64)
+    v = np.zeros(2, dtype=np.float64)
+    trajectory = []
+    for k in range(len(seq["scans"])):
+        scan = seq["scans"][k].astype(np.float32) / 255.0
+        infill = infill_up_down(scan) if mode in {"dro_d", "dro_gd"} else None
+        omega = float(gyro[k]) - bias.value
+        v = estimate_velocity(scan, infill, lmap, azimuths, ranges, beam_times, chirps, pose, omega, beta, range_res, v, mode, cfg)
+        if bias.update(v, float(gyro[k])):
+            omega = float(gyro[k]) - bias.value
+        trajectory.append([float(seq["frame_times"][k]), float(pose[0]), float(pose[1]), float(pose[2]), float(v[0]), float(v[1])])
         xy, inten = corrected_points(scan, azimuths, ranges, beam_times, chirps, pose, v, omega, beta)
         lmap.update_points(xy, inten)
-        scores.append({"frame": k, "vx": float(v[0]), "vy": float(v[1])})
-    return {"trajectory": trajectory, "ground_truth": gt.tolist(), "frame_estimates": scores}
+        pose[:2] += rot2(pose[2]) @ integrate_body_velocity(v, omega, frame_period)
+        pose[2] += omega * frame_period
+    return {
+        "trajectory": trajectory,
+        "gyro_bias_estimate": float(bias.value),
+        "stationary_frames": int(bias.stationary_frames),
+    }
+
+
+def cache_key(name: str, seq: dict, mode: str, cfg: dict) -> str:
+    h = hashlib.sha1()
+    h.update(Path(__file__).read_bytes())
+    h.update(json.dumps({"mode": mode, "cfg": cfg}, sort_keys=True).encode())
+    for key in ("scans", "gyro_yaw", "frame_times"):
+        h.update(np.ascontiguousarray(seq[key]).tobytes())
+    return f"{name}__{mode}__{h.hexdigest()[:16]}.json"
+
+
+def run_all(inputs: list[str], mode: str, cfg: dict, cache_dir: Path | None, only: set[str] | None = None) -> dict:
+    results = {}
+    for name, seq, sensor in load_sequences(inputs):
+        if only is not None and name not in only:
+            continue
+        cached = cache_dir / cache_key(name, seq, mode, cfg) if cache_dir is not None else None
+        if cached is not None and cached.is_file():
+            results[name] = json.loads(cached.read_text())
+            continue
+        results[name] = run_sequence(seq, sensor, mode, cfg)
+        if cached is not None:
+            cached.parent.mkdir(parents=True, exist_ok=True)
+            cached.write_text(json.dumps(results[name]))
+        print(f"{mode} {name}: done", flush=True)
+    return results
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data", default="data/synthetic_dro.npz")
-    parser.add_argument("--output-dir", default="checkpoints/dro_synthetic")
     parser.add_argument("--mode", choices=["dro_g", "dro_d", "dro_gd"], default="dro_gd")
+    parser.add_argument("--inputs", nargs="+", default=["data/train.npz", "data/test_inputs.npz"])
+    parser.add_argument("--output", default=None)
+    parser.add_argument("--name", default=None, help="method name written into the artifact (default: mode)")
+    parser.add_argument("--config", default=str(CONFIG_PATH))
+    parser.add_argument("--no-gyro-bias", action="store_true", help="ablation: integrate raw gyro rates")
+    parser.add_argument("--cache-dir", default="checkpoints/cache")
     args = parser.parse_args()
-    out_dir = Path(args.output_dir)
-    out_dir.mkdir(parents=True, exist_ok=True)
-    dataset = np.load(args.data, allow_pickle=False)
-    results = {scenario: run_sequence(dataset, scenario, args.mode) for scenario in ["structured", "tunnel"]}
-    with (out_dir / f"{args.mode}_predictions.json").open("w") as f:
-        json.dump({"method": args.mode, "scenarios": results}, f, indent=2)
-    print(out_dir / f"{args.mode}_predictions.json")
+
+    cfg = load_config(Path(args.config))
+    if args.no_gyro_bias:
+        cfg["gyro_bias_estimation"] = False
+    name = args.name or args.mode
+    output = Path(args.output or f"checkpoints/dro_synthetic/{name}_predictions.json")
+    results = run_all(args.inputs, args.mode, cfg, Path(args.cache_dir) if args.cache_dir else None)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps({"method": name, "mode": args.mode, "config": cfg, "sequences": results}, indent=1))
+    print(output)
 
 
 if __name__ == "__main__":
