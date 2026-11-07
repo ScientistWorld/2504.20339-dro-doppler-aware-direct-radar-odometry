@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/home/user/redteam/shortcut_empty/workspace/eval/train/evaluate.py", line 205, in <module>
+    main()
+  File "/home/user/redteam/shortcut_empty/workspace/eval/train/evaluate.py", line 195, in main
+    scores = build_scores(prediction_paths, Path(args.data))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/redteam/shortcut_empty/workspace/eval/train/evaluate.py", line 145, in build_scores
+    method, scenario_scores, averages = score_file(pred_path, ground_truth)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/redteam/shortcut_empty/workspace/eval/train/evaluate.py", line 114, in score_file
+    te, re, ve, ee, pe = segment_metrics(pred, gt)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/redteam/shortcut_empty/workspace/eval/train/evaluate.py", line 36, in segment_metrics
+    raise ValueError("at least three sliced frames are required for odometry scoring")
+ValueError: at least three sliced frames are required for odometry scoring

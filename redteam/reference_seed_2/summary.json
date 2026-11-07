@@ -1,0 +1,60 @@
+{
+  "case": "reference_seed_2",
+  "returncodes": {
+    "method": 0,
+    "train": 0,
+    "test": 0
+  },
+  "elapsed_seconds": 226.22249322396237,
+  "candidate_rank": {
+    "improvement": 0.0,
+    "finite": true,
+    "metric_count": 17,
+    "missing": [],
+    "experiment_improvement": {
+      "synthetic_doppler_core": 0.0,
+      "synthetic_doppler_structured": 0.0,
+      "synthetic_doppler_tunnel": 0.0,
+      "synthetic_doppler_ablation": 0.0
+    }
+  },
+  "all_rows_rank": {
+    "improvement": 0.0,
+    "finite": true,
+    "metric_count": 63,
+    "missing": [],
+    "experiment_improvement": {
+      "synthetic_doppler_core": 0.0,
+      "synthetic_doppler_structured": 0.0,
+      "synthetic_doppler_tunnel": 0.0,
+      "synthetic_doppler_ablation": 0.0
+    }
+  },
+  "candidate_results": {
+    "synthetic_doppler_core": {
+      "avg_translation_error_pct": 2.7032401748556345,
+      "avg_rotation_error_deg_per_100m": 1.5268199958452207,
+      "endpoint_position_error_m": 2.018228597680548,
+      "path_length_error_pct": 0.41143157613258097
+    },
+    "synthetic_doppler_structured": {
+      "translation_error_pct": 2.4351753803967915,
+      "rotation_error_deg_per_100m": 1.6156692497317597,
+      "endpoint_position_error_m": 1.7360113697880137,
+      "path_length_error_pct": 0.46743871425816874
+    },
+    "synthetic_doppler_tunnel": {
+      "translation_error_pct": 2.9713049693144775,
+      "rotation_error_deg_per_100m": 1.4379707419586816,
+      "endpoint_position_error_m": 2.300445825573082,
+      "path_length_error_pct": 0.35542443800699314
+    },
+    "synthetic_doppler_ablation": {
+      "avg_translation_error_pct": 2.7032401748556345,
+      "avg_rotation_error_deg_per_100m": 1.5268199958452207,
+      "velocity_rmse_mps": 0.1224413133337093,
+      "endpoint_position_error_m": 2.018228597680548,
+      "path_length_error_pct": 0.41143157613258097
+    }
+  }
+}

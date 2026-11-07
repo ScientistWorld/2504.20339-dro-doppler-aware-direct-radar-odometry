@@ -1,0 +1,9 @@
+{
+  "case": "shortcut_empty",
+  "returncodes": {
+    "method": 0,
+    "train": 1,
+    "test": 1
+  },
+  "elapsed_seconds": 1.6471890410175547
+}

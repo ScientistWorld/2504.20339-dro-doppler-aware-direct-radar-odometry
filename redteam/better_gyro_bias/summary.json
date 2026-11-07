@@ -1,0 +1,60 @@
+{
+  "case": "better_gyro_bias",
+  "returncodes": {
+    "method": 0,
+    "train": 0,
+    "test": 0
+  },
+  "elapsed_seconds": 16.05105604196433,
+  "candidate_rank": {
+    "improvement": -0.7458593606722321,
+    "finite": true,
+    "metric_count": 17,
+    "missing": [],
+    "experiment_improvement": {
+      "synthetic_doppler_core": -0.2979271005588552,
+      "synthetic_doppler_structured": -0.20577065809502432,
+      "synthetic_doppler_tunnel": -0.09215644246383085,
+      "synthetic_doppler_ablation": -0.15000515955452182
+    }
+  },
+  "all_rows_rank": {
+    "improvement": -0.7458593606722321,
+    "finite": true,
+    "metric_count": 63,
+    "missing": [],
+    "experiment_improvement": {
+      "synthetic_doppler_core": -0.2979271005588552,
+      "synthetic_doppler_structured": -0.20577065809502432,
+      "synthetic_doppler_tunnel": -0.09215644246383085,
+      "synthetic_doppler_ablation": -0.15000515955452182
+    }
+  },
+  "candidate_results": {
+    "synthetic_doppler_core": {
+      "avg_translation_error_pct": 11.367370102614641,
+      "avg_rotation_error_deg_per_100m": 10.15958287829012,
+      "endpoint_position_error_m": 7.794532458951349,
+      "path_length_error_pct": 7.086651485573039
+    },
+    "synthetic_doppler_structured": {
+      "translation_error_pct": 17.677786703247545,
+      "rotation_error_deg_per_100m": 2.002944508908244,
+      "endpoint_position_error_m": 12.023647527106903,
+      "path_length_error_pct": 13.505615432514983
+    },
+    "synthetic_doppler_tunnel": {
+      "translation_error_pct": 5.056953501981738,
+      "rotation_error_deg_per_100m": 18.316221247671997,
+      "endpoint_position_error_m": 3.5654173907957953,
+      "path_length_error_pct": 0.6676875386310956
+    },
+    "synthetic_doppler_ablation": {
+      "avg_translation_error_pct": 11.367370102614641,
+      "avg_rotation_error_deg_per_100m": 10.15958287829012,
+      "velocity_rmse_mps": 0.46964440503178895,
+      "endpoint_position_error_m": 7.794532458951349,
+      "path_length_error_pct": 7.086651485573039
+    }
+  }
+}

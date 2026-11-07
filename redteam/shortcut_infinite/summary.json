@@ -1,0 +1,60 @@
+{
+  "case": "shortcut_infinite",
+  "returncodes": {
+    "method": 0,
+    "train": 0,
+    "test": 0
+  },
+  "elapsed_seconds": 1.6496438570320606,
+  "candidate_rank": {
+    "improvement": null,
+    "finite": false,
+    "metric_count": 17,
+    "missing": [],
+    "experiment_improvement": {
+      "synthetic_doppler_core": NaN,
+      "synthetic_doppler_structured": NaN,
+      "synthetic_doppler_tunnel": NaN,
+      "synthetic_doppler_ablation": NaN
+    }
+  },
+  "all_rows_rank": {
+    "improvement": null,
+    "finite": false,
+    "metric_count": 63,
+    "missing": [],
+    "experiment_improvement": {
+      "synthetic_doppler_core": NaN,
+      "synthetic_doppler_structured": NaN,
+      "synthetic_doppler_tunnel": NaN,
+      "synthetic_doppler_ablation": NaN
+    }
+  },
+  "candidate_results": {
+    "synthetic_doppler_core": {
+      "avg_translation_error_pct": NaN,
+      "avg_rotation_error_deg_per_100m": NaN,
+      "endpoint_position_error_m": Infinity,
+      "path_length_error_pct": NaN
+    },
+    "synthetic_doppler_structured": {
+      "translation_error_pct": NaN,
+      "rotation_error_deg_per_100m": NaN,
+      "endpoint_position_error_m": Infinity,
+      "path_length_error_pct": NaN
+    },
+    "synthetic_doppler_tunnel": {
+      "translation_error_pct": NaN,
+      "rotation_error_deg_per_100m": NaN,
+      "endpoint_position_error_m": Infinity,
+      "path_length_error_pct": NaN
+    },
+    "synthetic_doppler_ablation": {
+      "avg_translation_error_pct": NaN,
+      "avg_rotation_error_deg_per_100m": NaN,
+      "velocity_rmse_mps": Infinity,
+      "endpoint_position_error_m": Infinity,
+      "path_length_error_pct": NaN
+    }
+  }
+}

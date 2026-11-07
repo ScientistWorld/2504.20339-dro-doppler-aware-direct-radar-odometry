@@ -1,0 +1,61 @@
+{
+  "case": "reference_data_seed_27",
+  "returncodes": {
+    "data": 0,
+    "method": 0,
+    "train": 0,
+    "test": 0
+  },
+  "elapsed_seconds": 230.49678314302582,
+  "candidate_rank": {
+    "improvement": 0.0014703297502094747,
+    "finite": true,
+    "metric_count": 17,
+    "missing": [],
+    "experiment_improvement": {
+      "synthetic_doppler_core": 0.000583472819898757,
+      "synthetic_doppler_structured": -0.004191946382752073,
+      "synthetic_doppler_tunnel": 0.00477541920265083,
+      "synthetic_doppler_ablation": 0.000303384110411961
+    }
+  },
+  "all_rows_rank": {
+    "improvement": 0.0014703297502094747,
+    "finite": true,
+    "metric_count": 63,
+    "missing": [],
+    "experiment_improvement": {
+      "synthetic_doppler_core": 0.000583472819898757,
+      "synthetic_doppler_structured": -0.004191946382752073,
+      "synthetic_doppler_tunnel": 0.00477541920265083,
+      "synthetic_doppler_ablation": 0.000303384110411961
+    }
+  },
+  "candidate_results": {
+    "synthetic_doppler_core": {
+      "avg_translation_error_pct": 2.7054650832077893,
+      "avg_rotation_error_deg_per_100m": 1.6722805433815844,
+      "endpoint_position_error_m": 1.9834795213251242,
+      "path_length_error_pct": 0.006954079768669737
+    },
+    "synthetic_doppler_structured": {
+      "translation_error_pct": 2.8373472408910407,
+      "rotation_error_deg_per_100m": 1.712689940260909,
+      "endpoint_position_error_m": 2.0204632431230922,
+      "path_length_error_pct": 0.002946380435812823
+    },
+    "synthetic_doppler_tunnel": {
+      "translation_error_pct": 2.573582925524538,
+      "rotation_error_deg_per_100m": 1.63187114650226,
+      "endpoint_position_error_m": 1.9464957995271561,
+      "path_length_error_pct": 0.010961779101526651
+    },
+    "synthetic_doppler_ablation": {
+      "avg_translation_error_pct": 2.7054650832077893,
+      "avg_rotation_error_deg_per_100m": 1.6722805433815844,
+      "velocity_rmse_mps": 0.11855874651284845,
+      "endpoint_position_error_m": 1.9834795213251242,
+      "path_length_error_pct": 0.006954079768669737
+    }
+  }
+}
