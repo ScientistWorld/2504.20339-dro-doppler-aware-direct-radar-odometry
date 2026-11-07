@@ -654,7 +654,7 @@
         "status": "verified"
       },
       "frozen_comparators_unchanged": true,
-      "elapsed_seconds": 7.754404177074321
+      "elapsed_seconds": 13.398961485014297
     },
     "shortcut_generator_fit_v2": {
       "case": "shortcut_generator_fit_v2",
@@ -785,6 +785,71 @@
       },
       "frozen_comparators_unchanged": true,
       "elapsed_seconds": 8.461890109931119
+    },
+    "shortcut_calibration_zero_velocity_v2": {
+      "case": "shortcut_calibration_zero_velocity_v2",
+      "returncodes": {
+        "method": 0,
+        "train": 0,
+        "test": 0
+      },
+      "candidate_rank": {
+        "rank": 0.02385841116131321,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.0679381859650152,
+          "synthetic_doppler_structured": -0.233459767928233,
+          "synthetic_doppler_tunnel": 0.5023299231554136,
+          "synthetic_doppler_ablation": -0.31294993003088256
+        },
+        "metric_count": 17,
+        "missing": []
+      },
+      "all_rows_rank": {
+        "rank": 0.02385841116131321,
+        "per_experiment": {
+          "synthetic_doppler_core": 0.0679381859650152,
+          "synthetic_doppler_structured": -0.233459767928233,
+          "synthetic_doppler_tunnel": 0.5023299231554136,
+          "synthetic_doppler_ablation": -0.31294993003088256
+        },
+        "metric_count": 63,
+        "missing": []
+      },
+      "results": {
+        "synthetic_doppler_core": {
+          "avg_translation_error_pct": 1.2118786778026704,
+          "avg_rotation_error_deg_per_100m": 0.4269807507142879,
+          "endpoint_position_error_m": 1.0916019995659385,
+          "path_length_error_pct": 1.0912663614792144
+        },
+        "synthetic_doppler_structured": {
+          "translation_error_pct": 1.3342783914516687,
+          "rotation_error_deg_per_100m": 0.35559604815568746,
+          "endpoint_position_error_m": 1.0053880690579315,
+          "path_length_error_pct": 1.246595612083957
+        },
+        "synthetic_doppler_tunnel": {
+          "translation_error_pct": 1.0894789641536722,
+          "rotation_error_deg_per_100m": 0.4983654532728883,
+          "endpoint_position_error_m": 1.1778159300739457,
+          "path_length_error_pct": 0.9359371108744717
+        },
+        "synthetic_doppler_ablation": {
+          "avg_translation_error_pct": 1.2118786778026704,
+          "avg_rotation_error_deg_per_100m": 0.4269807507142879,
+          "endpoint_position_error_m": 1.0916019995659385,
+          "path_length_error_pct": 1.0912663614792144,
+          "velocity_rmse_mps": 6.085721633191649
+        }
+      },
+      "failed_methods": {},
+      "ignored_artifacts": [],
+      "inputs": {
+        "path": "data/test_inputs.npz",
+        "status": "verified"
+      },
+      "frozen_comparators_unchanged": true,
+      "elapsed_seconds": 8.24102427600883
     },
     "shortcut_score_fields_v2": {
       "case": "shortcut_score_fields_v2",

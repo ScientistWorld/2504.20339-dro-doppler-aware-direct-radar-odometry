@@ -1,4 +1,4 @@
 action: submit
 gpus: 0
-test: false
-notes: "Run 25 isolated benchmark audit cases: genuine GP fix, weaker variants, three uncached reference seeds, generator recovery, and artifact/degenerate shortcuts."
+test: true
+notes: "Cheap final audit: test whether moving calibrated trajectories with zero reported velocity still outrank reference; verify public seed-recovery candidates against full gyro traces. Reuses generated reference outputs."

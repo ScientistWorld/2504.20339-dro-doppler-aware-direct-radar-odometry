@@ -49,10 +49,10 @@
           "path_length_error_pct": 14.327793378896565
         },
         "dro_gd": {
-          "avg_translation_error_pct": 8.242221286695457,
-          "avg_rotation_error_deg_per_100m": 14.264451264998222,
-          "endpoint_position_error_m": 14.4910512131262,
-          "path_length_error_pct": 6.193658081039574
+          "avg_translation_error_pct": 0.0,
+          "avg_rotation_error_deg_per_100m": 0.0,
+          "endpoint_position_error_m": 0.0,
+          "path_length_error_pct": 8.34873476656106e-15
         }
       }
     },
@@ -105,10 +105,10 @@
           "path_length_error_pct": 24.190718464225156
         },
         "dro_gd": {
-          "translation_error_pct": 16.484442573390915,
-          "rotation_error_deg_per_100m": 28.528902529996444,
-          "endpoint_position_error_m": 28.9821024262524,
-          "path_length_error_pct": 12.387316162079138
+          "translation_error_pct": 0.0,
+          "rotation_error_deg_per_100m": 0.0,
+          "endpoint_position_error_m": 0.0,
+          "path_length_error_pct": 7.16547160232758e-15
         }
       }
     },
@@ -129,11 +129,11 @@
           "velocity_rmse_mps": 0.13385772777961008
         },
         "dro_gd": {
-          "avg_translation_error_pct": 8.242221286695457,
-          "avg_rotation_error_deg_per_100m": 14.264451264998222,
-          "endpoint_position_error_m": 14.4910512131262,
-          "path_length_error_pct": 6.193658081039574,
-          "velocity_rmse_mps": 0.42082460040811664
+          "avg_translation_error_pct": 0.0,
+          "avg_rotation_error_deg_per_100m": 0.0,
+          "endpoint_position_error_m": 0.0,
+          "path_length_error_pct": 8.34873476656106e-15,
+          "velocity_rmse_mps": 0.0
         }
       }
     }
