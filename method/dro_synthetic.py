@@ -18,6 +18,8 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
 import numpy as np
@@ -154,8 +156,13 @@ def infill_up_down(scan: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     even = raw[0::2] - float(np.mean(raw[0::2]))
     odd = raw[1::2] - float(np.mean(raw[1::2]))
 
+    # The infill kernel has an even number of azimuth taps (support offsets
+    # -3, -1, +1, +3 around the inferred row). scipy centres such a kernel on
+    # tap 2, so with the default origin even_interp[j] would infer raw row
+    # 2j-1; origin -1 makes it infer raw row 2j+1, the row it fills below.
+    # odd_interp[j] infers raw row 2j with the default origin.
     even_smooth = correlate(even, GP_SMOOTH_WEIGHTS, mode="constant", cval=0.0)
-    even_interp = correlate(even, GP_INTERP_WEIGHTS, mode="constant", cval=0.0)
+    even_interp = correlate(even, GP_INTERP_WEIGHTS, mode="constant", cval=0.0, origin=(-1, 0))
     odd_smooth = correlate(odd, GP_SMOOTH_WEIGHTS, mode="constant", cval=0.0)
     odd_interp = correlate(odd, GP_INTERP_WEIGHTS, mode="constant", cval=0.0)
 
@@ -472,21 +479,67 @@ def cache_key(name: str, seq: dict, mode: str, cfg: dict) -> str:
     return f"{name}__{mode}__{h.hexdigest()[:16]}.json"
 
 
-def run_all(inputs: list[str], mode: str, cfg: dict, cache_dir: Path | None, only: set[str] | None = None) -> dict:
+def available_workers() -> int:
+    """CPU slots for per-sequence parallelism (DRO_WORKERS overrides).
+
+    Respects the CPU affinity mask and a cgroup v2 quota, so a 1-CPU job runs
+    sequentially. Parallelism only changes wall-clock time, not results.
+    """
+    env = os.environ.get("DRO_WORKERS")
+    if env:
+        return max(1, int(env))
+    count = len(os.sched_getaffinity(0)) if hasattr(os, "sched_getaffinity") else (os.cpu_count() or 1)
+    try:
+        quota, period = Path("/sys/fs/cgroup/cpu.max").read_text().split()[:2]
+        if quota != "max":
+            count = min(count, max(1, int(float(quota) / float(period))))
+    except (OSError, ValueError):
+        pass
+    return max(1, count)
+
+
+def run_all(
+    inputs: list[str],
+    mode: str,
+    cfg: dict,
+    cache_dir: Path | None,
+    only: set[str] | None = None,
+    workers: int | None = None,
+) -> dict:
     results = {}
+    order = []
+    pending = []
     for name, seq, sensor in load_sequences(inputs):
         if only is not None and name not in only:
             continue
+        order.append(name)
         cached = cache_dir / cache_key(name, seq, mode, cfg) if cache_dir is not None else None
         if cached is not None and cached.is_file():
             results[name] = json.loads(cached.read_text())
             continue
-        results[name] = run_sequence(seq, sensor, mode, cfg)
+        pending.append((name, seq, sensor, cached))
+
+    def store(name: str, cached: Path | None, result: dict) -> None:
+        results[name] = result
         if cached is not None:
             cached.parent.mkdir(parents=True, exist_ok=True)
-            cached.write_text(json.dumps(results[name]))
+            cached.write_text(json.dumps(result))
         print(f"{mode} {name}: done", flush=True)
-    return results
+
+    workers = available_workers() if workers is None else max(1, workers)
+    if workers > 1 and len(pending) > 1:
+        with ProcessPoolExecutor(max_workers=min(workers, len(pending))) as pool:
+            futures = {
+                pool.submit(run_sequence, seq, sensor, mode, cfg): (name, cached)
+                for name, seq, sensor, cached in pending
+            }
+            for future in as_completed(futures):
+                name, cached = futures[future]
+                store(name, cached, future.result())
+    else:
+        for name, seq, sensor, cached in pending:
+            store(name, cached, run_sequence(seq, sensor, mode, cfg))
+    return {name: results[name] for name in order}
 
 
 def main() -> None:

@@ -20,7 +20,9 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import dro_synthetic as dro  # noqa: E402
 
-CANDIDATE_WEIGHTS = (0.12, 8.0, 32.0, 128.0, 512.0, 2048.0)
+# Log-spaced grid around the scale where the direct term starts to dominate
+# (an earlier grid of 0.12 ... 2048 improved monotonically up to its edge).
+CANDIDATE_WEIGHTS = (128.0, 512.0, 2048.0, 8192.0)
 SEGMENTS_M = (20.0, 35.0, 50.0)
 
 

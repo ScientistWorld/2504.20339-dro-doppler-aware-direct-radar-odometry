@@ -1,6 +1,6 @@
 # Evaluation Protocol
 
-`bash scripts/evaluate_train.sh` scores every `*_predictions.json` artifact on disk against the labelled training sequences and writes `scoring/scores_train.json`. `bash scripts/evaluate.sh` does the same and writes `scoring/scores.json`. A held-out evaluator uses the same rules and the same artifact format, but scores the `test_*` sequences against labels that are not in this workspace.
+`bash scripts/evaluate_train.sh` scores every `*_predictions.json` artifact on disk against the labelled training sequences and writes `scoring/scores_train.json`. `bash scripts/evaluate.sh` does the same and writes `scoring/scores.json`. A held-out evaluator uses the same rules and the same artifact format, but scores the twelve `test_*` sequences (six landmark-rich, six tunnel) against labels that are not in this workspace.
 
 For every sequence, the evaluator recomputes all numbers from the submitted trajectory rows alone:
 
@@ -26,9 +26,13 @@ A method is scored as **failed**, with every metric set to its ceiling, if any o
 - a row is not six numbers;
 - a value is non-finite;
 - a timestamp is off the scan start time by more than 1 ms;
-- a position or speed is physically impossible;
+- a position, speed or heading is physically impossible (|x|, |y| above 100 km, speed above 100 m/s, |heading| above 1000 rad);
+- between consecutive scans the heading changes faster than 2 rad/s or the position moves faster than 100 m/s;
+- the first pose is not the origin with heading 0 (tolerance 1 mm and 1 mrad);
+- the reported velocities do not describe the reported poses. For every scan except the last, the velocity implied by the pose change to the next scan (the position change expressed in the frame of the mid-scan heading, divided by the scan period) is compared with the reported body-frame velocity. An RMS gap above 0.5 m/s in any sequence fails the method;
 - two artifacts claim the same method name;
-- its average translation error is not better than the fixed-velocity dead-reckoning comparator.
+- its average translation error is not better than the fixed-velocity dead-reckoning comparator;
+- its velocity RMSE is not better than the fixed-velocity dead-reckoning comparator.
 
 The ceilings are translation 100 %, rotation 100 deg/100 m, velocity 10 m/s, endpoint 100 m, path length 100 %. Valid values are also capped at these ceilings. On the held-out split, a method is also marked failed if the test input file has been modified or removed.
 

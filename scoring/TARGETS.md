@@ -8,7 +8,7 @@ Accurate relative odometry over all sequences.
 
 - **Metric**: `avg_translation_error_pct`
 - **Constraint metrics**: `avg_rotation_error_deg_per_100m`, `endpoint_position_error_m`, `path_length_error_pct`
-- **Eligibility**: a method whose average translation error is not better than fixed-velocity dead reckoning is scored as failed, with all metrics at their ceilings.
+- **Eligibility**: a method is scored as failed, with all metrics at their ceilings, if its average translation error or its velocity RMSE is not better than fixed-velocity dead reckoning, if its reported velocities do not describe its own poses (RMS gap above 0.5 m/s in any sequence), or if it breaks the output contract (see `briefing/evaluation.md`).
 
 ## Constraint: synthetic_doppler_structured
 

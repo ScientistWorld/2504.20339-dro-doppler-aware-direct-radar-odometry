@@ -8,6 +8,7 @@ In scope:
 - motion-distortion and timing modelling;
 - velocity observability in degenerate scenes;
 - gyroscope bias handling;
+- vehicle kinematics (the radar's offset from the rear axle is known);
 - temporal consistency and robust estimation;
 - principled hyperparameter selection on the training split.
 

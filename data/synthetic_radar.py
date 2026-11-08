@@ -13,9 +13,11 @@ triangular (alternating up/down chirp) modulation:
 * a yaw-rate gyroscope provides one bias-affected, noisy angular-rate sample
   per scan.
 
-Vehicles follow smooth, time-varying speed and yaw-rate profiles that start
-from rest. Scenes are either "structured" (buildings with gaps, poles,
-clutter) or "tunnel" (two dense, featureless walls along the road).
+Vehicles start from rest, then follow speed, curvature and side-slip
+profiles driven by smooth random processes (Gaussian-filtered white noise),
+so no drive is a member of a low-dimensional closed-form family. Scenes are
+either "structured" (buildings with gaps, poles, clutter) or "tunnel" (two
+dense, featureless walls along the road).
 
 Running this file writes the visible training split (inputs and labels).
 Held-out sequences are produced elsewhere and only their inputs are public.
@@ -41,6 +43,8 @@ RANGE_SIGMA_BINS = 1.15
 BEAM_SIGMA = (2.0 * np.pi / BEAMS) * 0.42
 RADAR_LEVER_ARM_M = 1.2
 PATH_EXTENSION_M = 100.0
+PROCESS_GRID_DT = 0.05
+MAX_CURVATURE = 0.05
 
 # Visible training split: (sequence name, scene type, seed).
 TRAIN_SEQUENCES = (
@@ -48,6 +52,8 @@ TRAIN_SEQUENCES = (
     ("train_01", "tunnel", 102),
     ("train_02", "structured", 103),
     ("train_03", "tunnel", 104),
+    ("train_04", "structured", 105),
+    ("train_05", "tunnel", 106),
 )
 
 
@@ -67,6 +73,7 @@ def sensor_manifest() -> dict:
         "range_res": RANGE_RES,
         "frame_period": FRAME_PERIOD,
         "beta": BETA,
+        "radar_ahead_of_rear_axle_m": RADAR_LEVER_ARM_M,
     }
 
 
@@ -76,14 +83,17 @@ def smoothstep(x: np.ndarray) -> np.ndarray:
 
 
 def sample_motion_profile(rng: np.random.Generator, scenario: str) -> dict:
+    """Scalar settings of one drive. The time variation itself comes from
+    smooth random processes (see smooth_unit_process), not from a closed-form
+    family, so a drive is not described by a handful of parameters."""
     if scenario == "structured":
         v_cruise = rng.uniform(5.5, 8.0)
         kappa0 = rng.uniform(-0.012, 0.012)
-        kappa1 = rng.uniform(0.006, 0.016)
+        kappa_std = rng.uniform(0.004, 0.011)
     elif scenario == "tunnel":
         v_cruise = rng.uniform(6.5, 9.0)
         kappa0 = rng.uniform(-0.002, 0.002)
-        kappa1 = rng.uniform(0.0, 0.0015)
+        kappa_std = rng.uniform(0.0, 0.0011)
     else:
         raise ValueError(f"unknown scenario: {scenario}")
     return {
@@ -91,31 +101,49 @@ def sample_motion_profile(rng: np.random.Generator, scenario: str) -> dict:
         "t_stop": rng.uniform(2.0, 2.75),
         "t_acc": rng.uniform(4.0, 6.0),
         "v_cruise": v_cruise,
-        "speed_amp": rng.uniform(0.5, 1.3),
-        "speed_period": rng.uniform(5.0, 9.0),
-        "speed_phase": rng.uniform(0.0, 2.0 * np.pi),
+        "speed_std": rng.uniform(0.35, 0.9),
+        "speed_corr_s": rng.uniform(0.8, 1.6),
         "kappa0": kappa0,
-        "kappa1": kappa1,
-        "kappa_period": rng.uniform(6.0, 12.0),
-        "kappa_phase": rng.uniform(0.0, 2.0 * np.pi),
-        "slip": rng.uniform(-0.04, 0.04),
+        "kappa_std": kappa_std,
+        "kappa_corr_s": rng.uniform(1.0, 2.0),
+        "slip0": rng.uniform(-0.04, 0.04),
+        "slip_std": rng.uniform(0.0, 0.02),
+        "slip_corr_s": rng.uniform(1.0, 2.0),
         "gyro_bias": float(rng.choice([-1.0, 1.0]) * rng.uniform(0.001, 0.003)),
     }
 
 
-def body_motion(profile: dict, t: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+def smooth_unit_process(rng: np.random.Generator, t: np.ndarray, corr_s: float) -> np.ndarray:
+    """Zero-mean, unit-variance smooth random signal sampled at times t.
+
+    White noise on a fine grid filtered with a Gaussian kernel of standard
+    deviation corr_s (seconds): a stationary process with as many degrees of
+    freedom as grid points, linearly interpolated to the beam-rate grid.
+    """
+    pad = 4.0 * corr_s
+    grid = np.arange(t[0] - pad, t[-1] + pad + PROCESS_GRID_DT, PROCESS_GRID_DT)
+    noise = rng.normal(0.0, 1.0, size=grid.shape)
+    half = int(np.ceil(pad / PROCESS_GRID_DT))
+    lags = np.arange(-half, half + 1) * PROCESS_GRID_DT
+    kernel = np.exp(-0.5 * (lags / corr_s) ** 2)
+    kernel /= np.sqrt(np.sum(kernel**2))
+    return np.interp(t, grid, np.convolve(noise, kernel, mode="same"))
+
+
+def sample_processes(rng: np.random.Generator, profile: dict, t: np.ndarray) -> dict[str, np.ndarray]:
+    return {name: smooth_unit_process(rng, t, profile[f"{name}_corr_s"]) for name in ("speed", "kappa", "slip")}
+
+
+def body_motion(profile: dict, processes: dict, t: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Body-frame forward/lateral velocity and yaw rate at times t."""
     ramp = smoothstep((t - profile["t_stop"]) / profile["t_acc"])
-    oscillation = profile["speed_amp"] * np.sin(
-        2.0 * np.pi * (t - profile["t_stop"]) / profile["speed_period"] + profile["speed_phase"]
-    )
-    speed = ramp * (profile["v_cruise"] + oscillation)
-    kappa = profile["kappa0"] + profile["kappa1"] * np.sin(
-        2.0 * np.pi * t / profile["kappa_period"] + profile["kappa_phase"]
-    )
+    speed = ramp * np.maximum(profile["v_cruise"] + profile["speed_std"] * processes["speed"], 1.0)
+    kappa = np.clip(profile["kappa0"] + profile["kappa_std"] * processes["kappa"], -MAX_CURVATURE, MAX_CURVATURE)
     omega = speed * kappa
     vx = speed
-    vy = RADAR_LEVER_ARM_M * omega + profile["slip"] * ramp
+    # Radar mounted ahead of the rear axle: no-slip lateral velocity is
+    # lever_arm * yaw_rate, plus a small, slowly varying side slip.
+    vy = RADAR_LEVER_ARM_M * omega + ramp * (profile["slip0"] + profile["slip_std"] * processes["slip"])
     return vx, vy, omega
 
 
@@ -139,7 +167,8 @@ def simulate_motion(scenario: str, seed: int, frames: int = FRAMES) -> dict:
     profile = sample_motion_profile(rngs["profile"], scenario)
     dt = FRAME_PERIOD / BEAMS
     t = np.arange(frames * BEAMS + 1, dtype=np.float64) * dt
-    vx, vy, omega = body_motion(profile, t)
+    processes = sample_processes(rngs["profile"], profile, t)
+    vx, vy, omega = body_motion(profile, processes, t)
     theta = _cumtrapz(omega, dt)
     c = np.cos(theta)
     s = np.sin(theta)

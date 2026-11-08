@@ -4,8 +4,8 @@ The paper introduces DRO, a Doppler-aware direct radar odometry method for spinn
 
 This workspace packages a compact reproduction on a procedurally rendered spinning-radar benchmark. The original datasets are either very large public robotics datasets or, for the central Doppler-enabled claim, not public. The benchmark keeps the sensing model and the paper's estimation procedure at smaller scale:
 
-- vehicles start at rest, then drive with time-varying speed and yaw rate;
+- vehicles start at rest, then drive with smoothly and randomly varying speed, curvature and side slip;
 - a biased, noisy gyroscope;
 - landmark-rich streets and featureless tunnels.
 
-Four labelled training sequences are visible. Six held-out sequences are scored by a hidden evaluator, whose labels and comparator rows live only in `eval/test/`.
+Six labelled training sequences are visible. Twelve held-out sequences are scored by a hidden evaluator, whose labels and comparator rows live only in `eval/test/`.

@@ -10,10 +10,17 @@ comparison side is owned here:
 * test size, frame times, segment lengths and score ceilings: constants below.
 
 From a method artifact only the per-frame trajectory rows are used; every
-scored number is recomputed from them. Any malformed, incomplete, non-finite
-or physically impossible output, modified test inputs, duplicate method
-names, or a result no better than dead reckoning marks the method as failed:
-all its metrics are set to the ceiling values (worst possible score).
+scored number is recomputed from them. The method is marked failed, with all
+its metrics set to the ceiling values (worst possible score), when:
+
+* the output is malformed, incomplete, non-finite or physically impossible
+  (positions, speeds, headings, per-scan jumps in position or heading);
+* the first pose is not the origin with heading 0;
+* the reported body-frame velocities do not describe the reported poses
+  (RMS gap to the pose-implied velocity above a fixed tolerance);
+* the test inputs were modified or two artifacts claim the same name;
+* its average translation error or its velocity RMSE is not better than
+  fixed-velocity dead reckoning.
 """
 
 from __future__ import annotations
@@ -38,6 +45,13 @@ SEGMENT_STEP = 2
 TIME_TOLERANCE_S = 1e-3
 MAX_ABS_POSITION_M = 1e5
 MAX_SPEED_MPS = 100.0
+MAX_ABS_HEADING_RAD = 1e3
+MAX_YAW_RATE_RADPS = 2.0
+ORIGIN_TOLERANCE = 1e-3
+# Body-frame velocity reported for scan k must match the velocity implied by
+# the reported poses k and k+1 (chord at mid-heading over the scan period).
+# Exact constant-velocity integration gives ~1e-3 m/s; ground truth ~1e-2.
+VELOCITY_CONSISTENCY_TOL_MPS = 0.5
 CEILING = {
     "translation_error_pct": 100.0,
     "rotation_error_deg_per_100m": 100.0,
@@ -110,6 +124,27 @@ def parse_trajectory(raw: Any, frame_times: np.ndarray) -> np.ndarray:
         raise InvalidPrediction("positions are physically impossible")
     if np.max(np.hypot(arr[:, 4], arr[:, 5])) > MAX_SPEED_MPS:
         raise InvalidPrediction("velocities are physically impossible")
+    if np.max(np.abs(arr[:, 3])) > MAX_ABS_HEADING_RAD:
+        raise InvalidPrediction("headings are physically impossible")
+    if max(abs(arr[0, 1]), abs(arr[0, 2]), abs(float(wrap_angle(arr[0, 3])))) > ORIGIN_TOLERANCE:
+        raise InvalidPrediction("the first pose must be the origin with heading 0")
+    dt = np.diff(frame_times)
+    d_heading = wrap_angle(np.diff(arr[:, 3]))
+    if np.any(np.abs(d_heading) > MAX_YAW_RATE_RADPS * dt):
+        raise InvalidPrediction("heading changes between scans are physically impossible")
+    d_xy = np.diff(arr[:, 1:3], axis=0)
+    if np.any(np.linalg.norm(d_xy, axis=1) > MAX_SPEED_MPS * dt):
+        raise InvalidPrediction("position jumps between scans are physically impossible")
+    mid = arr[:-1, 3] + 0.5 * d_heading
+    c = np.cos(mid)
+    s = np.sin(mid)
+    implied = np.column_stack([c * d_xy[:, 0] + s * d_xy[:, 1], -s * d_xy[:, 0] + c * d_xy[:, 1]]) / dt[:, None]
+    gap = float(np.sqrt(np.mean(np.sum((arr[:-1, 4:6] - implied) ** 2, axis=1))))
+    if gap > VELOCITY_CONSISTENCY_TOL_MPS:
+        raise InvalidPrediction(
+            f"reported velocities do not describe the reported poses (RMS gap {gap:.3f} m/s "
+            f"> {VELOCITY_CONSISTENCY_TOL_MPS} m/s)"
+        )
     return arr
 
 
@@ -242,6 +277,7 @@ def build_scores(prediction_paths: list[Path], inputs_path: Path) -> dict[str, A
     if BASELINE_ROW not in rows:
         raise RuntimeError(f"missing frozen comparator {BASELINE_ROW!r} in {COMPARATOR_DIR}")
     baseline_te = rows[BASELINE_ROW]["core"]["avg_translation_error_pct"]
+    baseline_vel = rows[BASELINE_ROW]["ablation"]["velocity_rmse_mps"]
 
     ignored = []
     failed: dict[str, str] = {}
@@ -275,6 +311,8 @@ def build_scores(prediction_paths: list[Path], inputs_path: Path) -> dict[str, A
                 reason = str(exc)
         if aggregates is not None and aggregates["core"]["avg_translation_error_pct"] >= baseline_te:
             reason = "average translation error is not better than fixed-velocity dead reckoning"
+        elif aggregates is not None and aggregates["ablation"]["velocity_rmse_mps"] >= baseline_vel:
+            reason = "velocity RMSE is not better than fixed-velocity dead reckoning"
         if reason is not None:
             failed[name] = reason
             aggregates = failed_aggregate()
@@ -297,6 +335,12 @@ def build_scores(prediction_paths: list[Path], inputs_path: Path) -> dict[str, A
             "frames_per_sequence": sorted({len(v["frame_times"]) for v in labels.values()}),
             "segment_lengths_m": list(SEGMENT_LENGTHS_M),
             "comparator_rows": comparator_names,
+            "eligibility": {
+                "translation_error_pct_below": baseline_te,
+                "velocity_rmse_mps_below": baseline_vel,
+                "velocity_consistency_tolerance_mps": VELOCITY_CONSISTENCY_TOL_MPS,
+                "max_yaw_rate_radps": MAX_YAW_RATE_RADPS,
+            },
             "test_inputs": {"path": str(inputs_path), "status": inputs_status},
             "prediction_files": [str(p) for p in prediction_paths],
             "ignored_artifacts": ignored,

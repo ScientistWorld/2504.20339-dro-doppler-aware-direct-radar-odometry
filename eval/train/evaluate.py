@@ -8,9 +8,12 @@ held-out evaluator so a method behaves the same way on both splits:
   come from frozen predictions in eval/train/comparators/;
 * from a method artifact only the per-frame trajectory rows are used and all
   metrics are recomputed from them;
-* malformed, incomplete, non-finite or physically impossible output,
-  duplicate method names, or a result no better than dead reckoning marks
-  the method as failed, with every metric at its ceiling value.
+* malformed, incomplete, non-finite or physically impossible output
+  (positions, speeds, headings, per-scan jumps in position or heading), a
+  first pose that is not the origin with heading 0, reported velocities that
+  do not describe the reported poses, duplicate method names, or an average
+  translation error or velocity RMSE no better than dead reckoning marks the
+  method as failed, with every metric at its ceiling value.
 """
 
 from __future__ import annotations
@@ -33,6 +36,10 @@ SEGMENT_STEP = 2
 TIME_TOLERANCE_S = 1e-3
 MAX_ABS_POSITION_M = 1e5
 MAX_SPEED_MPS = 100.0
+MAX_ABS_HEADING_RAD = 1e3
+MAX_YAW_RATE_RADPS = 2.0
+ORIGIN_TOLERANCE = 1e-3
+VELOCITY_CONSISTENCY_TOL_MPS = 0.5
 CEILING = {
     "translation_error_pct": 100.0,
     "rotation_error_deg_per_100m": 100.0,
@@ -99,6 +106,26 @@ def check_rows(raw: Any, frame_times: np.ndarray) -> np.ndarray:
         raise InvalidPrediction("positions are physically impossible")
     if np.hypot(traj[:, 4], traj[:, 5]).max() > MAX_SPEED_MPS:
         raise InvalidPrediction("velocities are physically impossible")
+    if np.abs(traj[:, 3]).max() > MAX_ABS_HEADING_RAD:
+        raise InvalidPrediction("headings are physically impossible")
+    if abs(traj[0, 1]) > ORIGIN_TOLERANCE or abs(traj[0, 2]) > ORIGIN_TOLERANCE or abs(wrap(traj[0, 3])) > ORIGIN_TOLERANCE:
+        raise InvalidPrediction("the first pose must be the origin with heading 0")
+    period = np.diff(frame_times)
+    turn = wrap(traj[1:, 3] - traj[:-1, 3])
+    if (np.abs(turn) > MAX_YAW_RATE_RADPS * period).any():
+        raise InvalidPrediction("heading changes between scans are physically impossible")
+    step = traj[1:, 1:3] - traj[:-1, 1:3]
+    if (np.hypot(step[:, 0], step[:, 1]) > MAX_SPEED_MPS * period).any():
+        raise InvalidPrediction("position jumps between scans are physically impossible")
+    # Velocity implied by consecutive poses: chord expressed in the frame at
+    # the mid-scan heading, divided by the scan period.
+    implied = np.array([to_body(traj[k, 3] + 0.5 * turn[k], step[k]) / period[k] for k in range(len(step))])
+    gap = float(np.sqrt(np.mean(np.sum((traj[:-1, 4:6] - implied) ** 2, axis=1))))
+    if gap > VELOCITY_CONSISTENCY_TOL_MPS:
+        raise InvalidPrediction(
+            f"reported velocities do not describe the reported poses (RMS gap {gap:.3f} m/s "
+            f"> {VELOCITY_CONSISTENCY_TOL_MPS} m/s)"
+        )
     return traj
 
 
@@ -201,6 +228,7 @@ def build_scores(prediction_paths: list[Path], data_path: Path) -> dict[str, Any
     if BASELINE_ROW not in rows:
         raise RuntimeError(f"missing frozen comparator {BASELINE_ROW!r} in {COMPARATOR_DIR}")
     baseline_te = rows[BASELINE_ROW]["core"]["avg_translation_error_pct"]
+    baseline_vel = rows[BASELINE_ROW]["ablation"]["velocity_rmse_mps"]
 
     ignored = []
     by_name: dict[str, list[tuple[Path, Any]]] = {}
@@ -232,6 +260,8 @@ def build_scores(prediction_paths: list[Path], data_path: Path) -> dict[str, Any
                 problem = str(exc)
         if summary is not None and summary["core"]["avg_translation_error_pct"] >= baseline_te:
             problem = "average translation error is not better than fixed-velocity dead reckoning"
+        elif summary is not None and summary["ablation"]["velocity_rmse_mps"] >= baseline_vel:
+            problem = "velocity RMSE is not better than fixed-velocity dead reckoning"
         if problem is not None:
             failures[name] = problem
             summary = failed_summary()
@@ -245,6 +275,12 @@ def build_scores(prediction_paths: list[Path], data_path: Path) -> dict[str, Any
             "sequences": len(labels),
             "segment_lengths_m": list(SEGMENT_LENGTHS_M),
             "comparator_rows": comparators,
+            "eligibility": {
+                "translation_error_pct_below": baseline_te,
+                "velocity_rmse_mps_below": baseline_vel,
+                "velocity_consistency_tolerance_mps": VELOCITY_CONSISTENCY_TOL_MPS,
+                "max_yaw_rate_radps": MAX_YAW_RATE_RADPS,
+            },
             "ground_truth_data": str(data_path),
             "prediction_files": [str(p) for p in prediction_paths],
             "ignored_artifacts": ignored,

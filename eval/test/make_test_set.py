@@ -29,12 +29,18 @@ LABELS_PATH = HERE / "test_labels.json"
 
 # Hidden: (sequence name, scene type, seed). Names do not reveal the scene.
 TEST_SEQUENCES = (
-    ("test_00", "tunnel", 2948203948079727480),
-    ("test_01", "structured", 1695886956203458073),
-    ("test_02", "structured", 2734029228027341091),
-    ("test_03", "tunnel", 19270606597703442),
-    ("test_04", "structured", 682870475370742460),
-    ("test_05", "tunnel", 1065506626223277763),
+    ("test_00", "structured", 2080372345620111880),
+    ("test_01", "tunnel", 4058819431781721955),
+    ("test_02", "structured", 2347433553033860830),
+    ("test_03", "tunnel", 4379474457683871416),
+    ("test_04", "structured", 850377655136520950),
+    ("test_05", "tunnel", 2663878394872081484),
+    ("test_06", "tunnel", 3856794999982939478),
+    ("test_07", "structured", 695584169107693871),
+    ("test_08", "structured", 475961388057396839),
+    ("test_09", "tunnel", 1880181093243746767),
+    ("test_10", "structured", 4370810346299692898),
+    ("test_11", "tunnel", 4443076904293228910),
 )
 
 

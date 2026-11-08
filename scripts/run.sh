@@ -1,14 +1,10 @@
 #!/bin/bash
-# CPU job: reproduce the reference end to end (data restore, comparators,
-# method, train/test scoring) and validate the workspace. The combined-
-# objective weight is read from method/dro_config.json (bash scripts/tune.sh
-# re-selects it on the train split). Gym maintenance (rebuilding the hidden
-# test split, freezing comparator rows, the hardening audit) lives in
-# redteam/hardening/job.sh.
+# CPU job for the final hardening iteration: rebuild data, comparators and
+# the reference from the final code, score, validate, and replay the audit.
+# (After this job, run.sh goes back to `bash scripts/reproduce.sh`.)
 
 set -e
 
 cd "$(dirname "$0")/.."
 
-bash scripts/reproduce.sh
-python validate.py
+bash redteam/hardening_v3/job.sh

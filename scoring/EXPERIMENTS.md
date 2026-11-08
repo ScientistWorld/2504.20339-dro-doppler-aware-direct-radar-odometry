@@ -1,6 +1,8 @@
 # Experiments
 
-All four scored experiments use the same prediction artifacts. The held-out score covers six sequences (three landmark-rich, three tunnel), each 72 radar scans long (18 s). Every vehicle starts at rest, then drives with time-varying speed and yaw rate. Fixed comparator rows (fixed-velocity gyro dead reckoning and two reference variants) are reported next to each submitted method for context.
+All four scored experiments use the same prediction artifacts. The held-out score covers twelve sequences (six landmark-rich, six tunnel), each 72 radar scans long (18 s). Every vehicle starts at rest, then drives with speed, curvature and side slip that vary smoothly and randomly. Fixed comparator rows (fixed-velocity gyro dead reckoning and two reference variants) are reported next to each submitted method for context.
+
+A submission only counts if it is a usable odometry output: it must beat fixed-velocity dead reckoning on both average translation error and velocity RMSE, its reported velocities must describe its own poses, and it must respect the output contract (origin start, physically possible motion). Otherwise every metric is set to its worst value.
 
 ## synthetic_doppler_core
 
@@ -16,4 +18,4 @@ The same measures on the tunnel sequences only. These scenes are long, smooth pa
 
 ## synthetic_doppler_ablation
 
-Aggregate pose metrics plus the error of the reported per-scan body-frame velocity. It establishes whether the method's velocity estimates are physically right, not just its integrated poses.
+Aggregate pose metrics plus the error of the reported per-scan body-frame velocity. It establishes whether the method's velocity estimates are physically right, not just its integrated poses. Velocity is also an eligibility condition, so poor velocities cannot be traded for pose accuracy.
