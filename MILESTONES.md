@@ -50,5 +50,11 @@
 - The scenes now have time-varying trajectories that start from rest, with a biased gyro. Two bugs were fixed: the renderer's rotation sign and the method's start-pose off-by-one. The paper's stationary gyro-bias heuristic was added, and the combined-objective weight is selected on train.
 - Held-out reference DRO-GD: 1.36 % translation error and 0.42 deg/100 m rotation, versus 32.0 % / 2.72 for dead reckoning. DRO-GD beats DRO-G (1.49 %) and DRO-D (7.03 %) in every group. Every major shortcut now fails or has no effect. See `HARDENING.md`.
 
+### [2026-11-08 01:40] - core_claim
+- Final hardening iteration. The held-out test now has 12 sequences and train has 6. Both are regenerated with a motion model driven by smooth random processes, which closes the redteam's generator-family fit (+0.059 → −6.13).
+- Reported velocities must now describe the reported poses (RMS gap ≤ 0.5 m/s) and must beat dead reckoning; this closes the calibrated-poses zero-velocity shortcut (+0.024 → failed). The first pose must be the origin, and headings and per-scan motion must be physically possible.
+- Fixed the up-chirp GP infill row alignment in the reference and re-selected the combined weight on train (8192). Held-out DRO-GD: 1.28 % translation and 0.30 deg/100 m rotation, against 31.3 % for dead reckoning, 4.97 % for DRO-D and 1.49 % for DRO-G. DRO-GD is better than every comparator on 12/12 sequences.
+- Variants order correctly with paired bootstrap noise: calibration +0.30 ± 0.05; no Doppler −0.28 ± 0.03; no gyro bias −1.05 ± 0.12; old infill −0.013 ± 0.005. See `HARDENING.md`.
+
 ## Stop Justification
 - Completed at milestone `core_claim`.

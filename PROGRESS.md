@@ -39,6 +39,13 @@
 - Current audit tightened evaluation integrity further: `scripts/evaluate.sh` now passes the benchmark data file to `eval/odometry_metrics.py`, which loads ground truth from `data/synthetic_dro.npz` instead of trusting the prediction artifact. The evaluator also raises on trajectories too short for the configured segment lengths.
 - The paper reference table now includes the omitted Table I `CT-LG` lidar baseline average (`5.1675%`, `0.12 deg/100m`), and `scoring/TARGETS.md` explicitly lists endpoint and path-length constraints.
 
+### Final hardening iteration (2026-11-08)
+
+- Job `414368ce-823` (exit 0, 22 min on 8 cores) rebuilt the gym from the final code. That covers new train (6) and held-out (12) splits from the random-process motion model, train-only weight selection (8192), comparators, the reference DRO-GD, frozen comparator rows, all score files, `validate.py`, and the shortcut and variant audit in `redteam/hardening_v3/`.
+- Held-out reference: 1.278 % translation, 0.299 deg/100 m rotation, 0.106 m/s velocity RMSE. Train: 1.328 % / 0.336 / 0.118.
+- Both evaluators now enforce velocity–pose consistency, velocity eligibility, the origin start and physically possible headings and per-scan motion.
+- Details in `HARDENING.md`.
+
 ## Remaining
 
 - Higher milestones would require scaling beyond this compact gym: adding more synthetic scenarios, running on public Boreas/MulRan sequences, or reproducing additional paper tables.

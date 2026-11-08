@@ -1,8 +1,6 @@
 # Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends.
-action: submit
-gpus: 0
-test: false
+action: done
 milestone: core_claim
-notes: "Resubmit after SLURM preemption (resumes from per-sequence caches). Final hardening: regenerate train (6) and held-out (12) splits with random-process motion, GP infill alignment fix, retune weight on train, rerun comparators + reference DRO-GD, freeze comparators, score with new eligibility/consistency rules, replay variants and shortcuts through the hidden test (redteam/hardening_v3)."
+notes: "Final hardening: 12-sequence held-out test with random-process motion (closes generator-family fit, +0.059 -> -6.13), velocity-pose consistency + velocity eligibility (zero-velocity shortcut +0.024 -> failed), origin/heading checks (ties -> failed), GP infill fix in reference; calibration variant +0.30+-0.05, no-Doppler -0.28+-0.03; see HARDENING.md."

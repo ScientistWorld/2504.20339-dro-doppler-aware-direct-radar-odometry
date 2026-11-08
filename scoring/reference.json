@@ -212,7 +212,7 @@
       }
     },
     "synthetic_doppler_core": {
-      "description": "Scaled replacement benchmark (paper's Doppler-enabled automotive data is not public): six held-out procedurally rendered spinning-FMCW radar sequences (three landmark-rich, three featureless-tunnel), 72 scans each, vehicles start from rest with time-varying speed and yaw rate. Values are the reference reproduction's held-out scores, not paper-reported numbers. Comparator rows are frozen by the evaluator.",
+      "description": "Scaled replacement benchmark (paper's Doppler-enabled automotive data is not public): twelve held-out procedurally rendered spinning-FMCW radar sequences (six landmark-rich, six featureless-tunnel), 72 scans each; vehicles start from rest, then drive with speed, curvature and side slip driven by smooth random processes. Values are the reference reproduction's held-out scores (DRO-GD with the train-selected weight 8192), not paper-reported numbers. Comparator rows are frozen by the evaluator. Eligibility: translation error and velocity RMSE must beat the frozen dead-reckoning row and reported velocities must describe the reported poses, otherwise every metric is at its ceiling.",
       "weight": 0.3,
       "primary_metric": "avg_translation_error_pct",
       "metrics": {
@@ -240,36 +240,36 @@
       "results": {
         "fixed_velocity_gyro": {
           "type": "baseline",
-          "avg_translation_error_pct": 31.971911536828646,
-          "avg_rotation_error_deg_per_100m": 2.7175693881267353,
-          "endpoint_position_error_m": 17.911881537018964,
-          "path_length_error_pct": 17.692461423060674
+          "avg_translation_error_pct": 31.314320845852354,
+          "avg_rotation_error_deg_per_100m": 2.046484503680872,
+          "endpoint_position_error_m": 15.30717956816978,
+          "path_length_error_pct": 14.087478511363786
         },
         "dro_d": {
           "type": "proposed",
-          "avg_translation_error_pct": 7.028720960797549,
-          "avg_rotation_error_deg_per_100m": 0.35644178389210596,
-          "endpoint_position_error_m": 6.974677445953259,
-          "path_length_error_pct": 6.014212625966368
+          "avg_translation_error_pct": 4.974478526373106,
+          "avg_rotation_error_deg_per_100m": 0.34709841811932735,
+          "endpoint_position_error_m": 4.679457467035253,
+          "path_length_error_pct": 4.7462493650548305
         },
         "dro_g": {
           "type": "proposed",
-          "avg_translation_error_pct": 1.4932296056468928,
-          "avg_rotation_error_deg_per_100m": 0.4384219542008742,
-          "endpoint_position_error_m": 1.4384080501790109,
-          "path_length_error_pct": 1.2785735725316574
+          "avg_translation_error_pct": 1.4921837573730974,
+          "avg_rotation_error_deg_per_100m": 0.29713538810500867,
+          "endpoint_position_error_m": 1.3693224049540274,
+          "path_length_error_pct": 1.3065955065190569
         },
         "dro_gd": {
           "type": "proposed",
-          "avg_translation_error_pct": 1.355368947548978,
-          "avg_rotation_error_deg_per_100m": 0.41704888369221144,
-          "endpoint_position_error_m": 1.3577396519691785,
-          "path_length_error_pct": 1.1933097807046993
+          "avg_translation_error_pct": 1.277832003829136,
+          "avg_rotation_error_deg_per_100m": 0.29918449437696376,
+          "endpoint_position_error_m": 1.2188649887377938,
+          "path_length_error_pct": 1.1296159004226707
         }
       }
     },
     "synthetic_doppler_structured": {
-      "description": "Landmark-rich held-out sequences of the scaled replacement benchmark (buildings with gaps, poles, clutter). Values are the reference reproduction's held-out scores, not paper-reported numbers.",
+      "description": "Landmark-rich held-out sequences of the scaled replacement benchmark (six of twelve: buildings with gaps, poles, clutter). Values are the reference reproduction's held-out scores, not paper-reported numbers.",
       "weight": 0.15,
       "primary_metric": "translation_error_pct",
       "metrics": {
@@ -297,36 +297,36 @@
       "results": {
         "fixed_velocity_gyro": {
           "type": "baseline",
-          "translation_error_pct": 26.09472773553496,
-          "rotation_error_deg_per_100m": 2.9333235001808937,
-          "endpoint_position_error_m": 9.143673485541003,
-          "path_length_error_pct": 11.06994943951076
+          "translation_error_pct": 27.8079598771415,
+          "rotation_error_deg_per_100m": 2.1042621790426894,
+          "endpoint_position_error_m": 10.203824931434358,
+          "path_length_error_pct": 8.768021675159828
         },
         "dro_d": {
           "type": "proposed",
-          "translation_error_pct": 1.8607792055180814,
-          "rotation_error_deg_per_100m": 0.3606110604498907,
-          "endpoint_position_error_m": 1.5757372446226645,
-          "path_length_error_pct": 0.4214947501097894
+          "translation_error_pct": 0.7502334215453249,
+          "rotation_error_deg_per_100m": 0.4210236044422741,
+          "endpoint_position_error_m": 0.5866942431237306,
+          "path_length_error_pct": 0.5912085716286178
         },
         "dro_g": {
           "type": "proposed",
-          "translation_error_pct": 0.28681537189895684,
-          "rotation_error_deg_per_100m": 0.34141540362515105,
-          "endpoint_position_error_m": 0.22158470702493738,
-          "path_length_error_pct": 0.1578027794945558
+          "translation_error_pct": 0.2942509067124642,
+          "rotation_error_deg_per_100m": 0.29945250194346656,
+          "endpoint_position_error_m": 0.2772075430338042,
+          "path_length_error_pct": 0.16128927727350093
         },
         "dro_gd": {
           "type": "proposed",
-          "translation_error_pct": 0.23830960887028288,
-          "rotation_error_deg_per_100m": 0.2986692626078255,
-          "endpoint_position_error_m": 0.17481625996102068,
-          "path_length_error_pct": 0.09651559318331532
+          "translation_error_pct": 0.24569600869824734,
+          "rotation_error_deg_per_100m": 0.3055046549606624,
+          "endpoint_position_error_m": 0.24622945009862732,
+          "path_length_error_pct": 0.08740445181382106
         }
       }
     },
     "synthetic_doppler_tunnel": {
-      "description": "Feature-degenerate held-out sequences of the scaled replacement benchmark (two dense smooth walls extending beyond radar range at both ends). Values are the reference reproduction's held-out scores, not paper-reported numbers.",
+      "description": "Feature-degenerate held-out sequences of the scaled replacement benchmark (six of twelve: two dense smooth walls extending beyond radar range at both ends). Values are the reference reproduction's held-out scores, not paper-reported numbers.",
       "weight": 0.25,
       "primary_metric": "translation_error_pct",
       "metrics": {
@@ -354,36 +354,36 @@
       "results": {
         "fixed_velocity_gyro": {
           "type": "baseline",
-          "translation_error_pct": 37.84909533812234,
-          "rotation_error_deg_per_100m": 2.5018152760725774,
-          "endpoint_position_error_m": 26.680089588496926,
-          "path_length_error_pct": 24.31497340661059
+          "translation_error_pct": 34.8206818145632,
+          "rotation_error_deg_per_100m": 1.9887068283190539,
+          "endpoint_position_error_m": 20.4105342049052,
+          "path_length_error_pct": 19.40693534756774
         },
         "dro_d": {
           "type": "proposed",
-          "translation_error_pct": 12.196662716077016,
-          "rotation_error_deg_per_100m": 0.3522725073343211,
-          "endpoint_position_error_m": 12.373617647283856,
-          "path_length_error_pct": 11.606930501822944
+          "translation_error_pct": 9.198723631200886,
+          "rotation_error_deg_per_100m": 0.2731732317963806,
+          "endpoint_position_error_m": 8.772220690946776,
+          "path_length_error_pct": 8.901290158481045
         },
         "dro_g": {
           "type": "proposed",
-          "translation_error_pct": 2.6996438393948288,
-          "rotation_error_deg_per_100m": 0.5354285047765973,
-          "endpoint_position_error_m": 2.655231393333084,
-          "path_length_error_pct": 2.399344365568759
+          "translation_error_pct": 2.690116608033731,
+          "rotation_error_deg_per_100m": 0.29481827426655066,
+          "endpoint_position_error_m": 2.4614372668742504,
+          "path_length_error_pct": 2.4519017357646127
         },
         "dro_gd": {
           "type": "proposed",
-          "translation_error_pct": 2.472428286227673,
-          "rotation_error_deg_per_100m": 0.5354285047765973,
-          "endpoint_position_error_m": 2.5406630439773363,
-          "path_length_error_pct": 2.290103968226083
+          "translation_error_pct": 2.3099679989600244,
+          "rotation_error_deg_per_100m": 0.2928643337932651,
+          "endpoint_position_error_m": 2.1915005273769603,
+          "path_length_error_pct": 2.1718273490315205
         }
       }
     },
     "synthetic_doppler_ablation": {
-      "description": "Aggregate held-out odometry of the scaled replacement benchmark plus body-frame velocity RMSE (vector norm, per scan). Values are the reference reproduction's held-out scores, not paper-reported numbers.",
+      "description": "Aggregate held-out odometry of the scaled replacement benchmark (twelve sequences) plus body-frame velocity RMSE (vector norm, per scan). Values are the reference reproduction's held-out scores, not paper-reported numbers.",
       "weight": 0.2,
       "primary_metric": "avg_translation_error_pct",
       "metrics": {
@@ -416,27 +416,27 @@
       "results": {
         "dro_d": {
           "type": "proposed",
-          "avg_translation_error_pct": 7.028720960797549,
-          "avg_rotation_error_deg_per_100m": 0.35644178389210596,
-          "endpoint_position_error_m": 6.974677445953259,
-          "path_length_error_pct": 6.014212625966368,
-          "velocity_rmse_mps": 0.45434617207882927
+          "avg_translation_error_pct": 4.974478526373106,
+          "avg_rotation_error_deg_per_100m": 0.34709841811932735,
+          "endpoint_position_error_m": 4.679457467035253,
+          "path_length_error_pct": 4.7462493650548305,
+          "velocity_rmse_mps": 0.3222637916174314
         },
         "dro_g": {
           "type": "proposed",
-          "avg_translation_error_pct": 1.4932296056468928,
-          "avg_rotation_error_deg_per_100m": 0.4384219542008742,
-          "endpoint_position_error_m": 1.4384080501790109,
-          "path_length_error_pct": 1.2785735725316574,
-          "velocity_rmse_mps": 0.1215971275276116
+          "avg_translation_error_pct": 1.4921837573730974,
+          "avg_rotation_error_deg_per_100m": 0.29713538810500867,
+          "endpoint_position_error_m": 1.3693224049540274,
+          "path_length_error_pct": 1.3065955065190569,
+          "velocity_rmse_mps": 0.11475715039406055
         },
         "dro_gd": {
           "type": "proposed",
-          "avg_translation_error_pct": 1.355368947548978,
-          "avg_rotation_error_deg_per_100m": 0.41704888369221144,
-          "endpoint_position_error_m": 1.3577396519691785,
-          "path_length_error_pct": 1.1933097807046993,
-          "velocity_rmse_mps": 0.1150207330656589
+          "avg_translation_error_pct": 1.277832003829136,
+          "avg_rotation_error_deg_per_100m": 0.29918449437696376,
+          "endpoint_position_error_m": 1.2188649887377938,
+          "path_length_error_pct": 1.1296159004226707,
+          "velocity_rmse_mps": 0.10570109638023029
         }
       }
     }
