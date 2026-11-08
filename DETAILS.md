@@ -4,11 +4,11 @@ The paper introduces DRO, a Doppler-aware direct radar odometry method for spinn
 
 This workspace packages a compact reproduction on a procedurally rendered spinning-radar benchmark. The original datasets are either very large public robotics datasets or, for the central Doppler-enabled claim, not public. The benchmark keeps the sensing model and the paper's estimation procedure at smaller scale:
 
-- vehicles start at rest, then drive with time-varying speed and yaw rate;
+- vehicles start at rest, then drive with smoothly and randomly varying speed, curvature and side slip;
 - a biased, noisy gyroscope;
 - landmark-rich streets and featureless tunnels.
 
-Four labelled training sequences are visible. Six held-out sequences are scored by a hidden evaluator, whose labels and comparator rows live only in `eval/test/`.
+Six labelled training sequences are visible. Twelve held-out sequences are scored by a hidden evaluator, whose labels and comparator rows live only in `eval/test/`.
 
 ---
 
@@ -18,7 +18,7 @@ Estimate the planar (SE(2)) trajectory of a vehicle carrying a 360-degree spinni
 
 Each radar scan is a polar intensity image (`uint8`, 180 azimuth rows x 220 range bins, 0.35 m per bin, about 77 m maximum range). The dish sweeps one revolution per scan (0.25 s), so every row is collected at its own timestamp while the vehicle keeps moving. Consecutive rows alternate between up-chirp and down-chirp frequency modulation (`chirps` = +1 / -1). The returned range of a reflector is shifted along the beam by an amount proportional to its radial velocity: by `-beta * u / 2` on up-chirp rows and `+beta * u / 2` on down-chirp rows, where `u` is the body-frame velocity projected on the beam direction and `beta` is given in the sensor metadata. The gyroscope provides one yaw-rate sample per scan: the mean rate over that scan plus an unknown constant bias and white noise.
 
-Every sequence starts with the vehicle at rest at the origin, heading 0. It then drives with time-varying speed and yaw rate. Scenes are either landmark-rich streets or long featureless tunnels.
+Every sequence starts with the vehicle at rest at the origin, heading 0. It then drives with speed, path curvature and side slip that vary smoothly and randomly over time. The radar is mounted on the vehicle's longitudinal axis, `radar_ahead_of_rear_axle_m` (sensor metadata) ahead of the rear axle. Scenes are either landmark-rich streets or long featureless tunnels.
 
 ## Inputs
 
@@ -35,7 +35,7 @@ One JSON artifact per method, named `*_predictions.json`, stored under `checkpoi
                "test_00":  {"trajectory": [...]}}}
 ```
 
-The artifact needs one row per scan for every sequence of a split, in the same coordinate convention as the labels: the first pose is the origin with heading 0. `t` is the scan start time from `<name>_frame_times`. `x, y, heading` is the pose at that time. `vx_body, vy_body` is the estimated body-frame velocity during that scan. Extra fields are ignored.
+The artifact needs one row per scan for every sequence of a split, in the same coordinate convention as the labels: the first pose is the origin with heading 0. `t` is the scan start time from `<name>_frame_times`. `x, y, heading` is the pose at that time. `vx_body, vy_body` is the estimated body-frame velocity during that scan; it must describe the motion from this row's pose to the next row's pose (see `briefing/evaluation.md`). Extra fields are ignored.
 
 The evaluators reserve the names `fixed_velocity_gyro`, `dead_reckoning`, `dro_d` and `dro_g` for their fixed comparator rows. Artifacts that use these names are ignored.
 
@@ -51,11 +51,11 @@ The reproduction (`method/dro_synthetic.py`) implements the paper's computationa
 - Gyro bias from the paper's stationary-vehicle heuristic: average the raw gyro rate over the first stationary scans (estimated speed below 5 cm/s), then low-pass update it whenever the vehicle is stationary again. The running mean is applied while the first samples accumulate.
 - Doppler range correction proportional to radial velocity and chirp direction.
 - Direct scan-to-local-map intensity cross-correlation (`O_psi`) on a Cartesian local map updated with a low-pass filter (gamma = 0.1).
-- Up/down chirp split with local Gaussian-process infill, giving a matched pair of Doppler images.
+- Up/down chirp split with local Gaussian-process infill, giving a matched pair of Doppler images. Each missing row is inferred from the neighbouring rows of the same chirp on both sides (the up-chirp infill's row alignment was corrected in the final hardening iteration).
 - Doppler velocity objective (`O_d`): cross-correlation of the two images after radial range shifting.
 - Normalized gradient ascent with step halving, after a coarse grid initialization.
 
-The three variants follow Table I: `dro_d` (O_d only), `dro_g` (O_psi only) and `dro_gd` (both). In `dro_gd`, the Doppler-only estimate initializes and weakly anchors the combined objective. The relative weight of O_psi is selected on the training split by `method/tune_gd_weight.py` and stored in `method/dro_config.json`.
+The three variants follow Table I: `dro_d` (O_d only), `dro_g` (O_psi only) and `dro_gd` (both). In `dro_gd`, the Doppler-only estimate initializes and weakly anchors the combined objective. The relative weight of O_psi is selected on the training split by `method/tune_gd_weight.py` (grid 128, 512, 2048, 8192; 8192 selected, train translation error 2.02, 1.52, 1.37, 1.33 %) and stored in `method/dro_config.json`.
 
 The authors' public release is included under `method/upstream_dro/` for reference.
 
@@ -68,7 +68,7 @@ Pipeline:
 
 # Evaluation Protocol
 
-`bash scripts/evaluate_train.sh` scores every `*_predictions.json` artifact on disk against the labelled training sequences and writes `scoring/scores_train.json`. `bash scripts/evaluate.sh` does the same and writes `scoring/scores.json`. A held-out evaluator uses the same rules and the same artifact format, but scores the `test_*` sequences against labels that are not in this workspace.
+`bash scripts/evaluate_train.sh` scores every `*_predictions.json` artifact on disk against the labelled training sequences and writes `scoring/scores_train.json`. `bash scripts/evaluate.sh` does the same and writes `scoring/scores.json`. A held-out evaluator uses the same rules and the same artifact format, but scores the twelve `test_*` sequences (six landmark-rich, six tunnel) against labels that are not in this workspace.
 
 For every sequence, the evaluator recomputes all numbers from the submitted trajectory rows alone:
 
@@ -94,9 +94,13 @@ A method is scored as **failed**, with every metric set to its ceiling, if any o
 - a row is not six numbers;
 - a value is non-finite;
 - a timestamp is off the scan start time by more than 1 ms;
-- a position or speed is physically impossible;
+- a position, speed or heading is physically impossible (|x|, |y| above 100 km, speed above 100 m/s, |heading| above 1000 rad);
+- between consecutive scans the heading changes faster than 2 rad/s or the position moves faster than 100 m/s;
+- the first pose is not the origin with heading 0 (tolerance 1 mm and 1 mrad);
+- the reported velocities do not describe the reported poses. For every scan except the last, the velocity implied by the pose change to the next scan (the position change expressed in the frame of the mid-scan heading, divided by the scan period) is compared with the reported body-frame velocity. An RMS gap above 0.5 m/s in any sequence fails the method;
 - two artifacts claim the same method name;
-- its average translation error is not better than the fixed-velocity dead-reckoning comparator.
+- its average translation error is not better than the fixed-velocity dead-reckoning comparator;
+- its velocity RMSE is not better than the fixed-velocity dead-reckoning comparator.
 
 The ceilings are translation 100 %, rotation 100 deg/100 m, velocity 10 m/s, endpoint 100 m, path length 100 %. Valid values are also capped at these ceilings. On the held-out split, a method is also marked failed if the test input file has been modified or removed.
 
@@ -662,6 +666,68 @@ The paper reports KITTI relative translation and rotation errors on real automot
 - Hardening iteration: the held-out test is now six separately rendered sequences. Their labels and seeds live only in `eval/test/`, and the inputs digest is verified. Comparator rows are frozen in `eval/`, invalid output is scored at the failure ceilings, and a method must beat dead reckoning to be eligible.
 - The scenes now have time-varying trajectories that start from rest, with a biased gyro. Two bugs were fixed: the renderer's rotation sign and the method's start-pose off-by-one. The paper's stationary gyro-bias heuristic was added, and the combined-objective weight is selected on train.
 - Held-out reference DRO-GD: 1.36 % translation error and 0.42 deg/100 m rotation, versus 32.0 % / 2.72 for dead reckoning. DRO-GD beats DRO-G (1.49 %) and DRO-D (7.03 %) in every group. Every major shortcut now fails or has no effect. See `HARDENING.md`.
+
+</details>
+
+### Iteration 11: claude-opus-5-5 (hardener)
+- **Milestone**: `core_claim` | **Status**: done
+- **Working time**: 17m | **GPU**: 0.0h
+- **Jobs**: 15 total (13 completed, 0 failed)
+
+<details>
+<summary>Progress Log</summary>
+
+### [2026-06-04 04:47] - method_runs
+- Existing compact DRO scaffold runs end-to-end and passes validation.
+- Audit found the previous `core_claim` bookkeeping too optimistic because GP infill, velocity scoring, and gyro constraints were weak.
+- Updated the implementation toward the paper's actual computation: local squared-exponential GP infill, cross-correlation kernel orientation, gyro measurement inputs, vector velocity scoring, and normalized gradient-ascent refinement.
+- Submitting a CPU job to rerun the full packaged pipeline before claiming any higher milestone.
+
+### [2026-06-04 05:06] - core_claim
+- CPU audit job `cf4a04e5-70e` completed with exit code 0.
+- Revised DRO-GD achieved `2.668%` average translation error versus `24.999%` for the fixed-velocity gyro baseline on the replacement FMCW radar benchmark.
+- The evaluator also reports the constraint metrics: DRO-GD rotation error `1.489 deg/100m` and vector body-frame velocity RMSE `0.123 m/s`.
+- Added evaluator support for per-scenario score groups and submitting another CPU job before claiming `core_claim_plus`.
+
+### [2026-06-04 05:40] - core_claim
+- CPU follow-up job `99110a51-e02` completed with exit code 0 and regenerated `scoring/scores.json` with four experiments.
+- DRO-GD beats the fixed-velocity gyro baseline on the aggregate replacement benchmark and on both generated sub-scenarios: `2.385%` versus `22.572%` on `structured`, and `2.952%` versus `27.426%` on `tunnel`.
+- `python validate.py` passes on the final workspace.
+- Final milestone is kept at `core_claim` because the reproduction uses a compact synthetic replacement benchmark rather than the paper's full real automotive, Boreas, MulRan, and off-road evaluation suite.
+
+### [2026-06-07 00:03] - core_claim
+- Verified the later split-score audit job `c758ed34-2b1` completed with exit code 0.
+- Held-out odd-frame scores still support the core claim: DRO-GD reached `2.703%` average translation error versus `24.999%` for the fixed-velocity gyro baseline.
+- Tightened the standalone evaluator so `scripts/evaluate.sh` reports endpoint drift and path-length constraint metrics in the same prediction-artifact contract as the train/test evaluators.
+- Submitting a CPU validation job to regenerate artifacts and rerun all validators inside the packaged container.
+
+### [2026-06-07 00:08] - core_claim
+- Final verification completed.
+- `python validate.py` and `python validate.py --compare` pass after adding the missing scored endpoint/path metrics to `scores.json` and balancing the reproduced synthetic experiment weights.
+- Milestone remains `core_claim` because the packaged gym validates the central claim on a compact synthetic replacement benchmark, not the paper's full real-data suite.
+
+### [2026-06-07 00:13] - core_claim
+- Tightened the standalone evaluator to load ground truth from `data/synthetic_dro.npz` instead of trusting prediction artifacts.
+- Added guards against too-short trajectories producing empty segment metrics.
+- Added the missing Table I `CT-LG` reference baseline and updated `TARGETS.md` to name endpoint and path-length constraint metrics.
+- Submitting a CPU container validation job because the login-node Python environment lacks NumPy.
+
+### [2026-06-07 00:18] - core_claim
+- Final verification kept the milestone at `core_claim`.
+- Cleaned method-safe scoring guidance so from-scratch agents receive task and evaluation constraints without implementation details.
+- Removed a generated cache artifact and reran `python validate.py --compare`, which passes.
+- Signaling done with the remaining limitation that the gym uses a compact synthetic replacement benchmark.
+
+### [2026-11-07 16:40] - core_claim
+- Hardening iteration: the held-out test is now six separately rendered sequences. Their labels and seeds live only in `eval/test/`, and the inputs digest is verified. Comparator rows are frozen in `eval/`, invalid output is scored at the failure ceilings, and a method must beat dead reckoning to be eligible.
+- The scenes now have time-varying trajectories that start from rest, with a biased gyro. Two bugs were fixed: the renderer's rotation sign and the method's start-pose off-by-one. The paper's stationary gyro-bias heuristic was added, and the combined-objective weight is selected on train.
+- Held-out reference DRO-GD: 1.36 % translation error and 0.42 deg/100 m rotation, versus 32.0 % / 2.72 for dead reckoning. DRO-GD beats DRO-G (1.49 %) and DRO-D (7.03 %) in every group. Every major shortcut now fails or has no effect. See `HARDENING.md`.
+
+### [2026-11-08 01:40] - core_claim
+- Final hardening iteration. The held-out test now has 12 sequences and train has 6. Both are regenerated with a motion model driven by smooth random processes, which closes the redteam's generator-family fit (+0.059 → −6.13).
+- Reported velocities must now describe the reported poses (RMS gap ≤ 0.5 m/s) and must beat dead reckoning; this closes the calibrated-poses zero-velocity shortcut (+0.024 → failed). The first pose must be the origin, and headings and per-scan motion must be physically possible.
+- Fixed the up-chirp GP infill row alignment in the reference and re-selected the combined weight on train (8192). Held-out DRO-GD: 1.28 % translation and 0.30 deg/100 m rotation, against 31.3 % for dead reckoning, 4.97 % for DRO-D and 1.49 % for DRO-G. DRO-GD is better than every comparator on 12/12 sequences.
+- Variants order correctly with paired bootstrap noise: calibration +0.30 ± 0.05; no Doppler −0.28 ± 0.03; no gyro bias −1.05 ± 0.12; old infill −0.013 ± 0.005. See `HARDENING.md`.
 
 </details>
 
