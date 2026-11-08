@@ -1,0 +1,182 @@
+{
+  "case": "shortcut_generator_prior_smoother",
+  "build_seconds": 0.026390377897769213,
+  "info": {
+    "tau_s": 1.2000000000000002,
+    "noise_var": [
+      0.013237481068906567,
+      0.0024798475523529835
+    ],
+    "signal_var": [
+      9.920147828101161,
+      0.0013539720552235735
+    ]
+  },
+  "test_returncode": 0,
+  "rank": {
+    "rank": -0.007618859865959201,
+    "per_experiment": {
+      "synthetic_doppler_core": -0.0028684266488180218,
+      "synthetic_doppler_structured": -0.0010481044144107668,
+      "synthetic_doppler_tunnel": -0.0030338703906787777,
+      "synthetic_doppler_ablation": -0.0006684584120516348
+    }
+  },
+  "all_rows_rank": -0.007618859865959201,
+  "failed_methods": {},
+  "ignored_artifacts": [],
+  "test_inputs": {
+    "path": "data/test_inputs.npz",
+    "status": "verified"
+  },
+  "candidate_results": {
+    "synthetic_doppler_core": {
+      "avg_translation_error_pct": 1.2774897971024652,
+      "avg_rotation_error_deg_per_100m": 0.3195471300898161,
+      "endpoint_position_error_m": 1.2327821379985016,
+      "path_length_error_pct": 1.1210123368680687
+    },
+    "synthetic_doppler_structured": {
+      "translation_error_pct": 0.23906276978537588,
+      "rotation_error_deg_per_100m": 0.32148878437261413,
+      "endpoint_position_error_m": 0.27495155787460607,
+      "path_length_error_pct": 0.08763656664799373
+    },
+    "synthetic_doppler_tunnel": {
+      "translation_error_pct": 2.3159168244195545,
+      "rotation_error_deg_per_100m": 0.31760547580701814,
+      "endpoint_position_error_m": 2.190612718122397,
+      "path_length_error_pct": 2.1543881070881437
+    },
+    "synthetic_doppler_ablation": {
+      "avg_translation_error_pct": 1.2774897971024652,
+      "avg_rotation_error_deg_per_100m": 0.3195471300898161,
+      "endpoint_position_error_m": 1.2327821379985016,
+      "path_length_error_pct": 1.1210123368680687,
+      "velocity_rmse_mps": 0.08497066270533506
+    }
+  },
+  "comparators_unchanged": true,
+  "train_rank": {
+    "rank": 0.009652023398981165,
+    "per_experiment": {
+      "synthetic_doppler_core": 0.003422825340940797,
+      "synthetic_doppler_structured": 0.005249916748626195,
+      "synthetic_doppler_tunnel": -0.0030451523461423047,
+      "synthetic_doppler_ablation": 0.004024433655556478
+    }
+  },
+  "train_failed_methods": {},
+  "bootstrap": {
+    "point": -0.007618859865959203,
+    "se": 0.00917606177943868,
+    "ci95": [
+      -0.026601845876221483,
+      0.009236915440853494
+    ],
+    "z": -0.8302973594871836,
+    "sequences_improved": 6,
+    "sequences_worse": 6,
+    "per_sequence": {
+      "test_00": -0.006292673032870715,
+      "test_01": -0.0035803392956380007,
+      "test_02": -0.0012264652229380384,
+      "test_03": 0.00033952219858206397,
+      "test_04": -0.0010674568874456188,
+      "test_05": -0.0032231637959822513,
+      "test_06": -0.0016253943378715643,
+      "test_07": 0.003792615978198349,
+      "test_08": 0.0016841769575463115,
+      "test_09": 0.001380214995977817,
+      "test_10": 0.0014180814581315681,
+      "test_11": 0.0007820211183508753
+    }
+  },
+  "per_sequence_metrics": {
+    "test_00": {
+      "translation_error_pct": 0.2443214903939035,
+      "rotation_error_deg_per_100m": 0.2634975120386986,
+      "velocity_rmse_mps": 0.022668624085571774,
+      "endpoint_position_error_m": 0.3542552242105968,
+      "path_length_error_pct": 0.07463405828879138
+    },
+    "test_01": {
+      "translation_error_pct": 1.871920959892041,
+      "rotation_error_deg_per_100m": 0.5268920233261186,
+      "velocity_rmse_mps": 0.1273214676227386,
+      "endpoint_position_error_m": 2.088516230320889,
+      "path_length_error_pct": 1.818567938239608
+    },
+    "test_02": {
+      "translation_error_pct": 0.2576558370828829,
+      "rotation_error_deg_per_100m": 0.5311778048853032,
+      "velocity_rmse_mps": 0.03270518420341011,
+      "endpoint_position_error_m": 0.41750046356903187,
+      "path_length_error_pct": 0.09250900024007475
+    },
+    "test_03": {
+      "translation_error_pct": 1.9995035971700594,
+      "rotation_error_deg_per_100m": 0.41203701030084744,
+      "velocity_rmse_mps": 0.11956095433512566,
+      "endpoint_position_error_m": 1.9244621590060569,
+      "path_length_error_pct": 1.7070257544090108
+    },
+    "test_04": {
+      "translation_error_pct": 0.17690845785612255,
+      "rotation_error_deg_per_100m": 0.4115887960408805,
+      "velocity_rmse_mps": 0.02387132238667096,
+      "endpoint_position_error_m": 0.18944322780665787,
+      "path_length_error_pct": 0.04297871596859821
+    },
+    "test_05": {
+      "translation_error_pct": 2.7230796286828465,
+      "rotation_error_deg_per_100m": 0.17804093143498656,
+      "velocity_rmse_mps": 0.13176898442231597,
+      "endpoint_position_error_m": 2.0112018544495913,
+      "path_length_error_pct": 2.5699958572174952
+    },
+    "test_06": {
+      "translation_error_pct": 2.166385329090304,
+      "rotation_error_deg_per_100m": 0.1966841586741029,
+      "velocity_rmse_mps": 0.13008969670201,
+      "endpoint_position_error_m": 1.9925035023786184,
+      "path_length_error_pct": 2.055229824587028
+    },
+    "test_07": {
+      "translation_error_pct": 0.32439581390514066,
+      "rotation_error_deg_per_100m": 0.5122398397003742,
+      "velocity_rmse_mps": 0.0323874602161762,
+      "endpoint_position_error_m": 0.3580591429302704,
+      "path_length_error_pct": 0.20115871805427893
+    },
+    "test_08": {
+      "translation_error_pct": 0.19234031606437813,
+      "rotation_error_deg_per_100m": 0.11652507689713301,
+      "velocity_rmse_mps": 0.033301088730297884,
+      "endpoint_position_error_m": 0.12315837165023603,
+      "path_length_error_pct": 0.015401489140393465
+    },
+    "test_09": {
+      "translation_error_pct": 2.804317172184564,
+      "rotation_error_deg_per_100m": 0.4256220286137619,
+      "velocity_rmse_mps": 0.15972349853225415,
+      "endpoint_position_error_m": 2.4883271497537773,
+      "path_length_error_pct": 2.5571902970763536
+    },
+    "test_10": {
+      "translation_error_pct": 0.23875470340982746,
+      "rotation_error_deg_per_100m": 0.09390367667329529,
+      "velocity_rmse_mps": 0.03612566874892205,
+      "endpoint_position_error_m": 0.20729291708084344,
+      "path_length_error_pct": 0.09913741819582562
+    },
+    "test_11": {
+      "translation_error_pct": 2.330294259497512,
+      "rotation_error_deg_per_100m": 0.16635670249229143,
+      "velocity_rmse_mps": 0.1701240024785274,
+      "endpoint_position_error_m": 2.638665412825449,
+      "path_length_error_pct": 2.2183189709993667
+    }
+  },
+  "elapsed_seconds": 1.717760942876339
+}

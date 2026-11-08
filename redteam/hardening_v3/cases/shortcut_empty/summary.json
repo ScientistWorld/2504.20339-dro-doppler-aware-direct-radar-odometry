@@ -1,0 +1,52 @@
+{
+  "case": "shortcut_empty",
+  "build_seconds": 0.01118105510249734,
+  "test_returncode": 0,
+  "rank": {
+    "rank": -165.2102063177253,
+    "per_experiment": {
+      "synthetic_doppler_core": -54.92155643134533,
+      "synthetic_doppler_structured": -27.68295958146451,
+      "synthetic_doppler_tunnel": -45.39766141646803,
+      "synthetic_doppler_ablation": -37.20802888844741
+    }
+  },
+  "all_rows_rank": -165.2102063177253,
+  "failed_methods": {
+    "dro_gd": "trajectory has 0 rows, expected one per frame (72)"
+  },
+  "ignored_artifacts": [],
+  "test_inputs": {
+    "path": "data/test_inputs.npz",
+    "status": "verified"
+  },
+  "candidate_results": {
+    "synthetic_doppler_core": {
+      "avg_translation_error_pct": 100.0,
+      "avg_rotation_error_deg_per_100m": 100.0,
+      "endpoint_position_error_m": 100.0,
+      "path_length_error_pct": 100.0
+    },
+    "synthetic_doppler_structured": {
+      "translation_error_pct": 100.0,
+      "rotation_error_deg_per_100m": 100.0,
+      "endpoint_position_error_m": 100.0,
+      "path_length_error_pct": 100.0
+    },
+    "synthetic_doppler_tunnel": {
+      "translation_error_pct": 100.0,
+      "rotation_error_deg_per_100m": 100.0,
+      "endpoint_position_error_m": 100.0,
+      "path_length_error_pct": 100.0
+    },
+    "synthetic_doppler_ablation": {
+      "avg_translation_error_pct": 100.0,
+      "avg_rotation_error_deg_per_100m": 100.0,
+      "endpoint_position_error_m": 100.0,
+      "path_length_error_pct": 100.0,
+      "velocity_rmse_mps": 10.0
+    }
+  },
+  "comparators_unchanged": true,
+  "elapsed_seconds": 0.7028754230123013
+}

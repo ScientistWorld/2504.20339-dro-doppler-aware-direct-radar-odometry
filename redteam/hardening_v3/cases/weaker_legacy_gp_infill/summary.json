@@ -1,0 +1,161 @@
+{
+  "case": "weaker_legacy_gp_infill",
+  "build_seconds": 220.77139719109982,
+  "test_returncode": 0,
+  "rank": {
+    "rank": -0.012678115006322713,
+    "per_experiment": {
+      "synthetic_doppler_core": -0.0036430849481566907,
+      "synthetic_doppler_structured": 0.000770182467553024,
+      "synthetic_doppler_tunnel": -0.007355445692849677,
+      "synthetic_doppler_ablation": -0.0024497668328693706
+    }
+  },
+  "all_rows_rank": -0.012678115006322713,
+  "failed_methods": {},
+  "ignored_artifacts": [],
+  "test_inputs": {
+    "path": "data/test_inputs.npz",
+    "status": "verified"
+  },
+  "candidate_results": {
+    "synthetic_doppler_core": {
+      "avg_translation_error_pct": 1.2875109776650902,
+      "avg_rotation_error_deg_per_100m": 0.295720612372019,
+      "endpoint_position_error_m": 1.2262695871256277,
+      "path_length_error_pct": 1.139611129737275
+    },
+    "synthetic_doppler_structured": {
+      "translation_error_pct": 0.24437953373277435,
+      "rotation_error_deg_per_100m": 0.2966229504774873,
+      "endpoint_position_error_m": 0.24394960363366025,
+      "path_length_error_pct": 0.08892729477031092
+    },
+    "synthetic_doppler_tunnel": {
+      "translation_error_pct": 2.3306424215974064,
+      "rotation_error_deg_per_100m": 0.29481827426655066,
+      "endpoint_position_error_m": 2.2085895706175953,
+      "path_length_error_pct": 2.190294964704239
+    },
+    "synthetic_doppler_ablation": {
+      "avg_translation_error_pct": 1.2875109776650902,
+      "avg_rotation_error_deg_per_100m": 0.295720612372019,
+      "endpoint_position_error_m": 1.2262695871256277,
+      "path_length_error_pct": 1.139611129737275,
+      "velocity_rmse_mps": 0.10605182194853434
+    }
+  },
+  "comparators_unchanged": true,
+  "bootstrap": {
+    "point": -0.012678115006322712,
+    "se": 0.005111635864004417,
+    "ci95": [
+      -0.023660688553936063,
+      -0.003688892331822585
+    ],
+    "z": -2.4802461176079884,
+    "sequences_improved": 4,
+    "sequences_worse": 8,
+    "per_sequence": {
+      "test_00": 0.0007389023397534904,
+      "test_01": -0.0008820662492672925,
+      "test_02": 0.0014129018925300206,
+      "test_03": -0.003623757768672566,
+      "test_04": -0.0004168951502773826,
+      "test_05": -0.002178410637094286,
+      "test_06": -0.0004009635888867021,
+      "test_07": 4.34679727312441e-05,
+      "test_08": -8.867118632244897e-05,
+      "test_09": -0.0063364720043325275,
+      "test_10": 0.0003714935343125204,
+      "test_11": -0.0013176441607967958
+    }
+  },
+  "per_sequence_metrics": {
+    "test_00": {
+      "translation_error_pct": 0.22453444012309778,
+      "rotation_error_deg_per_100m": 0.15348169881235899,
+      "velocity_rmse_mps": 0.060204438003968505,
+      "endpoint_position_error_m": 0.17651120026126602,
+      "path_length_error_pct": 0.07433688286594844
+    },
+    "test_01": {
+      "translation_error_pct": 1.8706144759567382,
+      "rotation_error_deg_per_100m": 0.45264171217149624,
+      "velocity_rmse_mps": 0.1322646695334116,
+      "endpoint_position_error_m": 2.0536588622272784,
+      "path_length_error_pct": 1.8537933469869352
+    },
+    "test_02": {
+      "translation_error_pct": 0.2524314259574317,
+      "rotation_error_deg_per_100m": 0.48712829302135074,
+      "velocity_rmse_mps": 0.05820948451870732,
+      "endpoint_position_error_m": 0.3766305987133494,
+      "path_length_error_pct": 0.05030076438649807
+    },
+    "test_03": {
+      "translation_error_pct": 2.0371010908314116,
+      "rotation_error_deg_per_100m": 0.41195786386320676,
+      "velocity_rmse_mps": 0.1276977261369075,
+      "endpoint_position_error_m": 1.9461433794276897,
+      "path_length_error_pct": 1.7274508199452339
+    },
+    "test_04": {
+      "translation_error_pct": 0.20680516130709822,
+      "rotation_error_deg_per_100m": 0.337890076195891,
+      "velocity_rmse_mps": 0.0853065189308896,
+      "endpoint_position_error_m": 0.1431212157376353,
+      "path_length_error_pct": 0.026964824498277352
+    },
+    "test_05": {
+      "translation_error_pct": 2.729117962232704,
+      "rotation_error_deg_per_100m": 0.1152629601799134,
+      "velocity_rmse_mps": 0.1353531861952113,
+      "endpoint_position_error_m": 2.0176863527321,
+      "path_length_error_pct": 2.593494059060071
+    },
+    "test_06": {
+      "translation_error_pct": 2.168216003863645,
+      "rotation_error_deg_per_100m": 0.14802025534156985,
+      "velocity_rmse_mps": 0.13668861486187625,
+      "endpoint_position_error_m": 1.9948943452373664,
+      "path_length_error_pct": 2.0649701834249017
+    },
+    "test_07": {
+      "translation_error_pct": 0.3472390480885841,
+      "rotation_error_deg_per_100m": 0.5806924085428414,
+      "velocity_rmse_mps": 0.05626619521753177,
+      "endpoint_position_error_m": 0.3835451624154964,
+      "path_length_error_pct": 0.1904114598801195
+    },
+    "test_08": {
+      "translation_error_pct": 0.19153660398478947,
+      "rotation_error_deg_per_100m": 0.12201888793946084,
+      "velocity_rmse_mps": 0.07067409392464019,
+      "endpoint_position_error_m": 0.17559148225417526,
+      "path_length_error_pct": 0.06183977304103571
+    },
+    "test_09": {
+      "translation_error_pct": 2.8430270216374027,
+      "rotation_error_deg_per_100m": 0.46509596597985126,
+      "velocity_rmse_mps": 0.16673838473334957,
+      "endpoint_position_error_m": 2.56235414998848,
+      "path_length_error_pct": 2.6530561789448956
+    },
+    "test_10": {
+      "translation_error_pct": 0.24373052293564504,
+      "rotation_error_deg_per_100m": 0.09852633835302077,
+      "velocity_rmse_mps": 0.06956759106821424,
+      "endpoint_position_error_m": 0.2082979624200389,
+      "path_length_error_pct": 0.1297100639499864
+    },
+    "test_11": {
+      "translation_error_pct": 2.335777975062535,
+      "rotation_error_deg_per_100m": 0.17593088806326673,
+      "velocity_rmse_mps": 0.17365096025770405,
+      "endpoint_position_error_m": 2.6768003340926576,
+      "path_length_error_pct": 2.249005199863397
+    }
+  },
+  "elapsed_seconds": 222.02119353204034
+}
