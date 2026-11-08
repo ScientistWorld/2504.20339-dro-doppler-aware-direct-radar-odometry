@@ -1,4 +1,3 @@
-action: submit
-gpus: 0
-test: true
-notes: "Cheap final audit: test whether moving calibrated trajectories with zero reported velocity still outrank reference; verify public seed-recovery candidates against full gyro traces. Reuses generated reference outputs."
+action: done
+milestone: core_claim
+notes: "Audit complete: 26 hidden-test cases; honest quality ordering passes, zero seed spread; public-generator and zero-velocity shortcuts beat reference. Evidence in REDTEAM.md; original scientific files restored."
