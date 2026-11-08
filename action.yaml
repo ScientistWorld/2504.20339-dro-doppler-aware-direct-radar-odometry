@@ -5,4 +5,4 @@ action: submit
 gpus: 0
 test: false
 milestone: core_claim
-notes: "Final hardening: regenerate train (6) and held-out (12) splits with random-process motion, GP infill alignment fix, retune weight on train, rerun comparators + reference DRO-GD, freeze comparators, score with new eligibility/consistency rules, replay variants and shortcuts through the hidden test (redteam/hardening_v3)."
+notes: "Resubmit after SLURM preemption (resumes from per-sequence caches). Final hardening: regenerate train (6) and held-out (12) splits with random-process motion, GP infill alignment fix, retune weight on train, rerun comparators + reference DRO-GD, freeze comparators, score with new eligibility/consistency rules, replay variants and shortcuts through the hidden test (redteam/hardening_v3)."
