@@ -1,0 +1,21 @@
+{
+  "audit_status": "complete",
+  "reproduction_milestone": "core_claim",
+  "start_revision": "f00595514916887a472bba5b7fd17cf402503eda",
+  "completed_cases": 26,
+  "protected_paths": [
+    "baseline/",
+    "briefing/",
+    "data/",
+    "environment/",
+    "eval/",
+    "method/",
+    "scoring/",
+    "scripts/"
+  ],
+  "protected_paths_match_start": true,
+  "unexpected_changed_paths": [],
+  "job_control_exception": "action.yaml is required by the scheduler; final state is done",
+  "managed_preexisting_status": "README.md, manifest.json and trajectory/ were already dirty; see start_state.json",
+  "verification": "python3 redteam/audit_v2/verify.py: PASS"
+}
